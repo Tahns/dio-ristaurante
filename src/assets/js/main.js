@@ -515,12 +515,24 @@ document.querySelectorAll("[data-open-now]").forEach((el) => {
   const names = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
   const today = slots.filter((s) => s.days.includes(day)).sort((a, b) => min(a.from) - min(b.from));
   const open = today.find((s) => now >= min(s.from) && now < min(s.to));
+  const SOON = 15; // minutes avant l'ouverture ou la fermeture
   if (open) {
-    el.className = "open-now is-open";
-    el.textContent = `Ouvert maintenant jusqu'à ${label(open.to)} (${open.mode})`;
+    const left = min(open.to) - now;
+    if (left <= SOON) {
+      el.className = "open-now is-soon";
+      el.textContent = `Ferme bientôt, à ${label(open.to)} (${open.mode})`;
+    } else {
+      el.className = "open-now is-open";
+      el.textContent = `Ouvert maintenant jusqu'à ${label(open.to)} (${open.mode})`;
+    }
     return;
   }
   const next = today.find((s) => min(s.from) > now);
+  if (next && min(next.from) - now <= SOON) {
+    el.className = "open-now is-soon";
+    el.textContent = `Ouvre bientôt, à ${label(next.from)} (${next.mode})`;
+    return;
+  }
   let msg;
   if (next) msg = `aujourd'hui à ${label(next.from)}`;
   else {
