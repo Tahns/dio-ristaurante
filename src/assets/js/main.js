@@ -117,6 +117,23 @@ if (form) {
       data.get("message") || "",
     ].filter((l, i, a) => l !== "" || a[i - 1] !== "");
 
+    // Règles d'ouverture : midi lun–sam ; soir sur place ven–sam, à emporter mar–sam ; fermé le dimanche.
+    const when = data.get("date") ? new Date(data.get("date") + "T12:00:00") : null;
+    const kind = type.value;
+    if (when && (kind === "table" || kind === "emporter")) {
+      const day = when.getDay(); // 0 = dimanche
+      const evening = data.get("service") === "diner";
+      let problem = "";
+      if (day === 0) problem = "Le restaurant est fermé le dimanche.";
+      else if (evening && day === 1) problem = "Le lundi, le restaurant n'ouvre que le midi.";
+      else if (evening && kind === "table" && day >= 2 && day <= 4)
+        problem = "Du mardi au jeudi, le soir est à emporter uniquement. Choisissez « Commande à emporter », le midi, ou un vendredi ou samedi soir.";
+      if (problem) {
+        setStatus(problem, false);
+        return;
+      }
+    }
+
     const endpoint = form.dataset.endpoint;
     if (endpoint) {
       try {
@@ -155,7 +172,7 @@ if (form) {
 if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObserver" in window) {
   document.documentElement.classList.add("motion");
   const targets = document.querySelectorAll(
-    ".section .container > *, .feature, .card, .menu-item, .gallery a, .quote, .steps li, .flyer, .parking, .trio img"
+    ".section .container > *:not(.menu-set):not(.gallery), .feature, .card, .menu-item, .gallery a, .quote, .steps li, .flyer, .parking, .trio img"
   );
   const io = new IntersectionObserver(
     (entries) =>
@@ -165,7 +182,7 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObse
           io.unobserve(e.target);
         }
       }),
-    { threshold: 0.12 }
+    { threshold: 0, rootMargin: "0px 0px -8% 0px" }
   );
   targets.forEach((el, i) => {
     el.classList.add("reveal");
@@ -188,4 +205,23 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObse
     }
     hero.appendChild(box);
   }
+}
+
+// Carte : onglets Sur place / À emporter (les deux restent visibles sans JavaScript)
+const menuTabs = document.querySelectorAll(".menu-tab");
+if (menuTabs.length) {
+  const root = document.querySelector(".menu");
+  const show = (key) => {
+    root.classList.add("tabs-on");
+    document.querySelectorAll(".menu-set").forEach((el) => el.classList.toggle("is-open", el.dataset.set === key));
+    menuTabs.forEach((t) => t.classList.toggle("is-active", t.dataset.tab === key));
+  };
+  menuTabs.forEach((t) =>
+    t.addEventListener("click", (e) => {
+      e.preventDefault();
+      show(t.dataset.tab);
+      history.replaceState(null, "", "#" + t.dataset.tab);
+    })
+  );
+  show(location.hash.startsWith("#emporter") ? "emporter" : "surplace");
 }

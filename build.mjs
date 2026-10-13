@@ -66,7 +66,12 @@ const parkingBlock = () => `<aside class="parking" aria-label="Parking">
   </div>
 </aside>`;
 
-function menuSection(cat) {
+const MENU_SETS = [
+  { key: "surplace", label: "Sur place", intro: "Servi à table, midi, et le soir les vendredis et samedis." },
+  { key: "emporter", label: "À emporter", intro: "Mêmes plats, prix à emporter. Commande possible le midi et le soir du mardi au samedi." },
+];
+
+function menuSection(cat, set) {
   const items = cat.items
     .map(
       (it) => `<li class="menu-item">
@@ -75,17 +80,24 @@ function menuSection(cat) {
       </li>`
     )
     .join("");
-  return `<section class="menu-cat" id="${esc(cat.id)}">
+  return `<section class="menu-cat" id="${set}-${esc(cat.id)}">
     <h2>${esc(cat.title)}</h2>
     ${cat.intro ? `<p class="menu-cat__intro">${esc(cat.intro)}</p>` : ""}
     <ul class="menu-list">${items}</ul>
   </section>`;
 }
 
-const menuNav = () =>
-  `<nav class="menu-nav" aria-label="Sections de la carte">${site.menu
-    .map((c) => `<a href="#${esc(c.id)}">${esc(c.title)}</a>`)
-    .join("")}</nav>`;
+const menuAll = () =>
+  `<div class="menu-tabs" role="group" aria-label="Choisir la carte">${MENU_SETS.map(
+    (m, i) => `<a class="menu-tab${i === 0 ? " is-active" : ""}" href="#${m.key}" data-tab="${m.key}">${m.label}</a>`
+  ).join("")}</div>
+  ${MENU_SETS.map(
+    (m) => `<div class="menu-set" id="${m.key}" data-set="${m.key}">
+    <p class="menu-set__intro">${esc(m.intro)}</p>
+    <nav class="menu-nav" aria-label="Sections de la carte ${m.label.toLowerCase()}">${site.menu[m.key].map((c) => `<a href="#${m.key}-${esc(c.id)}">${esc(c.title)}</a>`).join("")}</nav>
+    ${site.menu[m.key].map((c) => menuSection(c, m.key)).join("\n")}
+  </div>`
+  ).join("\n")}`;
 
 const formulas = () =>
   `<div class="grid grid--2">${site.privatisation.formulas
@@ -250,10 +262,15 @@ const jsonLd = {
   hasMenu: {
     "@type": "Menu",
     url: site.baseUrl + "/la-carte/",
-    hasMenuSection: site.menu.map((c) => ({
+    hasMenuSection: site.menu.surplace.map((c) => ({
       "@type": "MenuSection",
       name: c.title,
-      hasMenuItem: c.items.map((i) => ({ "@type": "MenuItem", name: i.name, description: i.desc })),
+      hasMenuItem: c.items.map((i) => ({
+        "@type": "MenuItem",
+        name: i.name,
+        description: i.desc,
+        ...(i.price ? { offers: { "@type": "Offer", price: i.price.replace(/[^\d,]/g, "").replace(",", "."), priceCurrency: "EUR" } } : {}),
+      })),
     })),
   },
   ...(Object.values(site.social).some(Boolean) ? { sameAs: Object.values(site.social).filter(Boolean) } : {}),
@@ -377,12 +394,11 @@ const tokens = {
   hours: () => esc(site.hours),
   services: () => esc(site.services.join(" · ")),
   menuNote: () => esc(site.menuNote),
-  menuNav,
-  menuAll: () => site.menu.map(menuSection).join("\n"),
+  menuAll,
   menuPreview: () =>
-    site.menu
+    site.menu.surplace
       .filter((c) => ["pizzas", "pates"].includes(c.id))
-      .map((c) => `<article class="card card--menu"><h3>${esc(c.title)}</h3><ul>${c.items.slice(0, 4).map((it) => `<li><strong>${esc(it.name)}</strong> ${esc(it.desc)}</li>`).join("")}</ul></article>`)
+      .map((c) => `<article class="card card--menu"><h3>${esc(c.title)}</h3><ul>${c.items.slice(0, 5).map((it) => `<li><strong>${esc(it.name)}${it.price ? ` <span class="pv">${esc(it.price)}</span>` : ""}</strong> ${esc(it.desc)}</li>`).join("")}</ul></article>`)
       .join(""),
   formulas,
   privIntro: () => esc(site.privatisation.intro),

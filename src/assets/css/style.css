@@ -287,3 +287,10 @@ body{overflow-x:clip}
 @media (prefers-reduced-motion:reduce){.gallery a,.split__img{transform:none!important}}
 html{scroll-padding-top:72px}
 @media (max-width:700px){.menu-nav{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch}.menu-nav a{white-space:nowrap}}
+.menu-tabs{display:flex;gap:0;margin:0 0 18px;border:2px solid var(--ink);border-radius:6px;overflow:hidden;width:fit-content;max-width:100%}
+.menu-tab{padding:12px 26px;font-weight:700;text-decoration:none;color:var(--ink);background:#fff}
+.menu-tab.is-active{background:var(--ink);color:#fff}
+.menu-set__intro{color:var(--muted);margin:0 0 6px}
+.tabs-on .menu-set{display:none}.tabs-on .menu-set.is-open{display:block}
+.menu-set + .menu-set{margin-top:48px}.tabs-on .menu-set + .menu-set{margin-top:0}
+.pv{font-weight:600;color:var(--ochre-light);margin-left:6px}
