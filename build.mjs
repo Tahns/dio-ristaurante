@@ -283,10 +283,14 @@ function menuSection(cat, set) {
       </li>`
     )
     .join("");
+  const compose = cat.id === "pizzas-creme" && site.compose
+    ? `<p class="menu-compose">Une idée précise ? <a href="/commander/#o-compose">Composez votre pizza</a> avec tous les ingrédients de la carte.</p>`
+    : "";
   return `<section class="menu-cat" id="${set}-${esc(cat.id)}">
     <h2>${esc(cat.title)}</h2>
     ${cat.intro ? `<p class="menu-cat__intro">${esc(cat.intro)}</p>` : ""}
     <ul class="menu-list">${items}</ul>
+    ${compose}
   </section>`;
 }
 

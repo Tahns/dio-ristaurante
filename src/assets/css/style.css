@@ -587,3 +587,29 @@ h3{font-weight:600}
 .mapband .map-fallback{min-height:600px;border:0}
 .logo__img{width:56px;height:56px}
 .hero__logo{padding:0;background:none;border-radius:0;width:150px;height:auto}
+
+/* Carte façon menu imprimé */
+.menu-photos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px}
+.menu-photos img{width:100%;height:260px;object-fit:cover;border-radius:2px;display:block}
+@media (max-width:700px){.menu-photos{grid-template-columns:1fr}.menu-photos img{height:200px}}
+.menu-tabs{border:0;border-bottom:2px solid var(--ink);border-radius:0;width:100%;gap:28px;margin-bottom:8px}
+.menu-tab{background:none;padding:10px 0;font:700 1.25rem var(--serif);text-transform:uppercase;letter-spacing:.04em;color:var(--muted);border-bottom:4px solid transparent;margin-bottom:-2px}
+.menu-tab.is-active{background:none;color:var(--ink);border-bottom-color:var(--ochre)}
+.menu-nav{gap:6px 22px;padding:12px 0;border-bottom:1px solid var(--line)}
+.menu-nav a{background:none;padding:4px 0;border-radius:0;font-weight:700;font-size:.92rem;border-bottom:3px solid transparent}
+.menu-nav a:hover{background:none;color:var(--ink);border-bottom-color:var(--ochre)}
+.menu-cat{background:none;border:0;border-top:2px solid var(--ink);border-radius:0;box-shadow:none;padding:0 0 16px;margin-top:40px}
+.menu-cat h2{margin:14px 0 4px;font-size:1.9rem}
+.menu-cat__intro{margin:0 0 8px;font-style:italic}
+.menu-item{padding:11px 0;border-bottom:0}
+.menu-item__head{justify-content:flex-start;gap:0}
+.menu-item h3{display:flex;flex:1;align-items:baseline;min-width:0;font-size:1.08rem}
+.menu-item h3::after{content:"";flex:1;margin:0 8px;border-bottom:2px dotted #a79d86;transform:translateY(-4px);min-width:16px}
+.menu-item__price{font:700 1.1rem var(--sans);font-variant-numeric:tabular-nums;color:var(--ink)}
+.menu-item p{margin:1px 0 0;font-size:.95rem}
+.menu-compose{margin:14px 0 0;padding:12px 14px;border:1px dashed var(--ochre-dark);font-weight:600}
+.menu-compose a{color:var(--ochre-dark)}
+.menu-foot{border:1px solid var(--line);background:#fff}
+.menu-cat{margin:0;padding:34px 0 8px;border-top:0;background:linear-gradient(var(--ink),var(--ink)) 0 34px/100% 2px no-repeat}
+.menu-cat h2{margin-top:14px}
+@media (max-width:979px){.menu-cat{background-position:0 34px}}
