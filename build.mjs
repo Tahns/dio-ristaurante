@@ -697,6 +697,7 @@ function parsePage(file) {
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.cpSync(path.join(SRC, "assets"), path.join(OUT, "assets"), { recursive: true });
 fs.cpSync(path.join(SRC, "admin"), path.join(OUT, "admin"), { recursive: true });
+fs.copyFileSync(path.join(SRC, "assets/img/favicon.ico"), path.join(OUT, "favicon.ico"));
 for (const f of ["assets/css/style.css", "admin/index.html"]) {
   const p = path.join(OUT, f);
   fs.writeFileSync(p, withBase(fs.readFileSync(p, "utf8")));
