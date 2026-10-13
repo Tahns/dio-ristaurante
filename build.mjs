@@ -166,6 +166,36 @@ const hoursPanel = () => {
 </section>`;
 };
 
+const parkingMap = () => `<figure class="parking-map">
+  <svg viewBox="0 0 800 560" role="img" aria-labelledby="pm-t pm-d" xmlns="http://www.w3.org/2000/svg">
+    <title id="pm-t">Plan : où se garer et où entrer chez DIO</title>
+    <desc id="pm-d">Le restaurant est au bord de la rue Émile Zola. L'entrée est sur le côté de la rue. Le parking gratuit est dans la boucle de la rue, juste derrière le restaurant.</desc>
+    <rect width="800" height="560" fill="#f4f1ea"/>
+    <rect x="18" y="0" width="64" height="560" fill="#b4bdca"/><rect x="100" y="0" width="64" height="560" fill="#b4bdca"/>
+    <text x="52" y="300" transform="rotate(-90 52 300)" text-anchor="middle" font-size="17" font-weight="600" fill="#fff" font-family="Inter,system-ui,sans-serif">Bd de l'Ouest</text>
+    <g fill="none" stroke="#b4bdca" stroke-linecap="round">
+      <ellipse cx="600" cy="262" rx="142" ry="166" stroke-width="44"/>
+      <path d="M470 0 C470 70 482 98 508 120" stroke-width="44"/>
+      <path d="M480 400 C430 450 320 450 262 508 L240 560" stroke-width="44"/>
+    </g>
+    <path id="pm-rz" d="M540 112 C620 78 715 125 748 205" fill="none"/>
+    <text font-size="17" font-weight="600" fill="#fff" font-family="Inter,system-ui,sans-serif"><textPath href="#pm-rz" startOffset="10%">Rue Émile Zola</textPath></text>
+    <rect x="510" y="170" width="180" height="184" rx="22" fill="#f0b429" fill-opacity=".22" stroke="#c98a2b" stroke-width="3" stroke-dasharray="9 7"/>
+    <g stroke="#c98a2b" stroke-opacity=".5" stroke-width="3"><path d="M540 190 L520 232 M580 190 L560 232 M620 190 L600 232 M660 190 L640 232"/><path d="M540 312 L520 354 M580 312 L560 354 M620 312 L600 354 M660 312 L640 354"/></g>
+    <rect x="566" y="228" width="68" height="68" rx="14" fill="#1d4f9f"/>
+    <text x="600" y="282" text-anchor="middle" font-size="52" font-weight="800" fill="#fff" font-family="Inter,system-ui,sans-serif">P</text>
+    <text x="600" y="326" text-anchor="middle" font-size="17" font-weight="800" fill="#7a4d0b" font-family="Inter,system-ui,sans-serif">PARKING GRATUIT</text>
+    <path d="M200 270 H320 V400 H200 Z" fill="#f6ecd2" stroke="#d3bf86" stroke-width="3"/>
+    <path d="M268 190 H362 V300 H268 Z" fill="#f6ecd2" stroke="#d3bf86" stroke-width="3"/>
+    <circle cx="258" cy="330" r="17" fill="#d93a2b"/><circle cx="258" cy="330" r="6" fill="#fff"/>
+    <text x="260" y="432" text-anchor="middle" font-size="19" font-weight="800" fill="#161616" font-family="Inter,system-ui,sans-serif">DIO Ristorante</text>
+    <path d="M412 352 H336" stroke="#d93a2b" stroke-width="6" stroke-linecap="round"/><path d="M350 336 L330 352 L350 368" fill="none" stroke="#d93a2b" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="372" y="388" text-anchor="middle" font-size="20" font-weight="800" fill="#d93a2b" font-family="Inter,system-ui,sans-serif">ENTRÉE</text>
+    <text x="16" y="548" font-size="13" fill="#5f5a52" font-family="Inter,system-ui,sans-serif">Plan simplifié, pas à l'échelle</text>
+  </svg>
+  <figcaption>L'entrée est côté rue. Le parking gratuit est dans la boucle de la rue Émile Zola, juste derrière le restaurant.</figcaption>
+</figure>`;
+
 const parkingSteps = () =>
   site.parking.steps?.length ? `<ol class="steps steps--compact">${site.parking.steps.map((t) => `<li>${esc(t)}</li>`).join("")}</ol>` : "";
 
@@ -502,6 +532,7 @@ const tokens = {
   map: mapBlock,
   parking: parkingBlock,
   bookingForm,
+  parkingMap,
   orderApp,
   phoneTel: () => (hasPhone ? phone.tel : ""),
   phoneDisplay: () => (hasPhone ? phone.display : ""),

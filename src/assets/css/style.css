@@ -434,3 +434,7 @@ tr.is-today .today-tag{display:inline-block}
 @media (min-width:901px){.order-bar{display:none!important}}
 .hours div.is-today{font-weight:400}.hours div.is-today dt{font-weight:700}
 .footer .hours dt{white-space:normal}
+
+.parking-map{margin:18px 0 22px;max-width:640px}
+.parking-map svg{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:var(--radius)}
+.parking-map figcaption{margin-top:8px;color:var(--muted);font-size:.92rem}
