@@ -21,13 +21,16 @@ const esc = (s) =>
   String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 const addressLine = [site.address.street, `${site.address.postalCode} ${site.address.city}`].filter(Boolean).join(", ");
-const mapsQuery = `Dio Ristorante ${addressLine}`;
+const mapsQuery = `DIO Ristorante ${addressLine}`;
 const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}`;
 // Lien « laisser un avis » : direct si l'identifiant de la fiche Google est renseigné, sinon la fiche sur Google Maps.
 const reviewUrl = site.googlePlaceId
   ? `https://search.google.com/local/writereview?placeid=${encodeURIComponent(site.googlePlaceId)}`
   : mapsUrl;
 const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(mapsQuery)}&output=embed`;
+const reviewsReadUrl = site.googlePlaceId
+  ? `https://search.google.com/local/reviews?placeid=${encodeURIComponent(site.googlePlaceId)}`
+  : mapsUrl;
 const phone = site.phones.resto;
 const hasPhone = Boolean(phone.tel);
 
@@ -50,24 +53,210 @@ const reserveExtras = () =>
     site.whatsapp ? `<a class="btn btn--dark" href="https://wa.me/${esc(site.whatsapp.replace(/\D/g, ""))}" rel="noopener">Écrire sur WhatsApp</a>` : "",
   ].join("");
 
-// Formulaire de réservation : affiché seulement s'il peut vraiment envoyer quelque chose (service d'envoi ou e-mail).
-// Sinon, grand bloc « appelez pour réserver ».
-const bookingForm = () => {
-  if (site.formEndpoint || site.email) return fs.readFileSync(path.join(SRC, "partials/booking-form.html"), "utf8");
-  return `<div class="call-card">
-      <span class="section__kicker">Réserver</span>
-      <h2>Le plus simple : un coup de fil</h2>
-      <p>Appelez-nous, on vous trouve une table, une commande à emporter ou une date pour votre groupe.</p>
-      ${hasPhone ? `<a class="call-card__num" href="tel:${phone.tel}">${phone.display}</a>` : ""}
-      ${hoursList()}
-      <p class="call-card__note">Le soir, on mange sur place le vendredi et le samedi. Du mardi au jeudi, le soir est à emporter uniquement (jusqu'à 20 h 30). Fermé le dimanche.</p>
-    </div>`;
+// Formulaire de réservation : toujours affiché. L'envoi dépend de la configuration :
+// service d'envoi (formEndpoint), sinon e-mail, sinon récapitulatif à confirmer par téléphone.
+const bookingForm = () =>
+  fs
+    .readFileSync(path.join(SRC, "partials/booking-form.html"), "utf8")
+    .replaceAll("{{formEndpoint}}", esc(site.formEndpoint || ""))
+    .replaceAll("{{emailRaw}}", esc(site.email || ""))
+    .replaceAll("{{slotsJson}}", JSON.stringify(site.hoursSlots || []))
+    .replaceAll("{{phoneTel}}", hasPhone ? phone.tel : "")
+    .replaceAll("{{phoneDisplay}}", hasPhone ? phone.display : "le restaurant");
+
+const parsePrice = (s) => {
+  const m = String(s || "").replace(/\s/g, "").match(/(\d+)(?:[,.](\d{1,2}))?/);
+  return m ? Number(m[1]) * 100 + Number((m[2] || "0").padEnd(2, "0")) : 0;
 };
 
+// Commande à emporter : les plats de la carte « à emporter » avec un compteur, et le panier à côté.
+const composeBlock = () => {
+  const c = site.compose;
+  if (!c) return "";
+  const f = (cents) => (cents / 100).toFixed(2).replace(".", ",").replace(",00", "") + " €";
+  return `<section class="order-cat compose" id="o-compose" data-max="${c.max || 6}">
+      <h2>${esc(c.title)}</h2>
+      <p class="menu-cat__intro">${esc(c.intro)}</p>
+      <fieldset class="compose__step"><legend>1. La base</legend>
+        <div class="compose__bases">${c.bases
+          .map(
+            (bs, i) => `<label class="base"><input type="radio" name="compose-base" value="${esc(bs.name)}" data-price="${parsePrice(bs.price)}"${i === 0 ? " checked" : ""}><span><strong>${esc(bs.name)}</strong><small>${esc(bs.desc)}</small><em>${esc(bs.price)}</em></span></label>`
+          )
+          .join("")}</div>
+      </fieldset>
+      <fieldset class="compose__step"><legend>2. Vos ingrédients <span class="compose__count">(0 sur ${c.max || 6})</span></legend>
+        ${c.groups
+          .map(
+            (g) => `<p class="compose__group">${esc(g.name)}</p><div class="compose__chips">${g.items
+              .map((it) => `<label class="chip"><input type="checkbox" name="compose-ing" value="${esc(it.name)}" data-price="${parsePrice(it.price)}"><span>${esc(it.name)} <small>${parsePrice(it.price) ? "+" + f(parsePrice(it.price)) : "offert"}</small></span></label>`)
+              .join("")}</div>`
+          )
+          .join("")}
+      </fieldset>
+      <p class="compose__total">Votre pizza : <strong data-compose-total>${f(parsePrice(c.bases[0].price))}</strong></p>
+      <p><button type="button" class="btn btn--primary" data-compose-add>Ajouter ma pizza au panier</button> <span class="compose__ok" role="status" aria-live="polite"></span></p>
+      <p class="compose__note">${esc(c.note || "")}</p>
+    </section>`;
+};
+
+const orderInfo = () => {
+  const cc = site.clickCollect || {};
+  const rows = (site.hoursGrid || [])
+    .map((h) => {
+      const parts = [h.midi, h.soir].filter(Boolean).map((r) => esc(fmtR(r).replace(/ – /g, "–")));
+      return `<li><span>${esc(h.day)}</span><strong>${parts.length ? parts.join(" / ") : "Fermé"}</strong></li>`;
+    })
+    .join("");
+  return `<section class="cc" aria-labelledby="cc-title">
+  <div class="cc__head">
+    <svg viewBox="0 0 24 24" width="44" height="44" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M12 3v5M12 21v-5M3 12h5M21 12h-5M9 6l3 3 3-3M9 18l3-3 3 3M6 9l3 3-3 3M18 9l-3 3 3 3"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg>
+    <div><h2 id="cc-title">Retrait à emporter</h2>${cc.minimum ? `<p>Minimum de ${esc(cc.minimum)} d'achat</p>` : ""}</div>
+    ${cc.prepMinutes ? `<p class="cc__time"><strong>${cc.prepMinutes} min</strong><span>à l'avance</span></p>` : ""}
+  </div>
+  <p class="cc__lead">Les commandes se préparent et se retirent uniquement pendant ces horaires :</p>
+  <ul class="cc__hours">${rows}</ul>
+  <p class="cc__lead">à l'adresse suivante :</p>
+  <p class="cc__addr"><a href="${mapsUrl}" rel="noopener">${esc(site.name)}, ${esc(addressLine)}</a></p>
+  ${cc.note ? `<p class="cc__note">${esc(cc.note)}</p>` : ""}
+</section>`;
+};
+
+const orderApp = () => {
+  const cats = (site.menu.emporter || []).map((c) => ({ ...c, items: c.items.filter((it) => parsePrice(it.price) > 0) })).filter((c) => c.items.length);
+  const lastPizza = cats.map((c) => c.id).filter((id) => id.startsWith("pizzas")).pop();
+  const nav = cats
+    .map((c) => `<a href="#o-${esc(c.id)}">${esc(c.title)}</a>` + (site.compose && c.id === lastPizza ? `<a href="#o-compose">Composer ma pizza</a>` : ""))
+    .join("");
+  const sections = cats
+    .map(
+      (c) => `<section class="order-cat" id="o-${esc(c.id)}">
+      <h2>${esc(c.title)}</h2>
+      ${c.intro ? `<p class="menu-cat__intro">${esc(c.intro)}</p>` : ""}
+      <ul class="order-list">${c.items
+        .map(
+          (it, i) => `<li class="order-item" data-id="${esc(c.id)}-${i}" data-name="${esc(it.name)}" data-price="${parsePrice(it.price)}">
+        <div class="order-item__info"><h3>${esc(it.name)}</h3>${it.desc ? `<p>${esc(it.desc)}</p>` : ""}<span class="order-item__price">${esc(it.price)}</span></div>
+        <div class="qty"><button type="button" data-act="minus" aria-label="Retirer : ${esc(it.name)}" hidden>−</button><output aria-live="polite" hidden>0</output><button type="button" data-act="plus" class="qty__add" aria-label="Ajouter : ${esc(it.name)}">+</button></div>
+      </li>`
+        )
+        .join("")}</ul>
+    </section>` + (site.compose && c.id === lastPizza ? composeBlock() : "")
+    )
+    .join("");
+  return `<div class="order" id="order" data-endpoint="${esc(site.formEndpoint)}" data-email="${esc(site.email)}" data-min="${parsePrice(site.clickCollect?.minimum)}" data-lead="${site.clickCollect?.prepMinutes || 30}" data-slots='${JSON.stringify(site.hoursSlots || [])}' data-tel="${hasPhone ? phone.tel : ""}" data-phone="${hasPhone ? phone.display : ""}">
+  <div class="order__menu">
+    <nav class="menu-nav" aria-label="Rubriques de la carte à emporter">${nav}</nav>
+    ${sections}
+  </div>
+  <aside class="order__cart" id="cart" aria-label="Votre commande">
+    <div class="order__panel">
+      <h2>Votre commande</h2>
+      <p class="cart-empty">Votre panier est vide. Ajoutez des plats avec le bouton +.</p>
+      <ul class="cart-lines"></ul>
+      <p class="cart-total" hidden><span>Total</span><strong>0 €</strong></p>
+      ${site.clickCollect?.minimum ? `<p class="cart-min" hidden>Minimum de commande : ${esc(site.clickCollect.minimum)}</p>` : ""}
+      <form id="order-form" class="order-form" novalidate>
+        <div class="field">
+          <span class="label" id="o-date-label">Jour de retrait</span>
+          <div class="cal" id="o-cal" aria-labelledby="o-date-label"></div>
+          <input type="hidden" id="o-date" name="date">
+          <p class="field__hint" id="o-date-picked" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="o-heure">Heure de retrait</label>
+          <select id="o-heure" name="heure" required disabled><option value="">Choisissez d'abord un jour</option></select>
+          <p class="slots__hint" id="o-heure-hint"></p>
+        </div>
+        <div class="field"><label for="o-nom">Votre nom</label><input id="o-nom" name="nom" autocomplete="name" required></div>
+        <div class="field"><label for="o-tel">Téléphone</label><input id="o-tel" name="telephone" type="tel" autocomplete="tel" required></div>
+        <div class="field"><label for="o-msg">Une remarque ? (allergie, sans oignons…)</label><textarea id="o-msg" name="message" rows="3"></textarea></div>
+        <p class="cancel-note"><strong>Un empêchement ?</strong> Prévenez-nous au ${hasPhone ? phone.display : "restaurant"} dès que possible si vous ne pouvez plus venir chercher votre commande.</p>
+        <label class="field field--check"><input type="checkbox" name="annulation" required><span>Je préviendrai le restaurant si je dois annuler ma commande. Je paie sur place au retrait.</span></label>
+        <button class="btn btn--primary btn--lg" type="submit">Valider ma commande</button>
+        <p class="form__status" role="status" aria-live="polite"></p>
+        <p class="form__note">Retrait au ${esc(addressLine)}, parking gratuit à côté du restaurant. Commande à passer au moins 30 minutes à l'avance. Elle est confirmée une fois validée par le restaurant.</p>
+      </form>
+    </div>
+  </aside>
+  <div class="recap" id="order-recap" hidden></div>
+  <a class="order-bar" href="#cart" hidden><span class="order-bar__count">0</span> <span>Voir ma commande</span> <strong class="order-bar__total">0 €</strong></a>
+</div>`;
+};
+
+const fmtT = (t) => t.replace(/^0/, "").replace(/:00$/, " h").replace(":", " h ");
+const fmtR = (r) => (r ? r.split("–").map(fmtT).join(" – ") : "");
+const modeLabel = (m) => (m === "emporter" ? "À emporter uniquement" : m === "surplace" ? "Sur place et à emporter" : "");
 const hoursList = () =>
-  site.hoursTable?.length
-    ? `<dl class="hours">${site.hoursTable.map((h) => `<div><dt>${esc(h.day)}</dt><dd>${esc(h.hours)}</dd></div>`).join("")}</dl>`
+  site.hoursGrid?.length
+    ? `<table class="hours-mini"><caption class="sr-only">Horaires d'ouverture</caption><thead><tr><th scope="col">Jour</th><th scope="col">Midi</th><th scope="col">Soir</th></tr></thead><tbody>${site.hoursGrid
+        .map((h) => {
+          const mid = h.midi ? esc(fmtR(h.midi).replace(/ – /g, "–")) : "Fermé";
+          const soir = h.soir ? `${esc(fmtR(h.soir).replace(/ – /g, "–"))}${h.soirMode === "emporter" ? "<small>à emporter</small>" : ""}` : "Fermé";
+          return `<tr data-dow="${h.dow}"><th scope="row">${esc(h.day)}</th><td>${mid}</td><td>${soir}</td></tr>`;
+        })
+        .join("")}</tbody></table>`
     : "";
+
+const hoursPanel = () => {
+  const rows = (site.hoursGrid || [])
+    .map((h) => {
+      const mid = h.midi ? `<td>${esc(fmtR(h.midi))}</td>` : `<td class="is-closed">Fermé</td>`;
+      const soir = h.soir
+        ? `<td>${esc(fmtR(h.soir))}<small class="mode mode--${h.soirMode}">${esc(modeLabel(h.soirMode))}</small></td>`
+        : `<td class="is-closed">Fermé</td>`;
+      return `<tr data-dow="${h.dow}"><th scope="row">${esc(h.day)}<span class="today-tag">Aujourd'hui</span></th>${mid}${soir}</tr>`;
+    })
+    .join("");
+  return `<section class="section section--cream hours-band" id="horaires">
+  <div class="container hours-band__inner">
+    <div>
+      <span class="section__kicker">Quand venir</span>
+      <h2>Horaires</h2>
+      <p class="open-now" data-open-now data-slots="${esc(JSON.stringify(site.hoursSlots || []))}" aria-live="polite"></p>
+      <ul class="hours-legend"><li><strong>Midi</strong> : du lundi au samedi.</li><li><strong>Soir sur place</strong> : le vendredi et le samedi.</li><li><strong>Soir à emporter</strong> : du mardi au jeudi, on prépare votre commande.</li><li><strong>Dimanche</strong> : fermé.</li></ul>
+      <p><a class="btn btn--primary" href="/reservation/">Réserver une table</a> ${hasPhone ? `<a class="btn btn--dark" href="tel:${phone.tel}">Appeler le ${phone.display}</a>` : ""}</p>
+    </div>
+    <table class="hours-table">
+      <caption class="sr-only">Horaires d'ouverture</caption>
+      <thead><tr><th scope="col">Jour</th><th scope="col">Midi</th><th scope="col">Soir</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  </div>
+</section>`;
+};
+
+const parkingMap = () => `<figure class="parking-map">
+  <svg viewBox="0 0 800 560" role="img" aria-labelledby="pm-t pm-d" xmlns="http://www.w3.org/2000/svg">
+    <title id="pm-t">Plan : où se garer et où entrer chez DIO</title>
+    <desc id="pm-d">Le restaurant est au bord de la rue Émile Zola. L'entrée du restaurant donne sur le parking gratuit, dans la boucle de la rue Émile Zola.</desc>
+    <rect width="800" height="560" fill="#f4f1ea"/>
+    <rect x="18" y="0" width="64" height="560" fill="#b4bdca"/><rect x="100" y="0" width="64" height="560" fill="#b4bdca"/>
+    <text x="52" y="300" transform="rotate(-90 52 300)" text-anchor="middle" font-size="17" font-weight="600" fill="#fff" font-family="Inter,system-ui,sans-serif">Bd de l'Ouest</text>
+    <g fill="none" stroke="#b4bdca" stroke-linecap="round">
+      <ellipse cx="600" cy="262" rx="142" ry="166" stroke-width="44"/>
+      <path d="M470 0 C470 70 482 98 508 120" stroke-width="44"/>
+      <path d="M480 400 C430 450 320 450 262 508 L240 560" stroke-width="44"/>
+    </g>
+    <path id="pm-rz" d="M540 112 C620 78 715 125 748 205" fill="none"/>
+    <text font-size="17" font-weight="600" fill="#fff" font-family="Inter,system-ui,sans-serif"><textPath href="#pm-rz" startOffset="10%">Rue Émile Zola</textPath></text>
+    <rect x="510" y="170" width="180" height="184" rx="22" fill="#f0b429" fill-opacity=".22" stroke="#c98a2b" stroke-width="3" stroke-dasharray="9 7"/>
+    <g stroke="#c98a2b" stroke-opacity=".5" stroke-width="3"><path d="M540 190 L520 232 M580 190 L560 232 M620 190 L600 232 M660 190 L640 232"/><path d="M540 312 L520 354 M580 312 L560 354 M620 312 L600 354 M660 312 L640 354"/></g>
+    <rect x="566" y="228" width="68" height="68" rx="14" fill="#1d4f9f"/>
+    <text x="600" y="282" text-anchor="middle" font-size="52" font-weight="800" fill="#fff" font-family="Inter,system-ui,sans-serif">P</text>
+    <text x="600" y="326" text-anchor="middle" font-size="17" font-weight="800" fill="#7a4d0b" font-family="Inter,system-ui,sans-serif">PARKING GRATUIT</text>
+    <path d="M200 270 H320 V400 H200 Z" fill="#f6ecd2" stroke="#d3bf86" stroke-width="3"/>
+    <path d="M268 190 H362 V300 H268 Z" fill="#f6ecd2" stroke="#d3bf86" stroke-width="3"/>
+    <circle cx="258" cy="330" r="17" fill="#d93a2b"/><circle cx="258" cy="330" r="6" fill="#fff"/>
+    <text x="260" y="432" text-anchor="middle" font-size="19" font-weight="800" fill="#161616" font-family="Inter,system-ui,sans-serif">DIO Ristorante</text>
+    <path d="M412 352 H336" stroke="#d93a2b" stroke-width="6" stroke-linecap="round"/><path d="M350 336 L330 352 L350 368" fill="none" stroke="#d93a2b" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="372" y="388" text-anchor="middle" font-size="20" font-weight="800" fill="#d93a2b" font-family="Inter,system-ui,sans-serif">ENTRÉE</text>
+    <text x="16" y="548" font-size="13" fill="#5f5a52" font-family="Inter,system-ui,sans-serif">Plan simplifié, pas à l'échelle</text>
+  </svg>
+  <figcaption>Le parking gratuit est dans la boucle de la rue Émile Zola, juste à côté du restaurant, en face de l'entrée.</figcaption>
+</figure>`;
+
+const mapFull = () =>
+  `<iframe class="mapband__frame" src="${esc(mapEmbedUrl)}" title="DIO Ristorante sur Google Maps" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>`;
 
 const parkingSteps = () =>
   site.parking.steps?.length ? `<ol class="steps steps--compact">${site.parking.steps.map((t) => `<li>${esc(t)}</li>`).join("")}</ol>` : "";
@@ -119,8 +308,8 @@ const formulas = () =>
     .join("")}</div>`;
 
 const ctaBand = (
-  title = "Une table chez Dio ?",
-  text = "Remplissez le formulaire, on vous recontacte pour confirmer."
+  title = "Une table chez DIO ?",
+  text = "Un coup de fil suffit, on vous trouve une table."
 ) => `
 <section class="cta-band">
   <div class="container cta-band__inner">
@@ -175,23 +364,36 @@ const logoImg = clientLogo
   : `<img class="logo__img" src="/assets/img/logo.svg" alt="" width="60" height="50">`;
 
 // Avis : note affichée seulement si elle est renseignée ; l'invitation à laisser un avis est toujours là.
+const hasExamples = () => (site.reviews?.items || []).some((it) => it.example);
+const ratingBadge = () => {
+  const r = site.reviews?.rating;
+  if (!r) return "";
+  const n = Number(String(r).replace(",", "."));
+  return `<a class="rating-badge" href="#avis" aria-label="Note Google : ${esc(r)} sur 5">
+    <span class="stars-bar" style="--r:${n}" aria-hidden="true">★★★★★</span>
+    <strong>${esc(r)}/5</strong> <span>sur Google</span>
+  </a>`;
+};
+
+// Avis : la note est affichée dès qu'elle est renseignée ; les avis marqués « example » sont des exemples, jamais présentés comme réels.
 function reviewsSection() {
   const r = site.reviews || {};
   const cards = (r.items || [])
-    .slice(0, 6)
+    .slice(0, 8)
     .map(
       (it) => `<figure class="quote">
-        <p class="quote__stars" role="img" aria-label="${esc(it.rating)} sur 5">${"★".repeat(Math.round(Number(it.rating) || 5))}</p>
+        <p class="quote__stars stars-bar" style="--r:${Number(it.rating) || 5}" role="img" aria-label="${esc(it.rating)} sur 5">★★★★★</p>
         <blockquote><p>${esc(it.text)}</p></blockquote>
-        <figcaption>${esc(it.author)}${it.date ? ` · ${esc(it.date)}` : ""} · Avis ${esc(r.source || "Google")}</figcaption>
+        <figcaption>${esc(it.author)}${it.date ? ` · ${esc(it.date)}` : ""} · ${it.example ? `<span class="tag-example">Exemple d'avis</span>` : `Avis ${esc(r.source || "Google")}`}</figcaption>
       </figure>`
     )
     .join("");
+  const n = Number(String(r.rating || "").replace(",", "."));
   const rating = r.rating
-    ? `<a class="rating" href="${mapsUrl}" rel="noopener">
+    ? `<a class="rating rating--big" href="${reviewsReadUrl}" rel="noopener">
         <strong>${esc(r.rating)}<span>/5</span></strong>
-        <span class="rating__stars" aria-hidden="true">★★★★★</span>
-        <span>${r.count ? esc(r.count) + " avis " : "Avis "}${esc(r.source || "Google")}</span>
+        <span class="stars-bar rating__stars" style="--r:${n}" aria-hidden="true">★★★★★</span>
+        <span>${r.count ? esc(r.count) + " avis " : "Note "}${esc(r.source || "Google")}</span>
       </a>`
     : "";
   return `<section class="section section--cream" id="avis">
@@ -203,13 +405,14 @@ function reviewsSection() {
       </div>
       ${rating}
     </div>
-    ${cards ? `<div class="grid grid--3">${cards}</div>` : ""}
+    ${cards ? `<div class="grid grid--2">${cards}</div>` : ""}
+    ${hasExamples() ? `<p class="reviews-example-note">Les avis ci-dessus sont des exemples pour la maquette. Ils seront remplacés par les vrais avis Google.</p>` : ""}
     <div class="review-ask">
       <div>
-        <h3>Un bon moment chez Dio ?</h3>
+        <h3>Un bon moment chez DIO ?</h3>
         <p>Un avis Google prend trente secondes et aide les autres à nous trouver.</p>
       </div>
-      <a class="btn btn--primary" href="${reviewUrl}" rel="noopener">Laisser un avis</a>
+      <p class="review-ask__actions"><a class="btn btn--primary" href="${reviewUrl}" rel="noopener">Laisser un avis</a> <a class="btn btn--light" href="${reviewsReadUrl}" rel="noopener">Lire les avis</a></p>
     </div>
   </div>
 </section>`;
@@ -218,25 +421,23 @@ function reviewsSection() {
 const shareBlock = () => `<section class="section section--dark share" id="partager">
   <div class="container share__inner">
     <div>
-      <span class="section__kicker">Passez le mot</span>
-      <h2>Un bon repas ? Passez le mot</h2>
+      <span class="section__kicker">Partager</span>
+      <h2>Vous avez aimé ? Dites-le autour de vous</h2>
       <p>Dites-le à un ami ou à un collègue : c'est ce qui nous fait le plus plaisir.</p>
     </div>
     <div class="share__actions">
-      <button class="btn btn--primary" type="button" data-share data-title="Dio Ristorante" data-text="Pizzas-d'Ascq, parking gratuit derrière le restaurant. Je recommande !">Recommander Dio</button>
+      <button class="btn btn--primary" type="button" data-share data-title="DIO Ristorante" data-text="Pizzas à Villeneuve-d'Ascq, parking gratuit à côté du restaurant. Je recommande !">Recommander DIO</button>
       <a class="btn btn--light" href="${reviewUrl}" rel="noopener">Laisser un avis</a>
     </div>
   </div>
 </section>`;
 
-const mapBlock = () => `<!--map--><div class="map-embed" data-src="${esc(mapEmbedUrl)}">
-  <div class="map-embed__placeholder">
-    <p>La carte est fournie par Google Maps. En l'affichant, vous acceptez que Google dépose des cookies.</p>
-    <p class="map-embed__actions">
-      <button class="btn btn--dark" type="button">Afficher la carte</button>
-      <a class="btn btn--ghost" href="${mapsUrl}" rel="noopener">Ouvrir dans Google Maps</a>
-    </p>
-  </div>
+const mapBlock = () => `<!--map--><div class="map-embed">
+  <iframe src="${esc(mapEmbedUrl)}" title="DIO Ristorante sur Google Maps : emplacement, note et avis" width="600" height="420" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+  <p class="map-embed__actions">
+    <a class="btn btn--dark" href="${mapsUrl}" rel="noopener">Itinéraire</a>
+    <a class="btn btn--ghost" href="${reviewsReadUrl}" rel="noopener">Lire les avis sur Google</a>
+  </p>
 </div><!--/map-->`;
 const heroPhoto =
   site.images?.hero || (fs.existsSync(path.join(SRC, "assets/photos/hero.jpg")) ? "/assets/photos/hero.jpg" : "");
@@ -368,7 +569,7 @@ const newsCard = (n, lvl = 3) => `<a class="news-card" href="/actualites/${n.slu
 // Description de page toujours assez longue, même si l'article est très court.
 function newsDescription(n) {
   const text = `${n.summary} ${n.html.replace(/<[^>]+>/g, " ")}`.replace(/\s+/g, " ").trim();
-  const d = text.length >= 60 ? text : `${n.title}. ${text} Actualité de Dio Ristorante, Villeneuve-d'Ascq.`;
+  const d = text.length >= 60 ? text : `${n.title}. ${text} Actualité de DIO Ristorante, Villeneuve-d'Ascq.`;
   return d.length > 155 ? d.slice(0, 152).trimEnd() + "…" : d;
 }
 
@@ -378,7 +579,7 @@ function newsSection() {
   <div class="container">
     <div class="section__head">
       <span class="section__kicker">Actualités</span>
-      <h2>Les dernières nouvelles de Dio</h2>
+      <h2>Les dernières nouvelles de DIO</h2>
     </div>
     <div class="grid grid--3">${news.slice(0, 3).map(newsCard).join("")}</div>
     <p class="reviews-more"><a class="btn btn--dark" href="/actualites/">Toutes les actualités</a></p>
@@ -393,13 +594,22 @@ const tokens = {
   map: mapBlock,
   parking: parkingBlock,
   bookingForm,
+  parkingMap,
+  mapFull,
+  orderApp,
+  orderInfo,
+  phoneTel: () => (hasPhone ? phone.tel : ""),
+  phoneDisplay: () => (hasPhone ? phone.display : ""),
   promoBar,
   reserveExtras,
   hoursList,
+  hoursPanel,
+  slotsJson: () => JSON.stringify(site.hoursSlots || []),
   parkingSteps,
   reviewUrl: () => reviewUrl,
   orderDirect: () => esc(site.orderDirect || ""),
   reviewsSection,
+  ratingBadge,
   shareBlock,
   year: () => String(new Date().getFullYear()),
   email: () => (site.email ? `<a href="mailto:${site.email}">${site.email}</a>` : ""),
@@ -532,8 +742,8 @@ for (const file of fs.readdirSync(path.join(SRC, "pages")).sort()) {
 // Actualités : une page de liste + une page par article
 writePage(
   {
-    title: "Actualités – Dio Ristorante",
-    description: "Les nouveautés de Dio Ristorante à Villeneuve-d'Ascq : plats du moment, soirées, événements et infos pratiques.",
+    title: "Actualités – DIO Ristorante",
+    description: "Les nouveautés de DIO Ristorante à Villeneuve-d'Ascq : plats du moment, soirées, événements et infos pratiques.",
     nav: "actualites",
   },
   `<section class="page-hero"><div class="container"><h1>Actualités</h1><p>Plats du moment, soirées et nouveautés de la maison.</p></div></section>
@@ -549,7 +759,7 @@ writePage(
 for (const n of news) {
   writePage(
     {
-      title: `${n.title} – Dio Ristorante`,
+      title: `${n.title} – DIO Ristorante`,
       description: newsDescription(n),
       nav: "actualites",
     },

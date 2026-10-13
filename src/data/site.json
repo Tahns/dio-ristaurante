@@ -1,21 +1,21 @@
 {
-  "name": "Dio Ristorante",
+  "name": "DIO Ristorante",
   "baseUrl": "https://www.dioristaurante.com",
-  "tagline": "Pizzas au four à bois, rigatoni et desserts maison à Villeneuve-d'Ascq",
+  "tagline": "Pizzas au four à bois, pâtes, risottos et desserts maison à Villeneuve-d'Ascq",
   "address": {
-    "street": "21 Rue Emile Zola",
+    "street": "21 Rue Émile Zola",
     "postalCode": "59650",
     "city": "Villeneuve-d'Ascq",
     "region": "Hauts-de-France",
     "country": "FR"
   },
   "parking": {
-    "title": "Parking gratuit derrière le restaurant",
-    "text": "Le parking est gratuit et il est juste derrière le restaurant. Garez-vous, vous êtes arrivés.",
+    "title": "Parking gratuit à côté du restaurant",
+    "text": "Le parking est gratuit et il est juste à côté du restaurant, en face de l'entrée. Garez-vous, vous êtes arrivés.",
     "detail": "",
     "steps": [
       "Arrivez devant le restaurant.",
-      "Le parking gratuit est juste derrière.",
+      "Le parking gratuit est juste à côté, en face de l'entrée.",
       "Garez-vous et entrez : on vous attend."
     ]
   },
@@ -32,7 +32,7 @@
     "instagram": "",
     "tiktok": ""
   },
-  "hours": "Midi lun–sam · soir mar–sam",
+  "hours": "Midi lun–sam · soir sur place ven–sam, à emporter mar–jeu",
   "hoursTable": [
     {
       "day": "Lundi",
@@ -59,18 +59,258 @@
     "10–20 € par personne"
   ],
   "formEndpoint": "",
-  "menuNote": "Les prix sont ceux du restaurant. Les prix à emporter sont différents des prix sur place.",
+  "menuNote": "Les prix sont ceux du restaurant. Les prix à emporter sont différents des prix sur place. Les grands classiques sont en premier.",
   "menu": {
     "surplace": [
+      {
+        "id": "pizzas",
+        "title": "Pizzas sauce tomate",
+        "intro": "Cuites au four à bois.",
+        "items": [
+          {
+            "name": "Regina",
+            "desc": "Jambon, mozzarella.",
+            "price": "11,90 €"
+          },
+          {
+            "name": "4 fromaggi",
+            "desc": "Gorgonzola, chèvre, mozzarella, grana.",
+            "price": "12,90 €"
+          },
+          {
+            "name": "Napolitaine",
+            "desc": "Mozzarella, olives, origan, anchois.",
+            "price": "12,90 €"
+          },
+          {
+            "name": "4 saisons",
+            "desc": "Mozzarella, jambon, champignons, artichaut.",
+            "price": "12,50 €"
+          },
+          {
+            "name": "Hawaïenne",
+            "desc": "Mozzarella, jambon, ananas.",
+            "price": "11,90 €"
+          },
+          {
+            "name": "Calzone",
+            "desc": "Mozzarella, jambon, champignons et œuf.",
+            "price": "12,90 €"
+          },
+          {
+            "name": "Amateurs de viande",
+            "desc": "Jambon, poulet, chorizo, merguez, viande hachée, jambon cru.",
+            "price": "16 €"
+          },
+          {
+            "name": "Amateurs de légumes",
+            "desc": "Mozzarella, tomate, courgette, aubergine, champignons, ail, olives, grana.",
+            "price": "14,50 €"
+          },
+          {
+            "name": "Burger",
+            "desc": "Steak, oignons frits, sauce barbecue, tomates, mozzarella.",
+            "price": "15 €"
+          },
+          {
+            "name": "Venezianna",
+            "desc": "Jambon, champignons.",
+            "price": "11,90 €"
+          },
+          {
+            "name": "Norvégienne",
+            "desc": "Mozzarella, thon, tomates.",
+            "price": "11,50 €"
+          },
+          {
+            "name": "Maroilles",
+            "desc": "Tomates, mozzarella, poulet, maroilles.",
+            "price": "13,50 €"
+          },
+          {
+            "name": "Valencia",
+            "desc": "Mozzarella, chorizo ou pepperoni.",
+            "price": "11,90 €"
+          },
+          {
+            "name": "Oranaise",
+            "desc": "Mozzarella, merguez.",
+            "price": "11,50 €"
+          },
+          {
+            "name": "Al crudo",
+            "desc": "Mozzarella, jambon, champignons et œuf.",
+            "price": "13 €"
+          }
+        ]
+      },
+      {
+        "id": "pizzas-creme",
+        "title": "Pizzas crème fraîche",
+        "intro": "Cuites au four à bois.",
+        "items": [
+          {
+            "name": "Tartiflette",
+            "desc": "Mozzarella, pommes de terre, lardons, jambon cru, reblochon.",
+            "price": "13,50 €"
+          },
+          {
+            "name": "Kebab",
+            "desc": "Viande kebab poulet et veau, salade, tomates, oignons, sauce barbecue.",
+            "price": "12,90 €"
+          },
+          {
+            "name": "Tilio",
+            "desc": "Mozzarella, gorgonzola, chèvre, grana.",
+            "price": "13 €"
+          },
+          {
+            "name": "Juventine",
+            "desc": "Mozzarella, jambon, chorizo, poivron, œuf.",
+            "price": "13,50 €"
+          },
+          {
+            "name": "Mattia",
+            "desc": "Mozzarella, poulet, poivrons, oignons, œuf, olives.",
+            "price": "13,50 €"
+          },
+          {
+            "name": "Lombarde",
+            "desc": "Ail, mozzarella, roquette, mortadelle, parmesan, tomate.",
+            "price": ""
+          }
+        ]
+      },
+      {
+        "id": "pates",
+        "title": "Pâtes",
+        "intro": "Gratinées au four pour 1 € de plus.",
+        "items": [
+          {
+            "name": "Carbonara",
+            "desc": "Crème fraîche, lardons, grana.",
+            "price": "12,90 €"
+          },
+          {
+            "name": "3 fromages",
+            "desc": "Crème fraîche, gorgonzola, chèvre et grana.",
+            "price": "12,90 €"
+          },
+          {
+            "name": "Pesto",
+            "desc": "Crème fraîche, pesto, grana.",
+            "price": "11,90 €"
+          },
+          {
+            "name": "Boscaiola",
+            "desc": "Jambon cru, champignons, gorgonzola, crème, épinards.",
+            "price": "13,90 €"
+          },
+          {
+            "name": "Fruits de mer",
+            "desc": "Sauce tomate, ail, huile d'olive, fruits de mer.",
+            "price": "13,90 €"
+          },
+          {
+            "name": "Saumon",
+            "desc": "Crème fraîche, grana.",
+            "price": "13,90 €"
+          },
+          {
+            "name": "Verdure",
+            "desc": "Assortiment de légumes, sauce tomate.",
+            "price": "13,90 €"
+          },
+          {
+            "name": "Chorizo gorgonzola",
+            "desc": "Crème fraîche, chorizo, gorgonzola.",
+            "price": "13,90 €"
+          },
+          {
+            "name": "Poulet",
+            "desc": "Crème fraîche, poulet, champignons.",
+            "price": "13,90 €"
+          },
+          {
+            "name": "Truffe",
+            "desc": "Crème fraîche, truffe, coppa, parmesan.",
+            "price": "15 €"
+          },
+          {
+            "name": "Scampi",
+            "desc": "Sauce napolitaine, crème fraîche.",
+            "price": "14,50 €"
+          },
+          {
+            "name": "DIO",
+            "desc": "Crème fraîche, jambon, champignons.",
+            "price": "13,90 €"
+          }
+        ]
+      },
+      {
+        "id": "specialites",
+        "title": "Spécialités",
+        "intro": "Pour les grosses faims.",
+        "items": [
+          {
+            "name": "Escalope de poulet milanaise",
+            "desc": "",
+            "price": "15 €"
+          },
+          {
+            "name": "Gratin de pâtes Tristan",
+            "desc": "Chorizo, poulet, lardons, jambon cru, viande hachée, merguez, mozzarella.",
+            "price": "15,90 €"
+          },
+          {
+            "name": "Escalope gratinée",
+            "desc": "Escalope, jambon cru, gorgonzola.",
+            "price": "17 €"
+          },
+          {
+            "name": "Onglet de bœuf rôti à l'ail",
+            "desc": "",
+            "price": "15,90 €"
+          },
+          {
+            "name": "Sauté de bœuf à la sicilienne",
+            "desc": "Olives noires, champignons, oignons, poivrons verts, tomate, courgette, aubergine, ail.",
+            "price": "16 €"
+          }
+        ]
+      },
+      {
+        "id": "risottos",
+        "title": "Risottos",
+        "intro": "",
+        "items": [
+          {
+            "name": "Poulet champignons",
+            "desc": "",
+            "price": "15 €"
+          },
+          {
+            "name": "Chorizo gorgonzola",
+            "desc": "",
+            "price": "15 €"
+          },
+          {
+            "name": "Verdure",
+            "desc": "Légumes de saison, parmesan.",
+            "price": "15 €"
+          }
+        ]
+      },
       {
         "id": "entrees",
         "title": "Entrées",
         "intro": "À partager au milieu de la table.",
         "items": [
           {
-            "name": "Planche de charcuterie",
-            "desc": "Assortiment de charcuterie italienne, pain à l'ail.",
-            "price": "12 €"
+            "name": "Burrata",
+            "desc": "Tomate cerise, roquette, parmesan et pain.",
+            "price": "10 €"
           },
           {
             "name": "Planche mixte italienne",
@@ -78,24 +318,24 @@
             "price": "18 €"
           },
           {
-            "name": "Jambon speck",
-            "desc": "Accompagné de salade, pain à l'ail.",
-            "price": "9 €"
-          },
-          {
-            "name": "Burrata",
-            "desc": "Tomate cerise, roquette, parmesan et pain.",
-            "price": "10 €"
-          },
-          {
-            "name": "Assiette de saumon",
-            "desc": "Salade, saumon, pain à l'ail.",
-            "price": "11 €"
+            "name": "Planche de charcuterie",
+            "desc": "Assortiment de charcuterie italienne, pain à l'ail.",
+            "price": "12 €"
           },
           {
             "name": "Pain à l'ail maison",
             "desc": "",
             "price": "3 €"
+          },
+          {
+            "name": "Jambon speck",
+            "desc": "Accompagné de salade, pain à l'ail.",
+            "price": "9 €"
+          },
+          {
+            "name": "Assiette de saumon",
+            "desc": "Salade, saumon, pain à l'ail.",
+            "price": "11 €"
           }
         ]
       },
@@ -118,127 +358,6 @@
             "name": "Océanne",
             "desc": "Thon, saumon fumé, légumes.",
             "price": "16 €"
-          }
-        ]
-      },
-      {
-        "id": "risottos",
-        "title": "Risottos",
-        "intro": "",
-        "items": [
-          {
-            "name": "Chorizo gorgonzola",
-            "desc": "",
-            "price": "15 €"
-          },
-          {
-            "name": "Verdure",
-            "desc": "Légumes de saison, parmesan.",
-            "price": "15 €"
-          },
-          {
-            "name": "Poulet champignons",
-            "desc": "",
-            "price": "15 €"
-          }
-        ]
-      },
-      {
-        "id": "specialites",
-        "title": "Spécialités",
-        "intro": "Pour les grosses faims.",
-        "items": [
-          {
-            "name": "Escalope de poulet milanaise",
-            "desc": "",
-            "price": "15 €"
-          },
-          {
-            "name": "Escalope gratinée",
-            "desc": "Escalope, jambon cru, gorgonzola.",
-            "price": "17 €"
-          },
-          {
-            "name": "Gratin de pâtes Tristan",
-            "desc": "Chorizo, poulet, lardons, jambon cru, viande hachée, merguez, mozzarella.",
-            "price": "15,90 €"
-          },
-          {
-            "name": "Onglet de bœuf rôti à l'ail",
-            "desc": "",
-            "price": "15,90 €"
-          },
-          {
-            "name": "Sauté de bœuf à la sicilienne",
-            "desc": "Olives noires, champignons, oignons, poivrons verts, tomate, courgette, aubergine, ail.",
-            "price": "16 €"
-          }
-        ]
-      },
-      {
-        "id": "pates",
-        "title": "Pâtes",
-        "intro": "Gratinées au four pour 1 € de plus.",
-        "items": [
-          {
-            "name": "Verdure",
-            "desc": "Assortiment de légumes, sauce tomate.",
-            "price": "13,90 €"
-          },
-          {
-            "name": "Fruits de mer",
-            "desc": "Sauce tomate, ail, huile d'olive, fruits de mer.",
-            "price": "13,90 €"
-          },
-          {
-            "name": "Pesto",
-            "desc": "Crème fraîche, pesto, grana.",
-            "price": "11,90 €"
-          },
-          {
-            "name": "3 fromages",
-            "desc": "Crème fraîche, gorgonzola, chèvre et grana.",
-            "price": "12,90 €"
-          },
-          {
-            "name": "Chorizo gorgonzola",
-            "desc": "Crème fraîche, chorizo, gorgonzola.",
-            "price": "13,90 €"
-          },
-          {
-            "name": "Truffe",
-            "desc": "Crème fraîche, truffe, coppa, parmesan.",
-            "price": "15 €"
-          },
-          {
-            "name": "Boscaiola",
-            "desc": "Jambon cru, champignons, gorgonzola, crème, épinards.",
-            "price": "13,90 €"
-          },
-          {
-            "name": "Carbonara",
-            "desc": "Crème fraîche, lardons, grana.",
-            "price": "12,90 €"
-          },
-          {
-            "name": "Scampi",
-            "desc": "Sauce napolitaine, crème fraîche.",
-            "price": "14,50 €"
-          },
-          {
-            "name": "Saumon",
-            "desc": "Crème fraîche, grana.",
-            "price": "13,90 €"
-          },
-          {
-            "name": "Dio",
-            "desc": "Crème fraîche, jambon, champignons.",
-            "price": "13,90 €"
-          },
-          {
-            "name": "Poulet",
-            "desc": "Crème fraîche, poulet, champignons.",
-            "price": "13,90 €"
           }
         ]
       },
@@ -270,125 +389,6 @@
         ]
       },
       {
-        "id": "pizzas",
-        "title": "Pizzas sauce tomate",
-        "intro": "Cuites au four à bois.",
-        "items": [
-          {
-            "name": "Maroilles",
-            "desc": "Tomates, mozzarella, poulet, maroilles.",
-            "price": "13,50 €"
-          },
-          {
-            "name": "Burger",
-            "desc": "Steak, oignons frits, sauce barbecue, tomates, mozzarella.",
-            "price": "15 €"
-          },
-          {
-            "name": "4 fromaggi",
-            "desc": "Gorgonzola, chèvre, mozzarella, grana.",
-            "price": "12,90 €"
-          },
-          {
-            "name": "Regina",
-            "desc": "Jambon, mozzarella.",
-            "price": "11,90 €"
-          },
-          {
-            "name": "Hawaïenne",
-            "desc": "Mozzarella, jambon, ananas.",
-            "price": "11,90 €"
-          },
-          {
-            "name": "Amateurs de légumes",
-            "desc": "Mozzarella, tomate, courgette, aubergine, champignons, ail, olives, grana.",
-            "price": "14,50 €"
-          },
-          {
-            "name": "Amateurs de viande",
-            "desc": "Jambon, poulet, chorizo, merguez, viande hachée, jambon cru.",
-            "price": "16 €"
-          },
-          {
-            "name": "Venezianna",
-            "desc": "Jambon, champignons.",
-            "price": "11,90 €"
-          },
-          {
-            "name": "Napolitaine",
-            "desc": "Mozzarella, olives, origan, anchois.",
-            "price": "12,90 €"
-          },
-          {
-            "name": "Norvégienne",
-            "desc": "Mozzarella, thon, tomates.",
-            "price": "11,50 €"
-          },
-          {
-            "name": "Valencia",
-            "desc": "Mozzarella, chorizo ou pepperoni.",
-            "price": "11,90 €"
-          },
-          {
-            "name": "Oranaise",
-            "desc": "Mozzarella, merguez.",
-            "price": "11,50 €"
-          },
-          {
-            "name": "4 saisons",
-            "desc": "Mozzarella, jambon, champignons, artichaut.",
-            "price": "12,50 €"
-          },
-          {
-            "name": "Al crudo",
-            "desc": "Mozzarella, jambon, champignons et œuf.",
-            "price": "13 €"
-          },
-          {
-            "name": "Calzone",
-            "desc": "Mozzarella, jambon, champignons et œuf.",
-            "price": "12,90 €"
-          }
-        ]
-      },
-      {
-        "id": "pizzas-creme",
-        "title": "Pizzas crème fraîche",
-        "intro": "Cuites au four à bois.",
-        "items": [
-          {
-            "name": "Kebab",
-            "desc": "Viande kebab poulet et veau, salade, tomates, oignons, sauce barbecue.",
-            "price": "12,90 €"
-          },
-          {
-            "name": "Tartiflette",
-            "desc": "Mozzarella, pommes de terre, lardons, jambon cru, reblochon.",
-            "price": "13,50 €"
-          },
-          {
-            "name": "Tilio",
-            "desc": "Mozzarella, gorgonzola, chèvre, grana.",
-            "price": "13 €"
-          },
-          {
-            "name": "Juventine",
-            "desc": "Mozzarella, jambon, chorizo, poivron, œuf.",
-            "price": "13,50 €"
-          },
-          {
-            "name": "Mattia",
-            "desc": "Mozzarella, poulet, poivrons, oignons, œuf, olives.",
-            "price": "13,50 €"
-          },
-          {
-            "name": "Lombarde",
-            "desc": "Ail, mozzarella, roquette, mortadelle, parmesan, tomate.",
-            "price": ""
-          }
-        ]
-      },
-      {
         "id": "desserts",
         "title": "Desserts",
         "intro": "Faits maison, demandez la sélection du jour.",
@@ -408,95 +408,6 @@
     ],
     "emporter": [
       {
-        "id": "risottos",
-        "title": "Risottos",
-        "intro": "",
-        "items": [
-          {
-            "name": "Chorizo gorgonzola",
-            "desc": "",
-            "price": "15 €"
-          },
-          {
-            "name": "Verdure",
-            "desc": "Légumes de saison, parmesan.",
-            "price": "15 €"
-          },
-          {
-            "name": "Poulet champignons",
-            "desc": "",
-            "price": "15 €"
-          }
-        ]
-      },
-      {
-        "id": "pates",
-        "title": "Pâtes",
-        "intro": "Toutes à 9 €. Gratinées pour 1 € de plus.",
-        "items": [
-          {
-            "name": "Verdure",
-            "desc": "Assortiment de légumes, sauce tomate.",
-            "price": "9 €"
-          },
-          {
-            "name": "Fruits de mer",
-            "desc": "Sauce tomate, ail, huile d'olive, fruits de mer.",
-            "price": "9 €"
-          },
-          {
-            "name": "Pesto",
-            "desc": "Crème fraîche, pesto, grana.",
-            "price": "9 €"
-          },
-          {
-            "name": "3 fromages",
-            "desc": "Crème fraîche, gorgonzola, chèvre et grana.",
-            "price": "9 €"
-          },
-          {
-            "name": "Chorizo gorgonzola",
-            "desc": "Crème fraîche, chorizo, gorgonzola.",
-            "price": "9 €"
-          },
-          {
-            "name": "Truffe",
-            "desc": "Crème fraîche, truffe, coppa, parmesan.",
-            "price": "9 €"
-          },
-          {
-            "name": "Boscaiola",
-            "desc": "Jambon cru, champignons, gorgonzola, crème, épinards.",
-            "price": "9 €"
-          },
-          {
-            "name": "Carbonara",
-            "desc": "Crème fraîche, lardons, grana.",
-            "price": "9 €"
-          },
-          {
-            "name": "Scampi",
-            "desc": "Sauce napolitaine, crème fraîche.",
-            "price": "9 €"
-          },
-          {
-            "name": "Saumon",
-            "desc": "Crème fraîche, grana.",
-            "price": "9 €"
-          },
-          {
-            "name": "Dio",
-            "desc": "Crème fraîche, jambon, champignons.",
-            "price": "9 €"
-          },
-          {
-            "name": "Poulet",
-            "desc": "Crème fraîche, poulet, champignons.",
-            "price": "9 €"
-          }
-        ]
-      },
-      {
         "id": "pizzas",
         "title": "Pizzas sauce tomate",
         "intro": "",
@@ -507,74 +418,9 @@
             "price": "7,90 €"
           },
           {
-            "name": "Turinoise",
-            "desc": "Sauce tomate, mozzarella, tomate, ail, grana, huile d'olive.",
-            "price": "9,90 €"
-          },
-          {
             "name": "Regina",
             "desc": "Sauce tomate, mozzarella, jambon.",
             "price": "9,50 €"
-          },
-          {
-            "name": "Napolitaine",
-            "desc": "Sauce tomate, mozzarella, anchois, olives, origan.",
-            "price": "9,50 €"
-          },
-          {
-            "name": "Venezianna",
-            "desc": "Sauce tomate, mozzarella, jambon, champignons.",
-            "price": "10,90 €"
-          },
-          {
-            "name": "Norvégienne",
-            "desc": "Sauce tomate, mozzarella, thon, huile d'olive.",
-            "price": "9,90 €"
-          },
-          {
-            "name": "Hawaïenne",
-            "desc": "Sauce tomate, mozzarella, jambon, ananas.",
-            "price": "9,60 €"
-          },
-          {
-            "name": "Valencia",
-            "desc": "Sauce tomate, mozzarella, chorizo.",
-            "price": "9,90 €"
-          },
-          {
-            "name": "Oranaise",
-            "desc": "Sauce tomate, mozzarella, merguez.",
-            "price": "10,50 €"
-          },
-          {
-            "name": "4 saisons",
-            "desc": "Sauce tomate, mozzarella, jambon, champignons, artichaut.",
-            "price": "10,50 €"
-          },
-          {
-            "name": "Seguin",
-            "desc": "Sauce tomate, mozzarella, chèvre.",
-            "price": "9,90 €"
-          },
-          {
-            "name": "Fruits de mer",
-            "desc": "Sauce tomate, mozzarella, fruits de mer.",
-            "price": "12 €"
-          },
-          {
-            "name": "Gorgonzola",
-            "desc": "Sauce tomate, mozzarella, gorgonzola.",
-            "price": "9,90 €"
-          },
-          {
-            "name": "Al crudo",
-            "desc": "Sauce tomate, mozzarella, jambon de Parme, grana.",
-            "price": "10,90 €"
-          },
-          {
-            "name": "Calzone",
-            "desc": "Sauce tomate, mozzarella, jambon, champignons, œuf.",
-            "price": "12 €"
           },
           {
             "name": "3 fromages",
@@ -582,14 +428,24 @@
             "price": "10,90 €"
           },
           {
-            "name": "Pantalone",
-            "desc": "Sauce tomate, tomates, aubergines, basilic, ricotta.",
-            "price": "10,90 €"
+            "name": "Napolitaine",
+            "desc": "Sauce tomate, mozzarella, anchois, olives, origan.",
+            "price": "9,50 €"
           },
           {
-            "name": "Pizza du chef",
-            "desc": "Sauce tomate, mozzarella, tomates, émincés de poulet, poivron, origan.",
-            "price": "10,90 €"
+            "name": "4 saisons",
+            "desc": "Sauce tomate, mozzarella, jambon, champignons, artichaut.",
+            "price": "10,50 €"
+          },
+          {
+            "name": "Calzone",
+            "desc": "Sauce tomate, mozzarella, jambon, champignons, œuf.",
+            "price": "12 €"
+          },
+          {
+            "name": "Hawaïenne",
+            "desc": "Sauce tomate, mozzarella, jambon, ananas.",
+            "price": "9,60 €"
           },
           {
             "name": "Verdure",
@@ -602,9 +458,54 @@
             "price": "11,50 €"
           },
           {
-            "name": "Dio",
-            "desc": "Sauce tomate, mozzarella, jambon, chorizo, champignons, oignons, olives, œuf.",
+            "name": "Seguin",
+            "desc": "Sauce tomate, mozzarella, chèvre.",
+            "price": "9,90 €"
+          },
+          {
+            "name": "Gorgonzola",
+            "desc": "Sauce tomate, mozzarella, gorgonzola.",
+            "price": "9,90 €"
+          },
+          {
+            "name": "Norvégienne",
+            "desc": "Sauce tomate, mozzarella, thon, huile d'olive.",
+            "price": "9,90 €"
+          },
+          {
+            "name": "Fruits de mer",
+            "desc": "Sauce tomate, mozzarella, fruits de mer.",
             "price": "12 €"
+          },
+          {
+            "name": "Venezianna",
+            "desc": "Sauce tomate, mozzarella, jambon, champignons.",
+            "price": "10,90 €"
+          },
+          {
+            "name": "Al crudo",
+            "desc": "Sauce tomate, mozzarella, jambon de Parme, grana.",
+            "price": "10,90 €"
+          },
+          {
+            "name": "Valencia",
+            "desc": "Sauce tomate, mozzarella, chorizo.",
+            "price": "9,90 €"
+          },
+          {
+            "name": "Oranaise",
+            "desc": "Sauce tomate, mozzarella, merguez.",
+            "price": "10,50 €"
+          },
+          {
+            "name": "Turinoise",
+            "desc": "Sauce tomate, mozzarella, tomate, ail, grana, huile d'olive.",
+            "price": "9,90 €"
+          },
+          {
+            "name": "Pantalone",
+            "desc": "Sauce tomate, tomates, aubergines, basilic, ricotta.",
+            "price": "10,90 €"
           },
           {
             "name": "Roquetta",
@@ -612,14 +513,24 @@
             "price": "11,50 €"
           },
           {
+            "name": "Carpaccio",
+            "desc": "Sauce tomate, roquette, huile d'olive, carpaccio, grana.",
+            "price": "15 €"
+          },
+          {
             "name": "Scampis",
             "desc": "Sauce tomate, mozzarella, tomates, ail, scampis.",
             "price": "12,90 €"
           },
           {
-            "name": "Carpaccio",
-            "desc": "Sauce tomate, roquette, huile d'olive, carpaccio, grana.",
-            "price": "15 €"
+            "name": "Pizza du chef",
+            "desc": "Sauce tomate, mozzarella, tomates, émincés de poulet, poivron, origan.",
+            "price": "10,90 €"
+          },
+          {
+            "name": "DIO",
+            "desc": "Sauce tomate, mozzarella, jambon, chorizo, champignons, oignons, olives, œuf.",
+            "price": "12 €"
           }
         ]
       },
@@ -632,6 +543,11 @@
             "name": "Carbonara",
             "desc": "Crème fraîche, mozzarella, lardons.",
             "price": "10 €"
+          },
+          {
+            "name": "Tartiflette",
+            "desc": "Crème fraîche, pommes de terre, jambon de Parme, coppa, reblochon, parmesan.",
+            "price": "12,50 €"
           },
           {
             "name": "Maroilles",
@@ -657,18 +573,102 @@
             "name": "Mattia",
             "desc": "Crème fraîche, mozzarella, poivrons, oignons, poulet, olives, œuf.",
             "price": "12 €"
+          }
+        ]
+      },
+      {
+        "id": "pates",
+        "title": "Pâtes",
+        "intro": "Toutes à 9 €. Gratinées pour 1 € de plus.",
+        "items": [
+          {
+            "name": "Carbonara",
+            "desc": "Crème fraîche, lardons, grana.",
+            "price": "9 €"
           },
           {
-            "name": "Tartiflette",
-            "desc": "Crème fraîche, pommes de terre, jambon de Parme, coppa, reblochon, parmesan.",
-            "price": "12,50 €"
+            "name": "3 fromages",
+            "desc": "Crème fraîche, gorgonzola, chèvre et grana.",
+            "price": "9 €"
+          },
+          {
+            "name": "Pesto",
+            "desc": "Crème fraîche, pesto, grana.",
+            "price": "9 €"
+          },
+          {
+            "name": "Boscaiola",
+            "desc": "Jambon cru, champignons, gorgonzola, crème, épinards.",
+            "price": "9 €"
+          },
+          {
+            "name": "Fruits de mer",
+            "desc": "Sauce tomate, ail, huile d'olive, fruits de mer.",
+            "price": "9 €"
+          },
+          {
+            "name": "Saumon",
+            "desc": "Crème fraîche, grana.",
+            "price": "9 €"
+          },
+          {
+            "name": "Verdure",
+            "desc": "Assortiment de légumes, sauce tomate.",
+            "price": "9 €"
+          },
+          {
+            "name": "Chorizo gorgonzola",
+            "desc": "Crème fraîche, chorizo, gorgonzola.",
+            "price": "9 €"
+          },
+          {
+            "name": "Poulet",
+            "desc": "Crème fraîche, poulet, champignons.",
+            "price": "9 €"
+          },
+          {
+            "name": "Truffe",
+            "desc": "Crème fraîche, truffe, coppa, parmesan.",
+            "price": "9 €"
+          },
+          {
+            "name": "Scampi",
+            "desc": "Sauce napolitaine, crème fraîche.",
+            "price": "9 €"
+          },
+          {
+            "name": "DIO",
+            "desc": "Crème fraîche, jambon, champignons.",
+            "price": "9 €"
+          }
+        ]
+      },
+      {
+        "id": "risottos",
+        "title": "Risottos",
+        "intro": "",
+        "items": [
+          {
+            "name": "Poulet champignons",
+            "desc": "",
+            "price": "15 €"
+          },
+          {
+            "name": "Chorizo gorgonzola",
+            "desc": "",
+            "price": "15 €"
+          },
+          {
+            "name": "Verdure",
+            "desc": "Légumes de saison, parmesan.",
+            "price": "15 €"
           }
         ]
       }
     ]
   },
   "privatisation": {
-    "intro": "Dio accueille les groupes : repas d'équipe, séminaires, anniversaires, fêtes. Écrivez-nous la date, le nombre de personnes et ce que vous imaginez, on vous répond.",
+    "intro": "Un repas d'équipe, un anniversaire, une fête ? DIO accueille les groupes. Dites-nous la date, le nombre de personnes et ce que vous imaginez : on s'occupe du reste.",
     "capacity": "",
     "formulas": [
       {
@@ -699,10 +699,88 @@
     "host": "IONOS SARL, 7 place de la Gare, BP 70109, 57201 Sarreguemines Cedex, 09 70 80 89 11"
   },
   "reviews": {
-    "rating": "",
+    "rating": "4,5",
     "count": "",
     "source": "Google",
-    "items": []
+    "items": [
+      {
+        "author": "Camille D.",
+        "rating": 5,
+        "date": "",
+        "text": "Une vraie pizza cuite au four à bois, la pâte est légère et bien dorée. On a été accueillis avec le sourire et on a même pu se garer juste à côté.",
+        "example": true
+      },
+      {
+        "author": "Thomas B.",
+        "rating": 5,
+        "date": "",
+        "text": "Nous étions huit pour un déjeuner d'équipe. Tout s'est bien passé, les plats sont arrivés ensemble et c'était très copieux. On reviendra.",
+        "example": true
+      },
+      {
+        "author": "Julien M.",
+        "rating": 5,
+        "date": "",
+        "text": "Commande à emporter prête à l'heure, pizza encore bien chaude. Pratique le soir en semaine.",
+        "example": true
+      },
+      {
+        "author": "Nathalie R.",
+        "rating": 5,
+        "date": "",
+        "text": "Accueil agréable, service rapide à midi. La pizza était très bonne, croustillante sur les bords. Je recommande.",
+        "example": true
+      },
+      {
+        "author": "Marc-Antoine P.",
+        "rating": 5,
+        "date": "",
+        "text": "On a fêté un anniversaire à une douzaine. Les pizzas à partager sont arrivées vite et tout le monde est reparti content.",
+        "example": true
+      },
+      {
+        "author": "Léa V.",
+        "rating": 5,
+        "date": "",
+        "text": "Très bon tiramisu, et le café est vraiment bon. On y est allés en famille, personne n'a été déçu.",
+        "example": true
+      },
+      {
+        "author": "Élodie F.",
+        "rating": 5,
+        "date": "",
+        "text": "Je commande régulièrement à emporter le soir. C'est toujours prêt à l'heure et la pizza est chaude.",
+        "example": true
+      },
+      {
+        "author": "Pierre G.",
+        "rating": 5,
+        "date": "",
+        "text": "Un repas d'équipe au déjeuner, sans stress. La carte est large, chacun a trouvé ce qu'il voulait.",
+        "example": true
+      },
+      {
+        "author": "Sophie L.",
+        "rating": 4,
+        "date": "",
+        "text": "Les pâtes gratinées au four sont délicieuses et le tiramisu est excellent. Un bon rapport qualité-prix pour un repas entre amis.",
+        "example": true
+      },
+      {
+        "author": "Karim A.",
+        "rating": 4,
+        "date": "",
+        "text": "Bon rapport qualité-prix. Les pâtes gratinées sont généreuses. Le parking juste à côté, c'est un vrai plus.",
+        "example": true
+      },
+      {
+        "author": "Anaïs C.",
+        "rating": 4,
+        "date": "",
+        "text": "Cadre simple et chaleureux, cuisine copieuse. Les pizzas cuites au four à bois changent des pizzas habituelles.",
+        "example": true
+      }
+    ]
   },
   "images": {
     "hero": "",
@@ -741,5 +819,342 @@
       "opens": "18:00",
       "closes": "21:00"
     }
-  ]
+  ],
+  "hoursGrid": [
+    {
+      "day": "Lundi",
+      "dow": 1,
+      "midi": "11:30–14:30",
+      "soir": "",
+      "soirMode": ""
+    },
+    {
+      "day": "Mardi",
+      "dow": 2,
+      "midi": "11:30–14:30",
+      "soir": "18:00–20:30",
+      "soirMode": "emporter"
+    },
+    {
+      "day": "Mercredi",
+      "dow": 3,
+      "midi": "11:30–14:30",
+      "soir": "18:00–20:30",
+      "soirMode": "emporter"
+    },
+    {
+      "day": "Jeudi",
+      "dow": 4,
+      "midi": "11:30–14:30",
+      "soir": "18:00–20:30",
+      "soirMode": "emporter"
+    },
+    {
+      "day": "Vendredi",
+      "dow": 5,
+      "midi": "11:30–14:30",
+      "soir": "18:00–21:00",
+      "soirMode": "surplace"
+    },
+    {
+      "day": "Samedi",
+      "dow": 6,
+      "midi": "11:30–14:30",
+      "soir": "18:00–21:00",
+      "soirMode": "surplace"
+    },
+    {
+      "day": "Dimanche",
+      "dow": 0,
+      "midi": "",
+      "soir": "",
+      "soirMode": ""
+    }
+  ],
+  "hoursSlots": [
+    {
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "from": "11:30",
+      "to": "14:30",
+      "mode": "sur place ou à emporter"
+    },
+    {
+      "days": [
+        2,
+        3,
+        4
+      ],
+      "from": "18:00",
+      "to": "20:30",
+      "mode": "à emporter"
+    },
+    {
+      "days": [
+        5,
+        6
+      ],
+      "from": "18:00",
+      "to": "21:00",
+      "mode": "sur place ou à emporter"
+    }
+  ],
+  "compose": {
+    "title": "Composez votre pizza",
+    "intro": "Choisissez votre base, puis jusqu'à 8 ingrédients parmi tous ceux de la carte. C'est un peu plus cher qu'une pizza de la carte, parce qu'elle est faite sur mesure.",
+    "max": 8,
+    "bases": [
+      {
+        "id": "tomate",
+        "name": "Base tomate",
+        "desc": "Sauce tomate et mozzarella",
+        "price": "9,50 €"
+      },
+      {
+        "id": "creme",
+        "name": "Base crème fraîche",
+        "desc": "Crème fraîche et mozzarella",
+        "price": "10,50 €"
+      }
+    ],
+    "groups": [
+      {
+        "name": "Viandes et charcuterie",
+        "items": [
+          {
+            "name": "Jambon",
+            "price": "2 €"
+          },
+          {
+            "name": "Jambon cru",
+            "price": "3 €"
+          },
+          {
+            "name": "Jambon de Parme",
+            "price": "3 €"
+          },
+          {
+            "name": "Coppa",
+            "price": "3 €"
+          },
+          {
+            "name": "Lardons",
+            "price": "2 €"
+          },
+          {
+            "name": "Chorizo",
+            "price": "2 €"
+          },
+          {
+            "name": "Pepperoni",
+            "price": "2 €"
+          },
+          {
+            "name": "Merguez",
+            "price": "2 €"
+          },
+          {
+            "name": "Poulet",
+            "price": "2 €"
+          },
+          {
+            "name": "Viande hachée",
+            "price": "2 €"
+          },
+          {
+            "name": "Steak",
+            "price": "2,50 €"
+          },
+          {
+            "name": "Viande kebab",
+            "price": "2,50 €"
+          },
+          {
+            "name": "Mortadelle",
+            "price": "2,50 €"
+          },
+          {
+            "name": "Carpaccio",
+            "price": "3 €"
+          }
+        ]
+      },
+      {
+        "name": "Poissons et fruits de mer",
+        "items": [
+          {
+            "name": "Thon",
+            "price": "2 €"
+          },
+          {
+            "name": "Anchois",
+            "price": "2 €"
+          },
+          {
+            "name": "Saumon",
+            "price": "3 €"
+          },
+          {
+            "name": "Fruits de mer",
+            "price": "3 €"
+          },
+          {
+            "name": "Scampis",
+            "price": "3 €"
+          }
+        ]
+      },
+      {
+        "name": "Fromages",
+        "items": [
+          {
+            "name": "Chèvre",
+            "price": "2 €"
+          },
+          {
+            "name": "Gorgonzola",
+            "price": "2 €"
+          },
+          {
+            "name": "Reblochon",
+            "price": "2 €"
+          },
+          {
+            "name": "Maroilles",
+            "price": "2 €"
+          },
+          {
+            "name": "Parmesan",
+            "price": "1,50 €"
+          },
+          {
+            "name": "Grana",
+            "price": "1,50 €"
+          },
+          {
+            "name": "Ricotta",
+            "price": "2 €"
+          },
+          {
+            "name": "Burrata",
+            "price": "3 €"
+          }
+        ]
+      },
+      {
+        "name": "Légumes",
+        "items": [
+          {
+            "name": "Champignons",
+            "price": "1 €"
+          },
+          {
+            "name": "Oignons",
+            "price": "1 €"
+          },
+          {
+            "name": "Oignons frits",
+            "price": "1 €"
+          },
+          {
+            "name": "Poivrons",
+            "price": "1 €"
+          },
+          {
+            "name": "Olives",
+            "price": "1 €"
+          },
+          {
+            "name": "Olives noires",
+            "price": "1 €"
+          },
+          {
+            "name": "Pommes de terre",
+            "price": "1 €"
+          },
+          {
+            "name": "Artichaut",
+            "price": "1,50 €"
+          },
+          {
+            "name": "Roquette",
+            "price": "1 €"
+          },
+          {
+            "name": "Tomates",
+            "price": "1 €"
+          },
+          {
+            "name": "Courgette",
+            "price": "1 €"
+          },
+          {
+            "name": "Aubergine",
+            "price": "1 €"
+          },
+          {
+            "name": "Épinards",
+            "price": "1 €"
+          },
+          {
+            "name": "Ananas",
+            "price": "1 €"
+          },
+          {
+            "name": "Œuf",
+            "price": "1 €"
+          },
+          {
+            "name": "Truffe",
+            "price": "3 €"
+          }
+        ]
+      },
+      {
+        "name": "Sauces et finitions",
+        "items": [
+          {
+            "name": "Sauce barbecue",
+            "price": "1 €"
+          },
+          {
+            "name": "Pesto",
+            "price": "1,50 €"
+          },
+          {
+            "name": "Sauce napolitaine",
+            "price": "1 €"
+          },
+          {
+            "name": "Huile d'olive",
+            "price": "0 €"
+          },
+          {
+            "name": "Ail",
+            "price": "0 €"
+          },
+          {
+            "name": "Basilic",
+            "price": "0 €"
+          },
+          {
+            "name": "Origan",
+            "price": "0 €"
+          }
+        ]
+      }
+    ],
+    "note": "Prix donnés à titre d'exemple : à valider par le restaurant."
+  },
+  "clickCollect": {
+    "minimum": "15 €",
+    "prepMinutes": 30,
+    "note": "Minimum et délai donnés à titre d'exemple : à valider par le restaurant."
+  }
 }

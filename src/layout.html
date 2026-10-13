@@ -9,15 +9,15 @@
 <link rel="canonical" href="{{canonical}}">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_FR">
-<meta property="og:site_name" content="Dio Ristorante">
+<meta property="og:site_name" content="DIO Ristorante">
 <meta property="og:title" content="{{pageTitle}}">
 <meta property="og:description" content="{{pageDescription}}">
 <meta property="og:url" content="{{canonical}}">
 <meta property="og:image" content="https://www.dioristaurante.com/assets/img/og.png">
 <meta name="theme-color" content="#151515">
 <link rel="icon" href="/assets/img/favicon.png" type="image/png">
-<link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/fraunces-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/sourcesans3.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/oswald.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/style.css">
 <script src="/assets/js/main.js" defer></script>
 {{jsonLd}}
@@ -28,25 +28,31 @@
 {{promoBar}}
 <div class="topbar">
   <div class="container topbar__inner">
-    <span>Villeneuve-d'Ascq · {{hours}} · <strong>Parking gratuit derrière le restaurant</strong></span>
+    <ul class="topbar__info" aria-label="Horaires et parking">
+      <li><b>Midi</b> du lundi au samedi</li>
+      <li><b>Soir sur place</b> vendredi et samedi</li>
+      <li><b>Soir à emporter</b> du mardi au jeudi</li>
+      <li><b>Parking gratuit</b> à côté du restaurant</li>
+    </ul>
     <span class="topbar__phones">{{topPhone}}</span>
   </div>
 </div>
 
 <header class="header">
   <div class="container header__inner">
-    <a class="logo" href="/" aria-label="Dio Ristorante, accueil">
+    <a class="logo" href="/" aria-label="DIO Ristorante, accueil">
       {{logo}}
-      <span class="logo__text">Dio <em>Ristorante</em></span>
+      <span class="logo__text">DIO <em>Ristorante</em></span>
     </a>
     <button class="nav-toggle" aria-expanded="false" aria-controls="nav">
       <span class="nav-toggle__bar"></span><span class="sr-only">Menu</span>
     </button>
     <nav id="nav" class="nav" aria-label="Menu principal">
       <ul>
+        <li><a href="/"{{nav:home}}>Accueil</a></li>
         <li><a href="/la-carte/"{{nav:carte}}>La carte</a></li>
+        <li><a href="/commander/"{{nav:commander}}>Click &amp; Collect</a></li>
         <li><a href="/privatisation/"{{nav:privatisation}}>Privatisation</a></li>
-        <li><a href="/galerie/"{{nav:galerie}}>Galerie</a></li>
         <li><a href="/acces/"{{nav:acces}}>Accès et parking</a></li>
         <li><a href="/#avis">Avis</a></li>
         <li class="nav__cta"><a class="btn btn--primary" href="/reservation/"{{nav:reservation}}>Réserver</a></li>
@@ -64,7 +70,7 @@
     <div>
       <a class="logo logo--footer" href="/">
         {{logo}}
-        <span class="logo__text">Dio <em>Ristorante</em></span>
+        <span class="logo__text">DIO <em>Ristorante</em></span>
       </a>
       <p>Restaurant italien à Villeneuve-d'Ascq : pizzas au four à bois, pâtes et risottos. Sur place, à emporter, en livraison et privatisation pour vos événements.</p>
       {{socialRow}}
@@ -74,7 +80,6 @@
       <ul>
         <li><a href="/la-carte/">La carte</a></li>
         <li><a href="/privatisation/">Privatisation et entreprises</a></li>
-        <li><a href="/galerie/">Galerie</a></li>
         <li><a href="/actualites/">Actualités</a></li>
         <li><a href="/faq/">Questions fréquentes</a></li>
       </ul>
@@ -86,12 +91,12 @@
         <li><a href="/reservation/">Réserver une table</a></li>
         <li><a href="{{mapsUrl}}" rel="noopener">Itinéraire Google Maps</a></li>
       </ul>
-      <p class="footer__park">Parking gratuit juste derrière le restaurant.</p>
+      <p class="footer__park">Parking gratuit juste à côté du restaurant.</p>
     </div>
     <div>
       <h2 class="footer__title">Contact</h2>
       <address>
-        Dio Ristorante<br>
+        DIO Ristorante<br>
         {{address}}<br>
         <a href="{{mapsUrl}}" rel="noopener">Itinéraire</a>
       </address>
@@ -101,7 +106,7 @@
     </div>
   </div>
   <div class="container footer__legal">
-    <p>© {{year}} Dio Ristorante</p>
+    <p>© {{year}} DIO Ristorante</p>
     <p>
       <a href="/mentions-legales/">Mentions légales</a>
       <a href="/confidentialite/">Confidentialité</a>
@@ -112,6 +117,8 @@
 <div class="mobile-bar">
   {{callLink}}
   <a href="/reservation/" class="mobile-bar__book">Réserver</a>
+  <a href="/commander/" class="mobile-bar__order">Click &amp; Collect</a>
+  <a href="{{mapsUrl}}" class="mobile-bar__route" rel="noopener">Itinéraire</a>
 </div>
 </body>
 </html>

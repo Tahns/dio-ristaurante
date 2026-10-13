@@ -52,6 +52,8 @@ for (const file of htmlFiles) {
   if (html.includes('class="todo"')) warnings.push(`${rel} : champs « [à compléter] » encore présents`);
 }
 
+if (/class="tag-example"/.test(fs.readFileSync(path.join(ROOT, "index.html"), "utf8"))) warnings.push("Avis d'exemple encore affichés sur l'accueil : à remplacer par les vrais avis Google");
+
 for (const w of warnings) console.warn(`⚠ ${w}`);
 if (errors.length) {
   for (const e of errors) console.error(`✗ ${e}`);
