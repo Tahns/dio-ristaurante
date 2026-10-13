@@ -59,7 +59,7 @@ function menuSection(cat) {
 
 const menuNav = () =>
   `<nav class="menu-nav" aria-label="Sections de la carte">${site.menu
-    .map((c) => `<a href="#${esc(c.id)}">${esc(c.title.replace(/ au feu de bois/, ""))}</a>`)
+    .map((c) => `<a href="#${esc(c.id)}">${esc(c.title)}</a>`)
     .join("")}</nav>`;
 
 const formulas = () =>
@@ -69,7 +69,7 @@ const formulas = () =>
 
 const ctaBand = (
   title = "Une table pour ce soir ?",
-  text = "Réservez en ligne en une minute : nous confirmons rapidement votre table."
+  text = "Une minute pour réserver. On vous confirme dès que possible."
 ) => `
 <section class="cta-band">
   <div class="container cta-band__inner">
@@ -147,16 +147,16 @@ function reviewsSection() {
   <div class="container">
     <div class="reviews-head">
       <div>
-        <span class="section__kicker">Avis</span>
-        <h2>Ils sont passés à table</h2>
+        <span class="section__kicker">Les avis</span>
+        <h2>Ils sont venus, ils ont mangé, ils en parlent</h2>
       </div>
       ${rating}
     </div>
     ${cards ? `<div class="grid grid--3">${cards}</div>` : ""}
     <div class="review-ask">
       <div>
-        <h3>Vous avez aimé ? Dites-le !</h3>
-        <p>Un avis Google, ça prend 30 secondes et c'est ce qui aide le plus un restaurant de quartier à se faire connaître.</p>
+        <h3>Un bon moment chez Dio ?</h3>
+        <p>Un avis Google prend trente secondes, et c'est ce qui aide le plus un petit restaurant comme le nôtre à se faire connaître.</p>
       </div>
       <a class="btn btn--primary" href="${mapsUrl}" rel="noopener">Laisser un avis</a>
     </div>
@@ -167,9 +167,9 @@ function reviewsSection() {
 const shareBlock = () => `<section class="section section--dark share" id="partager">
   <div class="container share__inner">
     <div>
-      <span class="section__kicker">Le bouche-à-oreille</span>
+      <span class="section__kicker">Passez le mot</span>
       <h2>Vous connaissez des gourmands ?</h2>
-      <p>Dio vit grâce à ses clients. Si vous avez passé un bon moment, parlez-en : un message à un ami, un collègue, un voisin fait toute la différence.</p>
+      <p>Dio vit grâce à ceux qui en parlent. Si vous avez bien mangé, dites-le à un ami, un collègue, un voisin : c'est la meilleure publicité qu'on puisse avoir.</p>
     </div>
     <div class="share__actions">
       <button class="btn btn--primary" type="button" data-share data-title="Dio Ristorante" data-text="Pizzas au feu de bois et pâtes à Villeneuve-d'Ascq, parking gratuit derrière le restaurant. Je recommande !">Recommander Dio</button>

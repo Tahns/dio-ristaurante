@@ -29,65 +29,158 @@
   },
   "hours": "Déjeuner et dîner",
   "hoursTable": [],
-  "services": ["Sur place", "À emporter", "Livraison", "Traiteur"],
+  "services": [
+    "Sur place",
+    "À emporter",
+    "Livraison",
+    "Traiteur"
+  ],
   "formEndpoint": "",
   "menuNote": "Carte indicative : les plats et les prix peuvent varier selon la saison. Demandez l'ardoise du jour sur place.",
   "menu": [
     {
       "id": "antipasti",
       "title": "Antipasti",
-      "intro": "Pour commencer, à partager.",
+      "intro": "Pour commencer, à partager au milieu de la table.",
       "items": [
-        { "name": "Planche de charcuteries", "desc": "Jambon cru, coppa, mortadelle, olives, focaccia chaude.", "price": "" },
-        { "name": "Planche de fromages", "desc": "Sélection de fromages italiens, tomates cerises, roquette.", "price": "" },
-        { "name": "Burrata", "desc": "Burrata crémeuse, tomates, roquette, huile d'olive.", "price": "" },
-        { "name": "Focaccia à l'ail", "desc": "Pain maison tiède, ail et herbes.", "price": "" }
+        {
+          "name": "Planche de charcuteries",
+          "desc": "Jambon cru, coppa, mortadelle, olives, focaccia chaude.",
+          "price": ""
+        },
+        {
+          "name": "Planche de fromages",
+          "desc": "Sélection de fromages italiens, tomates cerises, roquette.",
+          "price": ""
+        },
+        {
+          "name": "Burrata",
+          "desc": "Burrata crémeuse, tomates, roquette, huile d'olive.",
+          "price": ""
+        },
+        {
+          "name": "Focaccia à l'ail",
+          "desc": "Pain maison tiède, ail et herbes.",
+          "price": ""
+        }
       ]
     },
     {
       "id": "pizzas",
-      "title": "Pizzas au feu de bois",
-      "intro": "Pâte maison, cuisson au four à bois.",
+      "title": "Pizze",
+      "intro": "Pâte maison, cuites au four à bois.",
       "items": [
-        { "name": "Margherita", "desc": "Tomate, mozzarella, basilic.", "price": "" },
-        { "name": "Diavola", "desc": "Tomate, mozzarella, pepperoni.", "price": "" },
-        { "name": "Burrata", "desc": "Tomate, mozzarella, burrata, roquette, tomates cerises.", "price": "" },
-        { "name": "Bianca", "desc": "Crème, mozzarella, pommes de terre, jambon.", "price": "" },
-        { "name": "Chorizo", "desc": "Tomate, mozzarella, chorizo.", "price": "" },
-        { "name": "Quattro formaggi", "desc": "Sélection de quatre fromages.", "price": "" }
+        {
+          "name": "Margherita",
+          "desc": "Tomate, mozzarella, basilic.",
+          "price": ""
+        },
+        {
+          "name": "Diavola",
+          "desc": "Tomate, mozzarella, pepperoni.",
+          "price": ""
+        },
+        {
+          "name": "Burrata",
+          "desc": "Tomate, mozzarella, burrata, roquette, tomates cerises.",
+          "price": ""
+        },
+        {
+          "name": "Bianca",
+          "desc": "Crème, mozzarella, pommes de terre, jambon.",
+          "price": ""
+        },
+        {
+          "name": "Chorizo",
+          "desc": "Tomate, mozzarella, chorizo.",
+          "price": ""
+        },
+        {
+          "name": "Quattro formaggi",
+          "desc": "Sélection de quatre fromages.",
+          "price": ""
+        }
       ]
     },
     {
       "id": "pates",
-      "title": "Pâtes",
-      "intro": "Rigatoni, sauces maison, gratinés au four sur demande.",
+      "title": "Paste",
+      "intro": "Des rigatoni, des sauces maison, et gratinés au four si vous le voulez.",
       "items": [
-        { "name": "Arrabbiata", "desc": "Tomate pimentée, olives, basilic.", "price": "" },
-        { "name": "Bolognaise", "desc": "Sauce à la viande mijotée, parmesan.", "price": "" },
-        { "name": "Crème et champignons", "desc": "Crème, champignons, roquette.", "price": "" },
-        { "name": "Cacio e pepe", "desc": "Parmesan, poivre noir.", "price": "" },
-        { "name": "Rigatoni gratinés", "desc": "Sauce tomate, mozzarella, gratinés au four.", "price": "" }
+        {
+          "name": "Arrabbiata",
+          "desc": "Tomate pimentée, olives, basilic.",
+          "price": ""
+        },
+        {
+          "name": "Bolognaise",
+          "desc": "Sauce à la viande mijotée, parmesan.",
+          "price": ""
+        },
+        {
+          "name": "Crème et champignons",
+          "desc": "Crème, champignons, roquette.",
+          "price": ""
+        },
+        {
+          "name": "Cacio e pepe",
+          "desc": "Parmesan, poivre noir.",
+          "price": ""
+        },
+        {
+          "name": "Rigatoni gratinés",
+          "desc": "Sauce tomate, mozzarella, gratinés au four.",
+          "price": ""
+        }
       ]
     },
     {
       "id": "desserts",
-      "title": "Desserts",
-      "intro": "Faits maison.",
+      "title": "Dolci",
+      "intro": "Faits maison, et le café va avec.",
       "items": [
-        { "name": "Tiramisu", "desc": "Mascarpone, café, cacao.", "price": "" },
-        { "name": "Pain perdu brioché", "desc": "Glace vanille, caramel, chantilly.", "price": "" },
-        { "name": "Café gourmand", "desc": "Un expresso et ses petites douceurs.", "price": "" }
+        {
+          "name": "Tiramisu",
+          "desc": "Mascarpone, café, cacao.",
+          "price": ""
+        },
+        {
+          "name": "Pain perdu brioché",
+          "desc": "Glace vanille, caramel, chantilly.",
+          "price": ""
+        },
+        {
+          "name": "Café gourmand",
+          "desc": "Un expresso et ses petites douceurs.",
+          "price": ""
+        }
       ]
     },
     {
       "id": "boissons",
-      "title": "Boissons",
-      "intro": "Vins italiens, bières, cocktails et excellent café.",
+      "title": "Bevande",
+      "intro": "Vins italiens, bières, cocktails et un excellent café.",
       "items": [
-        { "name": "Vins italiens", "desc": "Rouges, blancs et rosés, au verre ou à la bouteille.", "price": "" },
-        { "name": "Bières et softs", "desc": "Bières, sodas, eaux.", "price": "" },
-        { "name": "Cocktails et apéritifs", "desc": "Spritz et autres apéritifs italiens.", "price": "" },
-        { "name": "Cafés", "desc": "Expresso, allongé, cappuccino.", "price": "" }
+        {
+          "name": "Vins italiens",
+          "desc": "Rouges, blancs et rosés, au verre ou à la bouteille.",
+          "price": ""
+        },
+        {
+          "name": "Bières et softs",
+          "desc": "Bières, sodas, eaux.",
+          "price": ""
+        },
+        {
+          "name": "Cocktails et apéritifs",
+          "desc": "Spritz et autres apéritifs italiens.",
+          "price": ""
+        },
+        {
+          "name": "Cafés",
+          "desc": "Expresso, allongé, cappuccino.",
+          "price": ""
+        }
       ]
     }
   ],
@@ -95,10 +188,22 @@
     "intro": "Dio se privatise pour vos repas d'équipe, séminaires, anniversaires et fêtes. Dites-nous la date, le nombre de convives et l'ambiance voulue : nous vous répondons avec une proposition sur mesure.",
     "capacity": "",
     "formulas": [
-      { "name": "Repas assis", "text": "Menu unique ou à choix : antipasti, pizzas ou pâtes, dessert, café." },
-      { "name": "Apéritif dînatoire", "text": "Planches, focaccia, mini-pizzas et boissons, debout et convivial." },
-      { "name": "Pizza party", "text": "Pizzas cuites au feu de bois à volonté, idéal pour les groupes." },
-      { "name": "Traiteur", "text": "Nos plats préparés pour vos événements, à emporter ou livrés." }
+      {
+        "name": "Repas assis",
+        "text": "Menu unique ou à choix : antipasti, pizzas ou pâtes, dessert, café."
+      },
+      {
+        "name": "Apéritif dînatoire",
+        "text": "Planches, focaccia, mini-pizzas et boissons, debout et convivial."
+      },
+      {
+        "name": "Pizza party",
+        "text": "Pizzas cuites au feu de bois à volonté, idéal pour les groupes."
+      },
+      {
+        "name": "Traiteur",
+        "text": "Nos plats préparés pour vos événements, à emporter ou livrés."
+      }
     ]
   },
   "legal": {
