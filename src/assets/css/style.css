@@ -218,7 +218,7 @@ details p{color:var(--muted)}
 /* Barre mobile */
 .mobile-bar{display:none}
 @media (max-width:760px){
-  .mobile-bar{display:grid;grid-template-columns:1fr 1fr;position:fixed;left:0;right:0;bottom:0;z-index:60;box-shadow:0 -4px 16px rgba(0,0,0,.25)}
+  .mobile-bar{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;z-index:60;box-shadow:0 -4px 16px rgba(0,0,0,.25)}
   .mobile-bar a{padding:15px;text-align:center;font-weight:700;text-decoration:none;color:#fff}
   .mobile-bar__call{background:var(--ink)}.mobile-bar__book{background:var(--ochre-dark)}
 }
@@ -453,3 +453,12 @@ tr.is-today .today-tag{display:inline-block}
 .cal button:focus-visible{outline:3px solid var(--ochre);outline-offset:2px}
 .field select{width:100%;padding:12px 14px;border:1px solid #867659;border-radius:10px;font:inherit;background:#fff;color:var(--ink)}
 .field select:disabled{background:var(--paper);color:var(--muted)}
+
+.mobile-bar a{padding:14px 4px;font-size:.88rem}
+.mobile-bar__order{background:var(--ochre);color:#1b1b1b!important}.mobile-bar__route{background:#2b2d2f}
+.hero__facts{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 14px}
+.hero__facts .open-now,.hero__facts .rating-badge{margin:0}
+.fact-address{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.28);color:#fff;text-decoration:none;font-weight:600}
+.fact-address:hover{text-decoration:underline}
+.about__points{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+.about__points li{padding:8px 16px;border-radius:999px;background:var(--kraft);font-weight:600}

@@ -12,8 +12,11 @@
       <a class="btn btn--primary btn--lg" href="/reservation/">Réserver une table</a>
       <a class="btn btn--ghost btn--lg" href="/la-carte/">Voir la carte</a>
     </div>
-    {{ratingBadge}}
-    <p class="open-now" data-open-now data-slots='{{slotsJson}}' aria-live="polite"></p>
+    <div class="hero__facts">
+      <p class="open-now" data-open-now data-slots='{{slotsJson}}' aria-live="polite"></p>
+      {{ratingBadge}}
+      <a class="fact-address" href="{{mapsUrl}}" rel="noopener">{{address}}</a>
+    </div>
     <p class="hero__hours">Midi du lundi au samedi · Soir sur place vendredi et samedi, à emporter du mardi au jeudi · <a href="#horaires">Tous les horaires</a></p>
   </div>
 </section>
@@ -29,13 +32,14 @@
 <section class="section">
   <div class="container intro">
     <div>
-      <span class="section__kicker">La cucina</span>
-      <h2>Au four à bois</h2>
+      <span class="section__kicker">Qui sommes-nous ?</span>
+      <h2>DIO, la pizza au four à bois</h2>
       <img class="photo-card" src="/assets/photos/four-et-cartons.jpg" alt="Le four à bois en mosaïque et les boîtes à pizza à emporter" width="660" height="440" loading="lazy">
     </div>
     <div class="intro__text">
-      <p>Chez DIO, la pizza passe par le four à bois : la pâte gonfle, le fromage fond, et c'est prêt en quelques minutes. À côté, il y a des pâtes (nature ou gratinées au four), des risottos, des spécialités pour les grosses faims et des planches à partager. À emporter, les pizzas démarrent à 7,90 € et les pâtes à 9 €.</p>
+      <p>DIO est un restaurant italien de Villeneuve-d'Ascq. La pizza passe par le four à bois : la pâte gonfle, le fromage fond, et c'est prêt en quelques minutes. À côté, il y a des pâtes (nature ou gratinées au four), des risottos, des spécialités pour les grosses faims et des planches à partager. À emporter, les pizzas démarrent à 7,90 € et les pâtes à 9 €.</p>
       <p>On finit volontiers par un tiramisu ou un pain perdu brioché au caramel. Et le café, on y tient.</p>
+      <ul class="about__points"><li>Four à bois</li><li>Sur place, à emporter, livraison</li><li>Traiteur et privatisation</li><li>Parking gratuit</li></ul>
       <p class="signature">Buon appetito !</p>
     </div>
   </div>
