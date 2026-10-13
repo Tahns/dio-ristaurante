@@ -718,6 +718,48 @@
         "example": true
       },
       {
+        "author": "Julien M.",
+        "rating": 5,
+        "date": "",
+        "text": "Commande à emporter prête à l'heure, pizza encore bien chaude. Pratique le soir en semaine.",
+        "example": true
+      },
+      {
+        "author": "Nathalie R.",
+        "rating": 5,
+        "date": "",
+        "text": "Accueil agréable, service rapide à midi. La pizza était très bonne, croustillante sur les bords. Je recommande.",
+        "example": true
+      },
+      {
+        "author": "Marc-Antoine P.",
+        "rating": 5,
+        "date": "",
+        "text": "On a fêté un anniversaire à une douzaine. Les pizzas à partager sont arrivées vite et tout le monde est reparti content.",
+        "example": true
+      },
+      {
+        "author": "Léa V.",
+        "rating": 5,
+        "date": "",
+        "text": "Très bon tiramisu, et le café est vraiment bon. On y est allés en famille, personne n'a été déçu.",
+        "example": true
+      },
+      {
+        "author": "Élodie F.",
+        "rating": 5,
+        "date": "",
+        "text": "Je commande régulièrement à emporter le soir. C'est toujours prêt à l'heure et la pizza est chaude.",
+        "example": true
+      },
+      {
+        "author": "Pierre G.",
+        "rating": 5,
+        "date": "",
+        "text": "Un repas d'équipe au déjeuner, sans stress. La carte est large, chacun a trouvé ce qu'il voulait.",
+        "example": true
+      },
+      {
         "author": "Sophie L.",
         "rating": 4,
         "date": "",
@@ -725,10 +767,17 @@
         "example": true
       },
       {
-        "author": "Julien M.",
-        "rating": 5,
+        "author": "Karim A.",
+        "rating": 4,
         "date": "",
-        "text": "Commande à emporter prête à l'heure, pizza encore bien chaude. Pratique le soir en semaine.",
+        "text": "Bon rapport qualité-prix. Les pâtes gratinées sont généreuses. Le parking juste à côté, c'est un vrai plus.",
+        "example": true
+      },
+      {
+        "author": "Anaïs C.",
+        "rating": 4,
+        "date": "",
+        "text": "Cadre simple et chaleureux, cuisine copieuse. Les pizzas cuites au four à bois changent des pizzas habituelles.",
         "example": true
       }
     ]
@@ -858,8 +907,8 @@
   ],
   "compose": {
     "title": "Composez votre pizza",
-    "intro": "Choisissez votre base, puis jusqu'à 6 ingrédients. C'est un peu plus cher qu'une pizza de la carte, parce qu'elle est faite sur mesure.",
-    "max": 6,
+    "intro": "Choisissez votre base, puis jusqu'à 8 ingrédients parmi tous ceux de la carte. C'est un peu plus cher qu'une pizza de la carte, parce qu'elle est faite sur mesure.",
+    "max": 8,
     "bases": [
       {
         "id": "tomate",
@@ -876,11 +925,23 @@
     ],
     "groups": [
       {
-        "name": "Viandes et poissons",
+        "name": "Viandes et charcuterie",
         "items": [
           {
             "name": "Jambon",
             "price": "2 €"
+          },
+          {
+            "name": "Jambon cru",
+            "price": "3 €"
+          },
+          {
+            "name": "Jambon de Parme",
+            "price": "3 €"
+          },
+          {
+            "name": "Coppa",
+            "price": "3 €"
           },
           {
             "name": "Lardons",
@@ -888,6 +949,10 @@
           },
           {
             "name": "Chorizo",
+            "price": "2 €"
+          },
+          {
+            "name": "Pepperoni",
             "price": "2 €"
           },
           {
@@ -903,12 +968,45 @@
             "price": "2 €"
           },
           {
+            "name": "Steak",
+            "price": "2,50 €"
+          },
+          {
+            "name": "Viande kebab",
+            "price": "2,50 €"
+          },
+          {
+            "name": "Mortadelle",
+            "price": "2,50 €"
+          },
+          {
+            "name": "Carpaccio",
+            "price": "3 €"
+          }
+        ]
+      },
+      {
+        "name": "Poissons et fruits de mer",
+        "items": [
+          {
             "name": "Thon",
             "price": "2 €"
           },
           {
             "name": "Anchois",
             "price": "2 €"
+          },
+          {
+            "name": "Saumon",
+            "price": "3 €"
+          },
+          {
+            "name": "Fruits de mer",
+            "price": "3 €"
+          },
+          {
+            "name": "Scampis",
+            "price": "3 €"
           }
         ]
       },
@@ -934,11 +1032,23 @@
           {
             "name": "Parmesan",
             "price": "1,50 €"
+          },
+          {
+            "name": "Grana",
+            "price": "1,50 €"
+          },
+          {
+            "name": "Ricotta",
+            "price": "2 €"
+          },
+          {
+            "name": "Burrata",
+            "price": "3 €"
           }
         ]
       },
       {
-        "name": "Légumes et le reste",
+        "name": "Légumes",
         "items": [
           {
             "name": "Champignons",
@@ -949,11 +1059,19 @@
             "price": "1 €"
           },
           {
+            "name": "Oignons frits",
+            "price": "1 €"
+          },
+          {
             "name": "Poivrons",
             "price": "1 €"
           },
           {
             "name": "Olives",
+            "price": "1 €"
+          },
+          {
+            "name": "Olives noires",
             "price": "1 €"
           },
           {
@@ -969,8 +1087,65 @@
             "price": "1 €"
           },
           {
+            "name": "Tomates",
+            "price": "1 €"
+          },
+          {
+            "name": "Courgette",
+            "price": "1 €"
+          },
+          {
+            "name": "Aubergine",
+            "price": "1 €"
+          },
+          {
+            "name": "Épinards",
+            "price": "1 €"
+          },
+          {
+            "name": "Ananas",
+            "price": "1 €"
+          },
+          {
             "name": "Œuf",
             "price": "1 €"
+          },
+          {
+            "name": "Truffe",
+            "price": "3 €"
+          }
+        ]
+      },
+      {
+        "name": "Sauces et finitions",
+        "items": [
+          {
+            "name": "Sauce barbecue",
+            "price": "1 €"
+          },
+          {
+            "name": "Pesto",
+            "price": "1,50 €"
+          },
+          {
+            "name": "Sauce napolitaine",
+            "price": "1 €"
+          },
+          {
+            "name": "Huile d'olive",
+            "price": "0 €"
+          },
+          {
+            "name": "Ail",
+            "price": "0 €"
+          },
+          {
+            "name": "Basilic",
+            "price": "0 €"
+          },
+          {
+            "name": "Origan",
+            "price": "0 €"
           }
         ]
       }

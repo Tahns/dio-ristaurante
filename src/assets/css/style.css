@@ -1,15 +1,12 @@
-@font-face{font-family:"Fraunces";src:url(/assets/fonts/fraunces-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
-@font-face{font-family:"Fraunces";src:url(/assets/fonts/fraunces-800.woff2) format("woff2");font-weight:800;font-style:normal;font-display:swap}
-@font-face{font-family:"Fraunces";src:url(/assets/fonts/fraunces-600i.woff2) format("woff2");font-weight:600;font-style:italic;font-display:swap}
-@font-face{font-family:"Caveat";src:url(/assets/fonts/caveat-600.woff2) format("woff2");font-weight:600;font-display:swap}
-@font-face{font-family:"Inter";src:url(/assets/fonts/inter-var.woff2) format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Oswald";src:url(/assets/fonts/oswald.woff2) format("woff2");font-weight:200 700;font-display:swap}
+@font-face{font-family:"Source Sans 3";src:url(/assets/fonts/sourcesans3.woff2) format("woff2");font-weight:200 900;font-display:swap}
 :root{
   --ink:#151515;--ink-2:#232323;--cream:#f3ecde;--paper:#fbf9f4;--ochre:#c98a2b;--ochre-dark:#8f5f12;--ochre-light:#e3b567;
   --green:#2f8f3e;--red:#d1301f;--tricolor:linear-gradient(90deg,#2f8f3e 0 33.3%,#ffffff 33.3% 66.6%,#d1301f 66.6%);
   --gold:var(--ochre);--ember:var(--ochre);--kraft:#f3ecde;
   --muted:#5f5a52;--line:#e2dccf;--radius:6px;
-  --serif:"Fraunces",Georgia,"Times New Roman",serif;--hand:"Caveat","Bradley Hand",cursive;
-  --sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --serif:"Oswald","Arial Narrow",Impact,sans-serif;--hand:"Source Sans 3",system-ui,sans-serif;
+  --sans:"Source Sans 3",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -550,3 +547,31 @@ tr.is-today .today-tag{display:inline-block}
 .cc__addr{font-weight:700;margin:0}.cc__addr a{color:var(--ink)}
 .cc__note{margin:14px 0 0;font-size:.85rem;font-style:italic;color:var(--muted)}
 .cart-min{margin:0;color:var(--ember);font-weight:600;font-size:.9rem}
+
+/* Moins « généré » : titres d'enseigne, formes droites, pas d'ombres ni de barres de couleur */
+h1,h2,.logo__text,.hero__name{font-weight:700;letter-spacing:.015em}
+h1,h2{text-transform:uppercase}
+h3{font-weight:600}
+.section h2::after,.page-hero h1::after,.hero h1::after{display:none!important}
+.hero::after,.page-hero::after,.topbar::after,.cta-band::before{display:none}
+.section__kicker,.hero__eyebrow,.hero__name{font:700 .85rem var(--sans);letter-spacing:.1em;text-transform:uppercase;transform:none;color:var(--ochre-dark)}
+.hero .section__kicker,.hero__name,.section--dark .section__kicker{color:var(--ochre-light)}
+.hero h1 em,.page-hero h1 em{font-style:normal;font-weight:inherit;color:inherit}
+.menu-item h3,.order-item h3{font-style:normal}
+.menu-item h3,.order-item h3{font-size:1.1rem;font-weight:600;text-transform:none}
+.signature{display:none}
+.about__title{background:none}
+.about__title .section__kicker,.about__title h2{background:none;padding-right:0}
+.photo-card,.split__img{transform:none;border:0;box-shadow:none;border-radius:2px;max-width:100%}
+.open-now,.rating-badge,.fact-address,.about__points li,.chip>span,.seg span,.recap__badge,.tag-example,.hero__float a,.today-tag,.order-bar,.hours-table td small.mode,.stepper,.cal__head button,.qty button,.cart-rm,.base>span{border-radius:4px}
+.order-bar__count{border-radius:3px}
+.hero__logo{box-shadow:none}
+.rating-badge,.about__card,.compose,.cc,.order__panel,.mapband__card,.hours-table,.review-ask,.recap,.card,.quote,.news-card,.call-card,.parking{box-shadow:none}
+.card,.card--menu{border-top:1px solid #3b3f42}
+.about__card{border:1px solid var(--line)}
+.compose,.order__panel,.recap,.call-card{border-top:1px solid var(--line)}
+.review-ask{border-bottom:0}
+.cancel-note{border:1px solid #e3c98f;border-left-width:1px}
+.parking{border-left:2px solid var(--ink)}
+.tag-example{background:none;border:1px solid var(--ochre-dark);color:var(--ochre-dark)}
+.hero__float a{background:transparent}

@@ -88,7 +88,7 @@ const composeBlock = () => {
         ${c.groups
           .map(
             (g) => `<p class="compose__group">${esc(g.name)}</p><div class="compose__chips">${g.items
-              .map((it) => `<label class="chip"><input type="checkbox" name="compose-ing" value="${esc(it.name)}" data-price="${parsePrice(it.price)}"><span>${esc(it.name)} <small>+${f(parsePrice(it.price))}</small></span></label>`)
+              .map((it) => `<label class="chip"><input type="checkbox" name="compose-ing" value="${esc(it.name)}" data-price="${parsePrice(it.price)}"><span>${esc(it.name)} <small>${parsePrice(it.price) ? "+" + f(parsePrice(it.price)) : "offert"}</small></span></label>`)
               .join("")}</div>`
           )
           .join("")}
@@ -211,7 +211,7 @@ const hoursPanel = () => {
   <div class="container hours-band__inner">
     <div>
       <span class="section__kicker">Quand venir</span>
-      <h2>On vous attend midi et soir</h2>
+      <h2>Horaires</h2>
       <p class="open-now" data-open-now data-slots="${esc(JSON.stringify(site.hoursSlots || []))}" aria-live="polite"></p>
       <ul class="hours-legend"><li><strong>Midi</strong> : du lundi au samedi.</li><li><strong>Soir sur place</strong> : le vendredi et le samedi.</li><li><strong>Soir à emporter</strong> : du mardi au jeudi, on prépare votre commande.</li><li><strong>Dimanche</strong> : fermé.</li></ul>
       <p><a class="btn btn--primary" href="/reservation/">Réserver une table</a> ${hasPhone ? `<a class="btn btn--dark" href="tel:${phone.tel}">Appeler le ${phone.display}</a>` : ""}</p>
@@ -379,7 +379,7 @@ const ratingBadge = () => {
 function reviewsSection() {
   const r = site.reviews || {};
   const cards = (r.items || [])
-    .slice(0, 6)
+    .slice(0, 8)
     .map(
       (it) => `<figure class="quote">
         <p class="quote__stars stars-bar" style="--r:${Number(it.rating) || 5}" role="img" aria-label="${esc(it.rating)} sur 5">★★★★★</p>
@@ -421,8 +421,8 @@ function reviewsSection() {
 const shareBlock = () => `<section class="section section--dark share" id="partager">
   <div class="container share__inner">
     <div>
-      <span class="section__kicker">Passez le mot</span>
-      <h2>Un bon repas ? Passez le mot</h2>
+      <span class="section__kicker">Partager</span>
+      <h2>Vous avez aimé ? Dites-le autour de vous</h2>
       <p>Dites-le à un ami ou à un collègue : c'est ce qui nous fait le plus plaisir.</p>
     </div>
     <div class="share__actions">
