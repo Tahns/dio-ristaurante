@@ -155,7 +155,7 @@ function reviewsSection() {
     .slice(0, 6)
     .map(
       (it) => `<figure class="quote">
-        <p class="quote__stars" aria-label="${esc(it.rating)} sur 5">${"★".repeat(Math.round(Number(it.rating) || 5))}</p>
+        <p class="quote__stars" role="img" aria-label="${esc(it.rating)} sur 5">${"★".repeat(Math.round(Number(it.rating) || 5))}</p>
         <blockquote><p>${esc(it.text)}</p></blockquote>
         <figcaption>${esc(it.author)}${it.date ? ` · ${esc(it.date)}` : ""} · Avis ${esc(r.source || "Google")}</figcaption>
       </figure>`
@@ -218,6 +218,15 @@ const heroPhoto =
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Restaurant",
+  "@id": site.baseUrl + "/#restaurant",
+  logo: site.baseUrl + "/assets/img/logo-dio.svg",
+  hasMap: mapsUrl,
+  ...(site.priceRange ? { priceRange: site.priceRange } : {}),
+  ...(site.geo ? { geo: { "@type": "GeoCoordinates", latitude: site.geo.lat, longitude: site.geo.lng } } : {}),
+  ...(site.hoursSpec?.length
+    ? { openingHoursSpecification: site.hoursSpec.map((h) => ({ "@type": "OpeningHoursSpecification", dayOfWeek: h.days, opens: h.opens, closes: h.closes })) }
+    : {}),
+  potentialAction: { "@type": "ReserveAction", target: site.baseUrl + "/reservation/", result: { "@type": "Reservation", name: "Réserver une table" } },
   name: site.name,
   url: site.baseUrl + "/",
   image: site.baseUrl + "/assets/img/og.png",
@@ -238,8 +247,16 @@ const jsonLd = {
     { "@type": "LocationFeatureSpecification", name: "Privatisation", value: true },
     { "@type": "LocationFeatureSpecification", name: "Vente à emporter", value: true },
   ],
-  hasMenu: site.baseUrl + "/la-carte/",
-  sameAs: Object.values(site.social).filter(Boolean),
+  hasMenu: {
+    "@type": "Menu",
+    url: site.baseUrl + "/la-carte/",
+    hasMenuSection: site.menu.map((c) => ({
+      "@type": "MenuSection",
+      name: c.title,
+      hasMenuItem: c.items.map((i) => ({ "@type": "MenuItem", name: i.name, description: i.desc })),
+    })),
+  },
+  ...(Object.values(site.social).some(Boolean) ? { sameAs: Object.values(site.social).filter(Boolean) } : {}),
 };
 
 // ---------- Actualités (src/actualites/*.md, éditables depuis l'administration) ----------
@@ -309,10 +326,10 @@ const news = (fs.existsSync(NEWS_DIR) ? fs.readdirSync(NEWS_DIR) : [])
   .filter((n) => !n.draft && !Number.isNaN(n.date.getTime()))
   .sort((a, b) => b.date - a.date);
 
-const newsCard = (n) => `<a class="activity activity--dark news-card" href="/actualites/${n.slug}/">
+const newsCard = (n, lvl = 3) => `<a class="news-card" href="/actualites/${n.slug}/">
   ${n.image ? `<img class="news-card__img" src="${esc(n.image)}" alt="" loading="lazy">` : ""}
   <span class="activity__age">${frDate(n.date)}</span>
-  <h3>${esc(n.title)}</h3>
+  <h${lvl}>${esc(n.title)}</h${lvl}>
   ${n.summary ? `<p>${esc(n.summary)}</p>` : ""}
   <span class="activity__more">Lire →</span>
 </a>`;
@@ -373,7 +390,7 @@ const tokens = {
   callBtn: () => callBtn(),
   callBtnLight: () => callBtn("btn btn--light"),
   callLink: () => (hasPhone ? `<a href="tel:${phone.tel}" class="mobile-bar__call">Appeler</a>` : `<a href="${mapsUrl}" class="mobile-bar__call" rel="noopener">Itinéraire</a>`),
-  phoneCard: () => (hasPhone ? `<div class="contact-card"><h3>${esc(phone.label)}</h3><a href="tel:${phone.tel}">${phone.display}</a></div>` : ""),
+  phoneCard: () => (hasPhone ? `<div class="contact-card"><h2>${esc(phone.label)}</h2><a href="tel:${phone.tel}">${phone.display}</a></div>` : ""),
   phoneLine: () => (hasPhone ? `Téléphone : <a href="tel:${phone.tel}">${phone.display}</a><br>` : ""),
   cta: () => ctaBand(),
   ctaPriv: () => ctaBand("Un événement à organiser ?", "Entreprise, anniversaire, fête : parlons de votre date et de vos envies."),
@@ -450,7 +467,7 @@ function writePage(meta, body, urlPath, outFile) {
     pageDescription: esc(meta.description),
     canonical: site.baseUrl + urlPath,
     robots: meta.noindex || NOINDEX ? "noindex, nofollow" : "index, follow",
-    jsonLd: ld(jsonLd) + (meta.jsonLd ? "\n" + ld(meta.jsonLd) : ""),
+    jsonLd: (urlPath === "/" ? ld(jsonLd) : "") + (meta.jsonLd ? "\n" + ld(meta.jsonLd) : ""),
   };
   let html = layout
     .replace(/\{\{(content|pageTitle|pageDescription|canonical|robots|jsonLd)\}\}/g, (_, k) => pageVars[k])
@@ -491,7 +508,7 @@ writePage(
   `<section class="page-hero"><div class="container"><h1>Actualités</h1><p>Plats du moment, soirées et nouveautés de la maison.</p></div></section>
 <section class="section"><div class="container">${
     news.length
-      ? `<div class="grid grid--3">${news.map(newsCard).join("")}</div>`
+      ? `<div class="grid grid--3">${news.map((n) => newsCard(n, 2)).join("")}</div>`
       : `<div class="empty-gallery"><p>Aucune actualité pour le moment. Revenez bientôt !</p></div>`
   }</div></section>
 {{cta}}`,
