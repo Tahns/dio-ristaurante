@@ -120,7 +120,7 @@ const formulas = () =>
 
 const ctaBand = (
   title = "Une table chez Dio ?",
-  text = "Remplissez le formulaire, on vous recontacte pour confirmer."
+  text = "Un coup de fil suffit, on vous trouve une table."
 ) => `
 <section class="cta-band">
   <div class="container cta-band__inner">
