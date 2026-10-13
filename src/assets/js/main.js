@@ -335,7 +335,8 @@ if (order) {
   const oform = document.getElementById("order-form");
   const recap = document.getElementById("order-recap");
   const status = oform.querySelector(".form__status");
-  const LEAD = 30;
+  const LEAD = Number(order.dataset.lead) || 30;
+  const MIN = Number(order.dataset.min) || 0;
   try { JSON.parse(localStorage.getItem("dio-cart") || "[]").forEach(([id, v]) => cart.set(id, v)); } catch {}
 
   const total = () => [...cart.values()].reduce((n, v) => n + v.price * v.qty, 0);
@@ -350,18 +351,26 @@ if (order) {
       out.hidden = q === 0;
       out.textContent = q;
     });
-    linesEl.replaceChildren(...[...cart.values()].map((v) => {
+    linesEl.replaceChildren(...[...cart.entries()].map(([id, v]) => {
       const li = document.createElement("li");
       const name = document.createElement("span");
       name.textContent = `${v.qty} × ${v.name}`;
       const price = document.createElement("span");
       price.textContent = euros(v.price * v.qty);
-      li.append(name, price);
+      const rm = document.createElement("button");
+      rm.type = "button";
+      rm.className = "cart-rm";
+      rm.setAttribute("aria-label", "Retirer un : " + v.name);
+      rm.textContent = "−";
+      rm.addEventListener("click", () => { v.qty -= 1; if (v.qty <= 0) cart.delete(id); paint(); });
+      li.append(name, price, rm);
       return li;
     }));
     emptyEl.hidden = cart.size > 0;
     totalEl.hidden = cart.size === 0;
     totalEl.querySelector("strong").textContent = euros(total());
+    const minEl = order.querySelector(".cart-min");
+    if (minEl) { minEl.hidden = cart.size === 0 || total() >= MIN; }
     bar.hidden = cart.size === 0;
     bar.querySelector(".order-bar__count").textContent = count();
     bar.querySelector(".order-bar__total").textContent = euros(total());
@@ -383,6 +392,36 @@ if (order) {
       paint();
     });
   });
+
+  // Composer sa pizza : base + ingrédients, le prix monte à chaque ingrédient
+  const compose = document.getElementById("o-compose");
+  if (compose) {
+    const max = Number(compose.dataset.max) || 6;
+    const ings = [...compose.querySelectorAll('input[name="compose-ing"]')];
+    const bases = [...compose.querySelectorAll('input[name="compose-base"]')];
+    const price = () => Number(bases.find((b) => b.checked).dataset.price) + ings.filter((i) => i.checked).reduce((n, i) => n + Number(i.dataset.price), 0);
+    const refreshCompose = () => {
+      const n = ings.filter((i) => i.checked).length;
+      ings.forEach((i) => (i.disabled = !i.checked && n >= max));
+      compose.querySelector(".compose__count").textContent = `(${n} sur ${max})`;
+      compose.querySelector("[data-compose-total]").textContent = euros(price());
+    };
+    compose.addEventListener("change", refreshCompose);
+    compose.querySelector("[data-compose-add]").addEventListener("click", () => {
+      const base = bases.find((b) => b.checked);
+      const chosen = ings.filter((i) => i.checked).map((i) => i.value);
+      const name = `Pizza composée, ${base.value.toLowerCase()}${chosen.length ? " : " + chosen.join(", ") : ""}`;
+      const id = "compose:" + base.value + ":" + [...chosen].sort().join("|");
+      const cur = cart.get(id) || { name, price: price(), qty: 0 };
+      cur.qty = Math.min(cur.qty + 1, 30);
+      cart.set(id, cur);
+      ings.forEach((i) => (i.checked = false));
+      refreshCompose();
+      paint();
+      compose.querySelector(".compose__ok").textContent = "Pizza ajoutée au panier.";
+    });
+    refreshCompose();
+  }
 
   // Jour de retrait : calendrier sur 14 jours, seuls les jours qui ont encore une heure disponible sont cliquables
   const dateEl = document.getElementById("o-date");
@@ -406,6 +445,7 @@ if (order) {
   oform.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (!cart.size) return setStatus("Ajoutez au moins un plat à votre commande.", false);
+    if (MIN && total() < MIN) return setStatus(`Le minimum de commande est de ${euros(MIN)}. Il manque ${euros(MIN - total())}.`, false);
     if (!dateEl.value) return setStatus("Choisissez le jour de retrait dans le calendrier.", false);
     if (!oform.reportValidity()) return;
     const d = new FormData(oform);

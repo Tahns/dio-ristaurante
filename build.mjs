@@ -70,9 +70,60 @@ const parsePrice = (s) => {
 };
 
 // Commande à emporter : les plats de la carte « à emporter » avec un compteur, et le panier à côté.
+const composeBlock = () => {
+  const c = site.compose;
+  if (!c) return "";
+  const f = (cents) => (cents / 100).toFixed(2).replace(".", ",").replace(",00", "") + " €";
+  return `<section class="order-cat compose" id="o-compose" data-max="${c.max || 6}">
+      <h2>${esc(c.title)}</h2>
+      <p class="menu-cat__intro">${esc(c.intro)}</p>
+      <fieldset class="compose__step"><legend>1. La base</legend>
+        <div class="compose__bases">${c.bases
+          .map(
+            (bs, i) => `<label class="base"><input type="radio" name="compose-base" value="${esc(bs.name)}" data-price="${parsePrice(bs.price)}"${i === 0 ? " checked" : ""}><span><strong>${esc(bs.name)}</strong><small>${esc(bs.desc)}</small><em>${esc(bs.price)}</em></span></label>`
+          )
+          .join("")}</div>
+      </fieldset>
+      <fieldset class="compose__step"><legend>2. Vos ingrédients <span class="compose__count">(0 sur ${c.max || 6})</span></legend>
+        ${c.groups
+          .map(
+            (g) => `<p class="compose__group">${esc(g.name)}</p><div class="compose__chips">${g.items
+              .map((it) => `<label class="chip"><input type="checkbox" name="compose-ing" value="${esc(it.name)}" data-price="${parsePrice(it.price)}"><span>${esc(it.name)} <small>+${f(parsePrice(it.price))}</small></span></label>`)
+              .join("")}</div>`
+          )
+          .join("")}
+      </fieldset>
+      <p class="compose__total">Votre pizza : <strong data-compose-total>${f(parsePrice(c.bases[0].price))}</strong></p>
+      <p><button type="button" class="btn btn--primary" data-compose-add>Ajouter ma pizza au panier</button> <span class="compose__ok" role="status" aria-live="polite"></span></p>
+      <p class="compose__note">${esc(c.note || "")}</p>
+    </section>`;
+};
+
+const orderInfo = () => {
+  const cc = site.clickCollect || {};
+  const rows = (site.hoursGrid || [])
+    .map((h) => {
+      const parts = [h.midi, h.soir].filter(Boolean).map((r) => esc(fmtR(r).replace(/ – /g, "–")));
+      return `<li><span>${esc(h.day)}</span><strong>${parts.length ? parts.join(" / ") : "Fermé"}</strong></li>`;
+    })
+    .join("");
+  return `<section class="cc" aria-labelledby="cc-title">
+  <div class="cc__head">
+    <svg viewBox="0 0 24 24" width="44" height="44" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M12 3v5M12 21v-5M3 12h5M21 12h-5M9 6l3 3 3-3M9 18l3-3 3 3M6 9l3 3-3 3M18 9l-3 3 3 3"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg>
+    <div><h2 id="cc-title">Click &amp; Collect</h2>${cc.minimum ? `<p>Minimum de ${esc(cc.minimum)} d'achat</p>` : ""}</div>
+    ${cc.prepMinutes ? `<p class="cc__time"><strong>${cc.prepMinutes} min</strong><span>à l'avance</span></p>` : ""}
+  </div>
+  <p class="cc__lead">Les commandes se préparent et se retirent uniquement pendant ces horaires :</p>
+  <ul class="cc__hours">${rows}</ul>
+  <p class="cc__lead">à l'adresse suivante :</p>
+  <p class="cc__addr"><a href="${mapsUrl}" rel="noopener">${esc(site.name)}, ${esc(addressLine)}</a></p>
+  ${cc.note ? `<p class="cc__note">${esc(cc.note)}</p>` : ""}
+</section>`;
+};
+
 const orderApp = () => {
   const cats = (site.menu.emporter || []).map((c) => ({ ...c, items: c.items.filter((it) => parsePrice(it.price) > 0) })).filter((c) => c.items.length);
-  const nav = cats.map((c) => `<a href="#o-${esc(c.id)}">${esc(c.title)}</a>`).join("");
+  const nav = (site.compose ? `<a href="#o-compose">Composer ma pizza</a>` : "") + cats.map((c) => `<a href="#o-${esc(c.id)}">${esc(c.title)}</a>`).join("");
   const sections = cats
     .map(
       (c) => `<section class="order-cat" id="o-${esc(c.id)}">
@@ -89,9 +140,10 @@ const orderApp = () => {
     </section>`
     )
     .join("");
-  return `<div class="order" id="order" data-endpoint="${esc(site.formEndpoint)}" data-email="${esc(site.email)}" data-slots='${JSON.stringify(site.hoursSlots || [])}' data-tel="${hasPhone ? phone.tel : ""}" data-phone="${hasPhone ? phone.display : ""}">
+  return `<div class="order" id="order" data-endpoint="${esc(site.formEndpoint)}" data-email="${esc(site.email)}" data-min="${parsePrice(site.clickCollect?.minimum)}" data-lead="${site.clickCollect?.prepMinutes || 30}" data-slots='${JSON.stringify(site.hoursSlots || [])}' data-tel="${hasPhone ? phone.tel : ""}" data-phone="${hasPhone ? phone.display : ""}">
   <div class="order__menu">
     <nav class="menu-nav" aria-label="Rubriques de la carte à emporter">${nav}</nav>
+    ${composeBlock()}
     ${sections}
   </div>
   <aside class="order__cart" id="cart" aria-label="Votre commande">
@@ -100,6 +152,7 @@ const orderApp = () => {
       <p class="cart-empty">Votre panier est vide. Ajoutez des plats avec le bouton +.</p>
       <ul class="cart-lines"></ul>
       <p class="cart-total" hidden><span>Total</span><strong>0 €</strong></p>
+      ${site.clickCollect?.minimum ? `<p class="cart-min" hidden>Minimum de commande : ${esc(site.clickCollect.minimum)}</p>` : ""}
       <form id="order-form" class="order-form" novalidate>
         <div class="field">
           <span class="label" id="o-date-label">Jour de retrait</span>
@@ -542,6 +595,7 @@ const tokens = {
   parkingMap,
   mapFull,
   orderApp,
+  orderInfo,
   phoneTel: () => (hasPhone ? phone.tel : ""),
   phoneDisplay: () => (hasPhone ? phone.display : ""),
   promoBar,

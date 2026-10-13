@@ -855,5 +855,131 @@
       "to": "21:00",
       "mode": "sur place ou à emporter"
     }
-  ]
+  ],
+  "compose": {
+    "title": "Composez votre pizza",
+    "intro": "Choisissez votre base, puis jusqu'à 6 ingrédients. C'est un peu plus cher qu'une pizza de la carte, parce qu'elle est faite sur mesure.",
+    "max": 6,
+    "bases": [
+      {
+        "id": "tomate",
+        "name": "Base tomate",
+        "desc": "Sauce tomate et mozzarella",
+        "price": "9,50 €"
+      },
+      {
+        "id": "creme",
+        "name": "Base crème fraîche",
+        "desc": "Crème fraîche et mozzarella",
+        "price": "10,50 €"
+      }
+    ],
+    "groups": [
+      {
+        "name": "Viandes et poissons",
+        "items": [
+          {
+            "name": "Jambon",
+            "price": "2 €"
+          },
+          {
+            "name": "Lardons",
+            "price": "2 €"
+          },
+          {
+            "name": "Chorizo",
+            "price": "2 €"
+          },
+          {
+            "name": "Merguez",
+            "price": "2 €"
+          },
+          {
+            "name": "Poulet",
+            "price": "2 €"
+          },
+          {
+            "name": "Viande hachée",
+            "price": "2 €"
+          },
+          {
+            "name": "Thon",
+            "price": "2 €"
+          },
+          {
+            "name": "Anchois",
+            "price": "2 €"
+          }
+        ]
+      },
+      {
+        "name": "Fromages",
+        "items": [
+          {
+            "name": "Chèvre",
+            "price": "2 €"
+          },
+          {
+            "name": "Gorgonzola",
+            "price": "2 €"
+          },
+          {
+            "name": "Reblochon",
+            "price": "2 €"
+          },
+          {
+            "name": "Maroilles",
+            "price": "2 €"
+          },
+          {
+            "name": "Parmesan",
+            "price": "1,50 €"
+          }
+        ]
+      },
+      {
+        "name": "Légumes et le reste",
+        "items": [
+          {
+            "name": "Champignons",
+            "price": "1 €"
+          },
+          {
+            "name": "Oignons",
+            "price": "1 €"
+          },
+          {
+            "name": "Poivrons",
+            "price": "1 €"
+          },
+          {
+            "name": "Olives",
+            "price": "1 €"
+          },
+          {
+            "name": "Pommes de terre",
+            "price": "1 €"
+          },
+          {
+            "name": "Artichaut",
+            "price": "1,50 €"
+          },
+          {
+            "name": "Roquette",
+            "price": "1 €"
+          },
+          {
+            "name": "Œuf",
+            "price": "1 €"
+          }
+        ]
+      }
+    ],
+    "note": "Prix donnés à titre d'exemple : à valider par le restaurant."
+  },
+  "clickCollect": {
+    "minimum": "15 €",
+    "prepMinutes": 30,
+    "note": "Minimum et délai donnés à titre d'exemple : à valider par le restaurant."
+  }
 }

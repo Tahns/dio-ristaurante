@@ -512,3 +512,41 @@ tr.is-today .today-tag{display:inline-block}
 .footer .hours-mini tr.is-today>*{background:#2b2d2f;color:var(--ochre-light)}
 .mapband__card .hours-mini{margin-bottom:14px}
 @media (min-width:701px){.mapband,.mapband__frame{min-height:600px;height:600px}}
+
+/* Composer sa pizza */
+.compose{background:#fff;border:1px solid var(--line);border-top:5px solid var(--ochre);border-radius:var(--radius);padding:clamp(18px,3vw,28px);margin-top:24px}
+.compose h2{margin-top:0}
+.compose__step{border:0;padding:0;margin:18px 0 0;min-width:0}
+.compose__step legend{font-weight:700;padding:0;margin-bottom:10px}
+.compose__count{font-weight:400;color:var(--muted)}
+.compose__bases{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.base input,.chip input{position:absolute;opacity:0;width:1px;height:1px}
+.base>span{display:grid;gap:2px;padding:14px 16px;border:2px solid var(--line);border-radius:10px;cursor:pointer}
+.base small{color:var(--muted)}.base em{font-style:normal;font-weight:700;color:var(--ochre-dark)}
+.base input:checked+span{border-color:var(--ink);background:#fff3d6}
+.compose__group{margin:14px 0 8px;font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.compose__chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip>span{display:inline-block;padding:8px 14px;border:1px solid #867659;border-radius:999px;cursor:pointer;background:#fff}
+.chip small{color:var(--muted)}
+.chip input:checked+span{background:var(--ink);color:#fff;border-color:var(--ink)}.chip input:checked+span small{color:#d8d2c4}
+.chip input:disabled+span{opacity:.4;cursor:not-allowed}
+.chip input:focus-visible+span,.base input:focus-visible+span{outline:3px solid var(--ochre);outline-offset:2px}
+.compose__total{margin:18px 0 10px;font-size:1.2rem}
+.compose__ok{color:#1b6b3a;font-weight:600;margin-left:10px}
+.compose__note{margin:0;color:var(--muted);font-size:.85rem;font-style:italic}
+.cart-lines li{align-items:center}
+.cart-rm{flex:none;width:28px;height:28px;border-radius:50%;border:1px solid var(--ink);background:#fff;font:700 1rem/1 var(--sans);cursor:pointer;color:var(--ink)}
+.cart-rm:hover{background:var(--ink);color:#fff}
+
+/* Fiche Click & Collect */
+.cc{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 10px 30px rgba(21,21,21,.1);padding:clamp(20px,4vw,32px);margin-bottom:28px;max-width:720px;margin-inline:auto;text-align:center}
+.cc__head{display:flex;align-items:center;gap:16px;text-align:left;margin-bottom:16px}
+.cc__head svg{flex:none;color:var(--ink)}
+.cc__head h2{margin:0;font-size:1.8rem}.cc__head p{margin:0;color:var(--muted)}
+.cc__time{margin-left:auto!important;text-align:right;display:grid;line-height:1.1}.cc__time strong{font-size:1.4rem;color:var(--ink)}.cc__time span{font-size:.85rem}
+.cc__lead{margin:12px 0;color:var(--muted)}
+.cc__hours{list-style:none;margin:0 auto;padding:0;max-width:420px;display:grid;gap:6px}
+.cc__hours li{display:flex;justify-content:space-between;gap:16px}.cc__hours li strong{font-variant-numeric:tabular-nums;text-align:right}
+.cc__addr{font-weight:700;margin:0}.cc__addr a{color:var(--ink)}
+.cc__note{margin:14px 0 0;font-size:.85rem;font-style:italic;color:var(--muted)}
+.cart-min{margin:0;color:var(--ember);font-weight:600;font-size:.9rem}
