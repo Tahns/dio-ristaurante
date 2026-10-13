@@ -110,7 +110,7 @@ const orderInfo = () => {
   return `<section class="cc" aria-labelledby="cc-title">
   <div class="cc__head">
     <svg viewBox="0 0 24 24" width="44" height="44" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M12 3v5M12 21v-5M3 12h5M21 12h-5M9 6l3 3 3-3M9 18l3-3 3 3M6 9l3 3-3 3M18 9l-3 3 3 3"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg>
-    <div><h2 id="cc-title">Click &amp; Collect</h2>${cc.minimum ? `<p>Minimum de ${esc(cc.minimum)} d'achat</p>` : ""}</div>
+    <div><h2 id="cc-title">Retrait à emporter</h2>${cc.minimum ? `<p>Minimum de ${esc(cc.minimum)} d'achat</p>` : ""}</div>
     ${cc.prepMinutes ? `<p class="cc__time"><strong>${cc.prepMinutes} min</strong><span>à l'avance</span></p>` : ""}
   </div>
   <p class="cc__lead">Les commandes se préparent et se retirent uniquement pendant ces horaires :</p>

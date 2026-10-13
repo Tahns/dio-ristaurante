@@ -581,3 +581,7 @@ h3{font-weight:600}
 .topbar__info b{color:var(--ochre-light);font-weight:700;margin-right:4px}
 .topbar__phones{font-weight:700}
 @media (max-width:700px){.topbar{font-size:.9rem}.topbar__info{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;width:100%}.topbar__info li{white-space:normal}.topbar__info b{display:block;margin:0}.topbar__phones{width:100%}}
+.mobile-bar a{font-size:.82rem;line-height:1.15;display:flex;align-items:center;justify-content:center}
+
+.map-fallback{display:grid;place-content:center;gap:6px;text-align:center;min-height:300px;padding:24px;background:var(--kraft);border:1px solid var(--line)}
+.mapband .map-fallback{min-height:600px;border:0}

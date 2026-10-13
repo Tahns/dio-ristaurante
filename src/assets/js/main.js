@@ -267,7 +267,7 @@ if (form) {
     if (d >= 2 && d <= 4) msg = "Du mardi au jeudi soir, on prépare uniquement des plats à emporter.";
     const groups = slotGroups(slots, iso, "table", 0);
     renderTimes(select, hintEl, groups, msg);
-    if (groups.some((g) => g.times.length) && d >= 2 && d <= 4) hintEl.textContent = "Le soir du mardi au jeudi, c'est uniquement à emporter : voir la page « Commander ».";
+    if (groups.some((g) => g.times.length) && d >= 2 && d <= 4) hintEl.textContent = "Le soir du mardi au jeudi, c'est uniquement à emporter : voir la page « Click & Collect ».";
   };
   const cal = makeCalendar(document.getElementById("cal"), {
     min: now.date,
