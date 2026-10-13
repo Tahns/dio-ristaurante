@@ -172,7 +172,7 @@ if (form) {
 if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObserver" in window) {
   document.documentElement.classList.add("motion");
   const targets = document.querySelectorAll(
-    ".section .container > *:not(.menu-set):not(.gallery), .section h2, .pizza, .feature, .card, .menu-item, .gallery a, .quote, .steps li, .flyer, .parking, .trio img"
+    ".section .container > *:not(.menu-set):not(.gallery), .section h2, .photo-card, .feature, .card, .menu-item, .gallery a, .quote, .steps li, .flyer, .parking, .trio img"
   );
   const io = new IntersectionObserver(
     (entries) =>
@@ -245,9 +245,6 @@ if (menuTabs.length) {
     if (calm) h.querySelectorAll(".w>span").forEach((s) => (s.style.transform = "none"));
   });
 
-  // Pizza : chaque garniture arrive à son tour
-  document.querySelectorAll(".pizza .pz > *").forEach((el, i) => el.style.setProperty("--k", i % 9));
-
   if (calm) return;
 
   // Parallaxe douce
@@ -275,7 +272,7 @@ if (menuTabs.length) {
   hero.prepend(cv);
   const ctx = cv.getContext("2d");
   const small = innerWidth < 700;
-  const N = small ? 70 : 150;
+  const N = small ? 34 : 70;
   let W = 0, H = 0, parts = [], running = false, last = 0;
   const dpr = Math.min(devicePixelRatio || 1, 1.5);
   const size = () => {
@@ -287,12 +284,12 @@ if (menuTabs.length) {
     // flammes plus fournies sur la gauche, où se trouve le texte
     p.x = Math.random() * W * (0.25 + Math.random() * 0.75);
     p.y = H + 10;
-    p.r = 18 + Math.random() * (small ? 26 : 44);
+    p.r = 8 + Math.random() * (small ? 12 : 20);
     p.vy = 40 + Math.random() * 90;
     p.life = 0;
     p.max = 1.4 + Math.random() * 1.6;
     p.ph = Math.random() * 6.28;
-    p.sp = Math.random() < 0.12; // étincelle
+    p.sp = Math.random() < 0.55; // étincelle
     if (p.sp) { p.r = 1.5 + Math.random() * 2; p.vy = 90 + Math.random() * 160; p.max = 2 + Math.random() * 2; }
     return p;
   };
@@ -311,7 +308,7 @@ if (menuTabs.length) {
       p.y -= p.vy * dt;
       const x = p.x + Math.sin(p.ph + p.life * 3) * (p.sp ? 18 : 10) * (0.4 + k);
       const r = p.r * (p.sp ? 1 : 1 - k * 0.7);
-      const a = p.sp ? 0.9 * (1 - k) : 0.5 * Math.sin(Math.PI * Math.min(k * 1.2, 1)) * (1 - k * 0.3);
+      const a = p.sp ? (0.5 + 0.5 * Math.sin(p.life * 22 + p.ph)) * 0.85 * (1 - k) : 0.22 * Math.sin(Math.PI * Math.min(k * 1.2, 1)) * (1 - k * 0.3);
       const g = ctx.createRadialGradient(x, p.y, 0, x, p.y, r);
       if (p.sp) { g.addColorStop(0, `rgba(255,214,130,${a})`); g.addColorStop(1, "rgba(255,160,40,0)"); }
       else {
