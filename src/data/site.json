@@ -1,141 +1,106 @@
 {
-  "name": "Paintball Lille",
-  "baseUrl": "https://www.paintball-lille.fr",
-  "tagline": "Le terrain de paintball à 10 minutes de Lille",
+  "name": "Dio Ristorante",
+  "baseUrl": "https://www.dioristaurante.com",
+  "tagline": "Pizzas au feu de bois et pâtes fraîches à Villeneuve-d'Ascq",
   "address": {
-    "street": "Impasse Jean Jaurès",
-    "postalCode": "59175",
-    "city": "Vendeville",
+    "street": "",
+    "postalCode": "59650",
+    "city": "Villeneuve-d'Ascq",
     "region": "Hauts-de-France",
     "country": "FR"
   },
+  "parking": {
+    "title": "Parking gratuit derrière le restaurant",
+    "text": "Le restaurant se trouve en retrait de la rue : garez-vous sur le parking gratuit situé juste derrière, l'entrée du parking est signalée.",
+    "detail": ""
+  },
   "phones": {
-    "adulte": {
-      "label": "Paintball, EVG et groupes",
-      "display": "06 65 62 66 54",
-      "tel": "+33665626654"
-    },
-    "kid": {
-      "label": "Kid Paintball et Paintball Expérience",
-      "display": "07 66 63 34 60",
-      "tel": "+33766633460"
+    "resto": {
+      "label": "Réservations et commandes",
+      "display": "",
+      "tel": ""
     }
   },
-  "email": "paintball.lille@gmail.com",
+  "email": "",
   "social": {
-    "facebook": "https://www.facebook.com/PlmWillems/",
-    "instagram": "https://www.instagram.com/paintball.lille/",
-    "tiktok": "https://www.tiktok.com/@paintball.lille"
+    "facebook": "",
+    "instagram": "",
+    "tiktok": ""
   },
-  "hours": "Ouvert toute l'année, uniquement sur réservation",
-  "promo": {
-    "active": true,
-    "title": "Offre automne-hiver",
-    "text": "Forfait Découverte à 20 € au lieu de 30 € : 200 billes, environ 1 heure de jeu.",
-    "price": "20 €",
-    "until": "2027-03-20"
-  },
+  "hours": "Déjeuner et dîner",
+  "hoursTable": [],
+  "services": ["Sur place", "À emporter", "Livraison", "Traiteur"],
   "formEndpoint": "",
-  "tarifs": {
-    "paintball": {
-      "title": "Paintball classique",
-      "subtitle": "Calibre .68 · dès 14 ans · minimum 4 joueurs",
-      "phone": "adulte",
+  "menuNote": "Carte indicative : les plats et les prix peuvent varier selon la saison. Demandez l'ardoise du jour sur place.",
+  "menu": [
+    {
+      "id": "antipasti",
+      "title": "Antipasti",
+      "intro": "Pour commencer, à partager.",
       "items": [
-        {
-          "name": "Découverte",
-          "price": "30 €",
-          "promo": "20 €",
-          "balls": "200 billes",
-          "duration": "environ 1 h"
-        },
-        {
-          "name": "Joueur",
-          "price": "40 €",
-          "balls": "500 billes",
-          "duration": "environ 2 h",
-          "featured": true
-        },
-        {
-          "name": "Expert",
-          "price": "50 €",
-          "balls": "750 billes",
-          "duration": "environ 3 h"
-        }
-      ],
-      "extra": "Recharge : 500 billes supplémentaires pour 20 €."
+        { "name": "Planche de charcuteries", "desc": "Jambon cru, coppa, mortadelle, olives, focaccia chaude.", "price": "" },
+        { "name": "Planche de fromages", "desc": "Sélection de fromages italiens, tomates cerises, roquette.", "price": "" },
+        { "name": "Burrata", "desc": "Burrata crémeuse, tomates, roquette, huile d'olive.", "price": "" },
+        { "name": "Focaccia à l'ail", "desc": "Pain maison tiède, ail et herbes.", "price": "" }
+      ]
     },
-    "experience": {
-      "title": "Paintball Expérience",
-      "subtitle": "Calibre .50 · impact réduit · dès 12 ans",
-      "phone": "kid",
+    {
+      "id": "pizzas",
+      "title": "Pizzas au feu de bois",
+      "intro": "Pâte maison, cuisson au four à bois.",
       "items": [
-        {
-          "name": "Initiation",
-          "price": "30 €",
-          "balls": "200 billes",
-          "duration": "environ 1 h"
-        },
-        {
-          "name": "Action",
-          "price": "35 €",
-          "balls": "300 billes",
-          "duration": "environ 1 h",
-          "featured": true
-        },
-        {
-          "name": "Intense",
-          "price": "40 €",
-          "balls": "500 billes",
-          "duration": "environ 2 h"
-        }
-      ],
-      "extra": ""
+        { "name": "Margherita", "desc": "Tomate, mozzarella, basilic.", "price": "" },
+        { "name": "Diavola", "desc": "Tomate, mozzarella, pepperoni.", "price": "" },
+        { "name": "Burrata", "desc": "Tomate, mozzarella, burrata, roquette, tomates cerises.", "price": "" },
+        { "name": "Bianca", "desc": "Crème, mozzarella, pommes de terre, jambon.", "price": "" },
+        { "name": "Chorizo", "desc": "Tomate, mozzarella, chorizo.", "price": "" },
+        { "name": "Quattro formaggi", "desc": "Sélection de quatre fromages.", "price": "" }
+      ]
     },
-    "kid": {
-      "title": "Kid Paintball",
-      "subtitle": "Sans douleur · dès 6 ans · encadré par nos animateurs",
-      "phone": "kid",
+    {
+      "id": "pates",
+      "title": "Pâtes",
+      "intro": "Rigatoni, sauces maison, gratinés au four sur demande.",
       "items": [
-        {
-          "name": "Découverte",
-          "price": "14 €",
-          "balls": "2 parties de 800 billes",
-          "duration": "minimum 6 enfants"
-        },
-        {
-          "name": "Anniversaire",
-          "price": "20 €",
-          "priceNote": "en semaine · 22 € le week-end et les jours fériés",
-          "balls": "3 parties de 800 billes",
-          "duration": "minimum 10 enfants",
-          "featured": true,
-          "includes": [
-            "Invitations numériques pour les copains",
-            "1 gâteau Savane, 1 bouteille d'Oasis et 1 bouteille d'eau pour le groupe",
-            "1 sachet de bonbons par enfant"
-          ]
-        },
-        {
-          "name": "Expert",
-          "price": "20 €",
-          "priceNote": "en semaine · 22 € le week-end et les jours fériés",
-          "balls": "4 parties de 800 billes",
-          "duration": "minimum 6 enfants"
-        }
-      ],
-      "extra": ""
+        { "name": "Arrabbiata", "desc": "Tomate pimentée, olives, basilic.", "price": "" },
+        { "name": "Bolognaise", "desc": "Sauce à la viande mijotée, parmesan.", "price": "" },
+        { "name": "Crème et champignons", "desc": "Crème, champignons, roquette.", "price": "" },
+        { "name": "Cacio e pepe", "desc": "Parmesan, poivre noir.", "price": "" },
+        { "name": "Rigatoni gratinés", "desc": "Sauce tomate, mozzarella, gratinés au four.", "price": "" }
+      ]
+    },
+    {
+      "id": "desserts",
+      "title": "Desserts",
+      "intro": "Faits maison.",
+      "items": [
+        { "name": "Tiramisu", "desc": "Mascarpone, café, cacao.", "price": "" },
+        { "name": "Pain perdu brioché", "desc": "Glace vanille, caramel, chantilly.", "price": "" },
+        { "name": "Café gourmand", "desc": "Un expresso et ses petites douceurs.", "price": "" }
+      ]
+    },
+    {
+      "id": "boissons",
+      "title": "Boissons",
+      "intro": "Vins italiens, bières, cocktails et excellent café.",
+      "items": [
+        { "name": "Vins italiens", "desc": "Rouges, blancs et rosés, au verre ou à la bouteille.", "price": "" },
+        { "name": "Bières et softs", "desc": "Bières, sodas, eaux.", "price": "" },
+        { "name": "Cocktails et apéritifs", "desc": "Spritz et autres apéritifs italiens.", "price": "" },
+        { "name": "Cafés", "desc": "Expresso, allongé, cappuccino.", "price": "" }
+      ]
     }
-  },
-  "groupDiscount": "-10 % à partir de 30 participants",
-  "facilities": [
-    "3 terrains de jeu sur 10 000 m²",
-    "Jusqu'à 50 joueurs par terrain",
-    "Espace barbecue et tables de pique-nique",
-    "8 hamacs et zones ombragées",
-    "WC secs sur place",
-    "Parking gratuit, accès autocar à proximité"
   ],
+  "privatisation": {
+    "intro": "Dio se privatise pour vos repas d'équipe, séminaires, anniversaires et fêtes. Dites-nous la date, le nombre de convives et l'ambiance voulue : nous vous répondons avec une proposition sur mesure.",
+    "capacity": "",
+    "formulas": [
+      { "name": "Repas assis", "text": "Menu unique ou à choix : antipasti, pizzas ou pâtes, dessert, café." },
+      { "name": "Apéritif dînatoire", "text": "Planches, focaccia, mini-pizzas et boissons, debout et convivial." },
+      { "name": "Pizza party", "text": "Pizzas cuites au feu de bois à volonté, idéal pour les groupes." },
+      { "name": "Traiteur", "text": "Nos plats préparés pour vos événements, à emporter ou livrés." }
+    ]
+  },
   "legal": {
     "company": "",
     "siret": "",
@@ -143,13 +108,11 @@
     "vat": "",
     "director": "",
     "mediator": "",
-    "host": "IONOS SARL, 7 place de la Gare, BP 70109, 57201 Sarreguemines Cedex, 09 70 80 89 11",
-    "deposit": "30 %",
-    "freeCancellationDays": "7"
+    "host": "IONOS SARL, 7 place de la Gare, BP 70109, 57201 Sarreguemines Cedex, 09 70 80 89 11"
   },
   "reviews": {
-    "rating": "4,9",
-    "count": "460",
+    "rating": "",
+    "count": "",
     "source": "Google",
     "items": []
   },

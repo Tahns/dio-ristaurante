@@ -1,19 +1,28 @@
 <!-- {
-  "title": "Réserver une partie de paintball près de Lille | Paintball Lille",
-  "description": "Réservez votre partie de paintball, Kid Paintball, EVG ou anniversaire à Vendeville, près de Lille. Par téléphone ou via le formulaire, réponse rapide.",
+  "title": "Réserver une table ou privatiser | Dio Ristorante",
+  "description": "Réservez une table chez Dio Ristorante à Villeneuve-d'Ascq, commandez à emporter ou demandez un devis de privatisation. Réponse rapide, parking gratuit derrière le restaurant.",
   "nav": "reservation"
 } -->
 <section class="page-hero">
-  {{splatA}}
   <div class="container">
     <h1>Réserver</h1>
-    <p>Indiquez-nous votre activité, votre date et le nombre de joueurs : nous vous recontactons rapidement pour confirmer le créneau. Pour une réponse immédiate, appelez-nous.</p>
+    <p>Une table pour ce soir, une commande à emporter ou un événement à privatiser : indiquez-nous votre demande, nous confirmons rapidement.</p>
   </div>
 </section>
 
 <section class="section">
   <div class="container grid grid--2 grid--top">
     <form id="booking-form" class="form" data-endpoint="{{formEndpoint}}" data-email="{{emailRaw}}" novalidate>
+      <div class="field">
+        <label for="type">Votre demande</label>
+        <select id="type" name="type" required>
+          <option value="table">Réserver une table</option>
+          <option value="emporter">Commande à emporter</option>
+          <option value="privatisation-entreprise">Privatisation : entreprise, séminaire</option>
+          <option value="privatisation-prive">Privatisation : anniversaire, EVG/EVJF, fête</option>
+          <option value="traiteur">Traiteur</option>
+        </select>
+      </div>
       <div class="form__row">
         <div class="field">
           <label for="nom">Nom et prénom</label>
@@ -28,23 +37,9 @@
         <label for="email">E-mail</label>
         <input id="email" name="email" type="email" autocomplete="email" required>
       </div>
-      <div class="form__row">
-        <div class="field">
-          <label for="activite">Activité</label>
-          <select id="activite" name="activite" required>
-            <option value="paintball">Paintball classique (dès 14 ans)</option>
-            <option value="experience">Paintball Expérience (dès 12 ans)</option>
-            <option value="kid">Kid Paintball (dès 6 ans)</option>
-            <option value="anniversaire">Anniversaire enfant</option>
-            <option value="evg">EVG / EVJF</option>
-            <option value="groupe">Entreprise, BDE, centre de loisirs</option>
-            <option value="tshirts">T-shirts personnalisés</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="joueurs">Nombre de joueurs</label>
-          <input id="joueurs" name="joueurs" type="number" min="1" max="100" inputmode="numeric" required>
-        </div>
+      <div class="field" data-show-for="privatisation-entreprise,traiteur" hidden>
+        <label for="societe">Société</label>
+        <input id="societe" name="societe" autocomplete="organization">
       </div>
       <div class="form__row">
         <div class="field">
@@ -52,45 +47,44 @@
           <input id="date" name="date" type="date" required>
         </div>
         <div class="field">
-          <label for="creneau">Créneau</label>
-          <select id="creneau" name="creneau">
-            <option value="matin">Matin</option>
-            <option value="apres-midi">Après-midi</option>
-            <option value="indifferent">Peu importe</option>
+          <label for="service">Service</label>
+          <select id="service" name="service">
+            <option value="dejeuner">Déjeuner</option>
+            <option value="diner" selected>Dîner</option>
           </select>
         </div>
       </div>
+      <div class="form__row">
+        <div class="field">
+          <label for="heure">Heure souhaitée</label>
+          <input id="heure" name="heure" type="time">
+        </div>
+        <div class="field">
+          <label for="convives" id="convives-label">Nombre de personnes</label>
+          <input id="convives" name="convives" type="number" min="1" max="200" inputmode="numeric" required>
+        </div>
+      </div>
       <div class="field">
-        <label for="message">Précisions (forfait souhaité, âge des enfants, t-shirts…)</label>
+        <label for="message">Précisions (allergies, poussette, budget, ambiance…)</label>
         <textarea id="message" name="message"></textarea>
       </div>
       <label class="field field--check">
         <input type="checkbox" name="consentement" required>
-        <span>J'accepte que mes informations soient utilisées pour traiter ma demande de réservation. Voir notre <a href="/confidentialite/">politique de confidentialité</a>.</span>
+        <span>J'accepte que mes informations soient utilisées pour traiter ma demande. Voir notre <a href="/confidentialite/">politique de confidentialité</a>.</span>
       </label>
       <button class="btn btn--primary btn--lg" type="submit">Envoyer ma demande</button>
       <p class="form__status" role="status" aria-live="polite"></p>
-      <p class="form__note">Votre réservation est confirmée une fois validée par notre équipe.</p>
+      <p class="form__note">Votre table est confirmée une fois validée par le restaurant. Pensez à vous garer sur le parking gratuit derrière le restaurant.</p>
     </form>
 
     <div class="contact-cards">
-      <div class="contact-card">
-        <h3>{{phoneLabel:adulte}}</h3>
-        <a href="tel:{{tel:adulte}}">{{phoneDisplay:adulte}}</a>
-      </div>
-      <div class="contact-card">
-        <h3>{{phoneLabel:kid}}</h3>
-        <a href="tel:{{tel:kid}}">{{phoneDisplay:kid}}</a>
-      </div>
-      <div class="contact-card contact-card--light">
-        <h3>E-mail</h3>
-        {{email}}
-      </div>
+      {{phoneCard}}
       <div class="contact-card contact-card--light">
         <h3>Adresse</h3>
-        <p>Paintball Lille<br>{{address}}<br><a href="{{mapsUrl}}" rel="noopener">Itinéraire</a></p>
+        <p>Dio Ristorante<br>{{address}}<br><a href="{{mapsUrl}}" rel="noopener">Itinéraire</a></p>
         <p>{{hours}}</p>
       </div>
+      {{parking}}
       {{map}}
     </div>
   </div>

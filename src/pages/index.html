@@ -1,140 +1,88 @@
 <!-- {
-  "title": "Paintball Lille – Terrain de paintball à 10 min de Lille (Vendeville)",
-  "description": "Paintball à Vendeville, à 10 minutes de Lille : 10 000 m², 3 terrains, paintball dès 14 ans, paintball à impact réduit dès 12 ans et Kid Paintball dès 6 ans. EVG, anniversaires, entreprises. Dès 14 €.",
+  "title": "Dio Ristorante – Pizzas au feu de bois à Villeneuve-d'Ascq",
+  "description": "Restaurant italien à Villeneuve-d'Ascq : pizzas au feu de bois, pâtes, desserts maison. Réservation en ligne, à emporter, privatisation. Parking gratuit derrière le restaurant.",
   "nav": "home"
 } -->
-{{promo}}
-
 <section class="{{heroClass}}"{{heroStyle}}>
-  {{splatA}}{{splatB}}{{splatC}}
-  <div class="container">
-    <span class="hero__eyebrow">Vendeville · 10 min de Lille</span>
-    <h1>Le paintball <span>grandeur nature</span> près de Lille</h1>
-    <p class="hero__lead">10 000 m² de terrain, 3 arènes, un espace barbecue et une équipe qui encadre chaque partie. Entre amis, pour un EVG, un anniversaire ou avec vos collègues.</p>
+  <div class="container hero__inner">
+    <span class="hero__eyebrow">Ristorante · Villeneuve-d'Ascq</span>
+    <h1>Pizzas au feu de bois et pâtes comme en Italie</h1>
+    <p class="hero__lead">Une pâte maison, un four à bois qui ne s'éteint pas, une cuisine généreuse et un excellent café. Venez à deux, en famille ou en équipe.</p>
     <div class="hero__actions">
-      <a class="btn btn--primary btn--lg" href="/reservation/">Réserver une partie</a>
-      <a class="btn btn--ghost btn--lg" href="/tarifs/">Voir les tarifs</a>
+      <a class="btn btn--primary btn--lg" href="/reservation/">Réserver une table</a>
+      <a class="btn btn--ghost btn--lg" href="/la-carte/">Voir la carte</a>
     </div>
-    <ul class="hero__facts">
-      {{rating}}
-      <li><strong>10 000 m²</strong>de terrain</li>
-      <li><strong>3</strong>arènes de jeu</li>
-      <li><strong>dès 6 ans</strong>avec le Kid Paintball</li>
-      <li><strong>dès {{from:kid}}</strong>par personne</li>
-    </ul>
+    <p class="hero__services">{{services}}</p>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    {{parking}}
   </div>
 </section>
 
 <section class="section">
-  <div class="container">
-    <div class="section__head">
-      <span class="section__kicker">Nos activités</span>
-      <h2>Un paintball pour chaque âge</h2>
-      <p class="section__lead">Trois façons de jouer, selon l'âge et l'envie d'adrénaline. Équipement fourni et parties encadrées par nos animateurs.</p>
-    </div>
-    <div class="grid grid--3">
-      <a class="activity" href="/paintball/">
-        <span class="activity__age">Dès 14 ans · calibre .68</span>
-        <h3>Paintball classique</h3>
-        <p>Le vrai paintball, pour les ados et les adultes qui veulent des sensations fortes.</p>
-        <p class="activity__price">à partir de <strong>{{from:paintball}}</strong></p>
-        <span class="activity__more">Découvrir →</span>
-      </a>
-      <a class="activity activity--red" href="/paintball-experience/">
-        <span class="activity__age">Dès 12 ans · calibre .50</span>
-        <h3>Paintball Expérience</h3>
-        <p>Des billes plus petites et un impact réduit : idéal pour débuter, en famille ou en EVJF.</p>
-        <p class="activity__price">à partir de <strong>{{from:experience}}</strong></p>
-        <span class="activity__more">Découvrir →</span>
-      </a>
-      <a class="activity activity--green" href="/kid-paintball/">
-        <span class="activity__age">Dès 6 ans · sans douleur</span>
-        <h3>Kid Paintball</h3>
-        <p>Des missions adaptées aux enfants, sans douleur et encadrées par des pros. Parfait pour un anniversaire.</p>
-        <p class="activity__price">à partir de <strong>{{from:kid}}</strong></p>
-        <span class="activity__more">Découvrir →</span>
-      </a>
-    </div>
+  <div class="container grid grid--3">
+    <article class="feature">
+      <h2>Le feu de bois</h2>
+      <p>Nos pizzas cuisent au four à bois, sur une pâte maison levée longuement : croûte gonflée, cœur fondant, petit goût de fumée.</p>
+    </article>
+    <article class="feature">
+      <h2>Des pâtes généreuses</h2>
+      <p>Rigatoni arrabbiata, bolognaise, crème-champignons ou gratinés au four : des sauces maison, des assiettes qui se terminent.</p>
+    </article>
+    <article class="feature">
+      <h2>Du café aux desserts</h2>
+      <p>Tiramisu, pain perdu brioché au caramel, expresso : on finit comme il faut. Vins italiens et cocktails pour accompagner.</p>
+    </article>
   </div>
 </section>
 
 <section class="section section--dark">
-  <div class="container grid grid--2">
-    <div>
-      <span class="section__kicker">Le terrain</span>
-      <h2>3 arènes, 10 000 m², tout sur place</h2>
-      <p class="section__lead">Un site en pleine nature à Vendeville, à 10 minutes de Lille. Chaque terrain accueille de 4 à 50 joueurs : plusieurs groupes peuvent jouer en même temps sans se croiser.</p>
-      <p><a class="btn btn--primary" href="/le-terrain/">Découvrir le terrain</a></p>
+  <div class="container">
+    <div class="section__head">
+      <span class="section__kicker">La carte</span>
+      <h2>Ce qu'on aime vous servir</h2>
+      <p>{{menuNote}}</p>
     </div>
-    {{facilities}}
+    <div class="grid grid--2">{{menuPreview}}</div>
+    <p class="section__more"><a class="btn btn--primary" href="/la-carte/">Toute la carte</a> <a class="btn btn--light" href="/galerie/">Voir les photos</a></p>
   </div>
 </section>
 
 <section class="section">
-  <div class="container">
-    <div class="section__head">
-      <span class="section__kicker">Pour quelle occasion ?</span>
-      <h2>On organise, vous jouez</h2>
-    </div>
-    <div class="grid grid--4">
-      <a class="activity activity--dark" href="/evg-evjf/">
-        <h3>EVG / EVJF</h3>
-        <p>Le futur marié en cible, des t-shirts personnalisés et le barbecue pour finir.</p>
-        <span class="activity__more">Voir →</span>
-      </a>
-      <a class="activity activity--green" href="/anniversaire-enfant/">
-        <h3>Anniversaire enfant</h3>
-        <p>Formule clé en main dès 6 ans : parties, invitations, gâteau et bonbons.</p>
-        <span class="activity__more">Voir →</span>
-      </a>
-      <a class="activity" href="/groupes/">
-        <h3>Entreprises</h3>
-        <p>Team building en plein air, de 15 à 50 participants. {{discount}}.</p>
-        <span class="activity__more">Voir →</span>
-      </a>
-      <a class="activity activity--red" href="/groupes/#bde">
-        <h3>BDE & centres de loisirs</h3>
-        <p>Tarifs préférentiels pour les étudiants, sorties clé en main pour les animateurs.</p>
-        <span class="activity__more">Voir →</span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<section class="section section--white">
-  <div class="container">
-    <div class="section__head">
-      <span class="section__kicker">Tarifs</span>
-      <h2>Des prix clairs, par personne</h2>
-      <p class="section__lead">Équipement complet et encadrement inclus. Tous les tarifs, y compris le Paintball Expérience et le Kid Paintball, sont sur la <a href="/tarifs/">page tarifs</a>.</p>
-    </div>
-    {{tarifs:paintball}}
-  </div>
-</section>
-
-<section class="section">
-  <div class="container grid grid--2">
+  <div class="container split">
+    <img class="split__img" src="/assets/photos/pizzaiolo.jpg" alt="Le pizzaiolo garnit les pizzas à la main" width="660" height="560" loading="lazy">
     <div>
-      <span class="section__kicker">Pourquoi nous</span>
-      <h2>Une équipe qui s'occupe de tout</h2>
-      <ul class="checklist">
-        <li>Briefing sécurité et règles du jeu avant chaque partie</li>
-        <li>Scénarios de jeu variés, adaptés à l'âge et au niveau du groupe</li>
-        <li>Équipement fourni et entretenu : lanceur et masque de protection</li>
-        <li>Animateurs présents sur le terrain pendant toute la session</li>
-        <li>Espace barbecue et détente pour prolonger la journée</li>
+      <span class="section__kicker">Entreprises et groupes</span>
+      <h2>Privatisez Dio pour votre événement</h2>
+      <p>Déjeuner d'équipe, séminaire, afterwork, anniversaire, EVG/EVJF, fête de famille : le restaurant se privatise, avec une formule sur mesure et un traiteur pour les plus gros événements.</p>
+      <ul class="ticks">
+        <li>Repas assis, apéritif dînatoire ou pizza party</li>
+        <li>Devis rapide, interlocuteur unique</li>
+        <li>Parking gratuit pour vos invités</li>
       </ul>
-      <p><a class="btn btn--dark" href="/faq/">Toutes vos questions</a></p>
-    </div>
-    <div class="panel">
-      {{splatPanel}}
-      <p class="panel__big">Prêts ?<small>Ça va tacher</small></p>
+      <p><a class="btn btn--primary" href="/privatisation/">Découvrir la privatisation</a></p>
     </div>
   </div>
 </section>
-
-{{news}}
 
 {{reviewsSection}}
+
+{{shareBlock}}
+
+<section class="section">
+  <div class="container grid grid--2 grid--top">
+    <div>
+      <span class="section__kicker">Nous trouver</span>
+      <h2>Facile à rejoindre, facile à garer</h2>
+      <p>Le restaurant n'est pas très visible depuis la rue, mais il est bien là. Le parking gratuit est juste derrière : on vous y attend.</p>
+      <p><strong>{{address}}</strong><br>{{hours}}</p>
+      <p><a class="btn btn--dark" href="/acces/">Plan d'accès et parking</a></p>
+    </div>
+    {{map}}
+  </div>
+</section>
 
 {{cta}}

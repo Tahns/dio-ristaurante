@@ -5,7 +5,7 @@ import path from "node:path";
 
 const SRC = "src";
 const OUT = "site";
-// Publication dans un sous-dossier (ex. GitHub Pages : BASE_PATH=/paintball-lille) et hors index (NOINDEX=1).
+// Publication dans un sous-dossier (ex. GitHub Pages : BASE_PATH=/nom-du-depot) et hors index (NOINDEX=1).
 const BASE = (process.env.BASE_PATH || "").replace(/\/+$/, "");
 const NOINDEX = process.env.NOINDEX === "1";
 const withBase = (text) =>
@@ -20,66 +20,57 @@ const layout = fs.readFileSync(path.join(SRC, "layout.html"), "utf8");
 const esc = (s) =>
   String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
-const addressLine = `${site.address.street}, ${site.address.postalCode} ${site.address.city}`;
-const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`Paintball Lille ${addressLine}`)}`;
+const addressLine = [site.address.street, `${site.address.postalCode} ${site.address.city}`].filter(Boolean).join(", ");
+const mapsQuery = `Dio Ristorante ${addressLine}`;
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}`;
+const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(mapsQuery)}&output=embed`;
+const phone = site.phones.resto;
+const hasPhone = Boolean(phone.tel);
 
 // ---------- Composants réutilisables ----------
 
-const phoneLink = (key, cls = "") => {
-  const p = site.phones[key];
-  return `<a class="${cls}" href="tel:${p.tel}">${p.display}</a>`;
-};
+// Boutons « Appeler » : n'apparaissent que si un numéro est renseigné.
+const callBtn = (cls = "btn btn--ghost") =>
+  hasPhone ? `<a class="${cls}" href="tel:${phone.tel}">Appeler le ${phone.display}</a>` : "";
 
-function priceCards(key) {
-  const t = site.tarifs[key];
-  const cards = t.items
-    .map((it) => {
-      const promo = it.promo && promoActive();
-      const price = promo
-        ? `<span class="price__old">${it.price}</span><span class="price__now">${it.promo}</span>`
-        : `<span class="price__now">${it.price}</span>`;
-      const includes = it.includes
-        ? `<ul class="card__list">${it.includes.map((i) => `<li>${esc(i)}</li>`).join("")}</ul>`
-        : "";
-      return `
-      <article class="price-card${it.featured ? " price-card--featured" : ""}">
-        ${it.featured ? '<span class="badge">Le plus choisi</span>' : ""}
-        ${promo ? `<span class="badge badge--promo">${esc(site.promo.title)}</span>` : ""}
-        <h3 class="price-card__name">${esc(it.name)}</h3>
-        <p class="price"${promo && site.promo.until ? ` data-until="${site.promo.until}" data-regular="${esc(it.price)}"` : ""}>${price}<span class="price__unit">/ pers.</span></p>
-        ${it.priceNote ? `<p class="price-card__note">${esc(it.priceNote)}</p>` : ""}
-        <ul class="price-card__facts">
-          <li>${esc(it.balls)}</li>
-          <li>${esc(it.duration)}</li>
-        </ul>
-        ${includes}
-      </article>`;
-    })
+const parkingBlock = () => `<aside class="parking" aria-label="Parking">
+  <svg class="parking__icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4" fill="currentColor"/><path d="M9.5 17V7h3.6a3 3 0 0 1 0 6h-3.6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <div>
+    <strong>${esc(site.parking.title)}</strong>
+    <p>${esc(site.parking.text)}${site.parking.detail ? " " + esc(site.parking.detail) : ""}</p>
+  </div>
+</aside>`;
+
+function menuSection(cat) {
+  const items = cat.items
+    .map(
+      (it) => `<li class="menu-item">
+        <div class="menu-item__head"><h3>${esc(it.name)}</h3>${it.price ? `<span class="menu-item__price">${esc(it.price)}</span>` : ""}</div>
+        ${it.desc ? `<p>${esc(it.desc)}</p>` : ""}
+      </li>`
+    )
     .join("");
-  return `
-  <div class="price-block">
-    <div class="price-block__head">
-      <h3 class="price-block__title">${esc(t.title)}</h3>
-      <p class="price-block__sub">${esc(t.subtitle)}</p>
-    </div>
-    <div class="price-grid">${cards}</div>
-    ${t.extra ? `<p class="price-block__extra">${esc(t.extra)}</p>` : ""}
-    <p class="price-block__cta">
-      <a class="btn btn--primary" href="/reservation/?activite=${key}">Réserver</a>
-      <a class="btn btn--ghost" href="tel:${site.phones[t.phone].tel}">Appeler le ${site.phones[t.phone].display}</a>
-    </p>
-  </div>`;
+  return `<section class="menu-cat" id="${esc(cat.id)}">
+    <h2>${esc(cat.title)}</h2>
+    ${cat.intro ? `<p class="menu-cat__intro">${esc(cat.intro)}</p>` : ""}
+    <ul class="menu-list">${items}</ul>
+  </section>`;
 }
 
-const facilities = () =>
-  `<ul class="facilities">${site.facilities.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>`;
+const menuNav = () =>
+  `<nav class="menu-nav" aria-label="Sections de la carte">${site.menu
+    .map((c) => `<a href="#${esc(c.id)}">${esc(c.title.replace(/ au feu de bois/, ""))}</a>`)
+    .join("")}</nav>`;
 
-const promoBanner = () =>
-  promoActive()
-    ? `<div class="promo"${site.promo.until ? ` data-until="${site.promo.until}"` : ""}><div class="container promo__inner"><strong>${esc(site.promo.title)}</strong><span>${esc(site.promo.text)}</span><a href="/reservation/?activite=paintball">J'en profite</a></div></div>`
-    : "";
+const formulas = () =>
+  `<div class="grid grid--2">${site.privatisation.formulas
+    .map((f) => `<article class="card"><h3>${esc(f.name)}</h3><p>${esc(f.text)}</p></article>`)
+    .join("")}</div>`;
 
-const ctaBand = (title = "Prêts à jouer ?", text = "Choisissez votre date, on s'occupe du reste. Réponse rapide par téléphone ou par e-mail.") => `
+const ctaBand = (
+  title = "Une table pour ce soir ?",
+  text = "Réservez en ligne en une minute : nous confirmons rapidement votre table."
+) => `
 <section class="cta-band">
   <div class="container cta-band__inner">
     <div>
@@ -87,8 +78,8 @@ const ctaBand = (title = "Prêts à jouer ?", text = "Choisissez votre date, on 
       <p>${text}</p>
     </div>
     <div class="cta-band__actions">
-      <a class="btn btn--primary btn--lg" href="/reservation/">Demander une réservation</a>
-      <a class="btn btn--light" href="tel:${site.phones.adulte.tel}">${site.phones.adulte.display}</a>
+      <a class="btn btn--primary btn--lg" href="/reservation/">Réserver une table</a>
+      ${callBtn("btn btn--light")}
     </div>
   </div>
 </section>`;
@@ -107,14 +98,7 @@ function gallery() {
       }));
   }
   if (!photos.length) {
-    return `<div class="empty-gallery">
-      <p>Les photos arrivent bientôt. En attendant, retrouvez nos parties en images sur nos réseaux.</p>
-      <p class="social-row">
-        <a class="btn btn--dark" href="${site.social.instagram}" rel="noopener">Instagram</a>
-        <a class="btn btn--dark" href="${site.social.tiktok}" rel="noopener">TikTok</a>
-        <a class="btn btn--dark" href="${site.social.facebook}" rel="noopener">Facebook</a>
-      </p>
-    </div>`;
+    return `<div class="empty-gallery"><p>Les photos arrivent bientôt.</p></div>`;
   }
   return `<div class="gallery">${photos
     .map((p) => `<a href="${esc(p.src)}"><img src="${esc(p.src)}" alt="${esc(p.alt)}" loading="lazy" decoding="async"></a>`)
@@ -129,52 +113,70 @@ const LEGAL_LABELS = {
   director: "Directeur de la publication",
 };
 
-// Logo : celui choisi dans l'administration, sinon src/assets/img/logo-paintball-lille.*, sinon logo générique.
+// Logo : celui choisi dans l'administration, sinon src/assets/img/logo-dio.*, sinon logo générique.
 const clientLogo =
   site.images?.logo ||
   ["png", "webp", "svg", "jpg"]
-    .map((ext) => `/assets/img/logo-paintball-lille.${ext}`)
+    .map((ext) => `/assets/img/logo-dio.${ext}`)
     .find((f) => fs.existsSync(path.join(SRC, f)));
 const logoImg = clientLogo
-  ? `<img class="logo__img logo__img--client" src="${esc(clientLogo)}" alt="">`
+  ? `<img class="logo__img" src="${esc(clientLogo)}" alt="" width="44" height="44">`
   : `<img class="logo__img" src="/assets/img/logo.svg" alt="" width="44" height="44">`;
 
-const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(`Paintball Lille, ${addressLine}`)}&output=embed`;
-
-const promoActive = () =>
-  site.promo.active && (!site.promo.until || new Date() <= new Date(site.promo.until + "T23:59:59"));
-
+// Avis : note affichée seulement si elle est renseignée ; l'invitation à laisser un avis est toujours là.
 function reviewsSection() {
-  const r = site.reviews;
-  if (!r) return "";
+  const r = site.reviews || {};
   const cards = (r.items || [])
     .slice(0, 6)
     .map(
       (it) => `<figure class="quote">
         <p class="quote__stars" aria-label="${esc(it.rating)} sur 5">${"★".repeat(Math.round(Number(it.rating) || 5))}</p>
         <blockquote><p>${esc(it.text)}</p></blockquote>
-        <figcaption>${esc(it.author)}${it.date ? ` · ${esc(it.date)}` : ""} · Avis ${esc(r.source)}</figcaption>
+        <figcaption>${esc(it.author)}${it.date ? ` · ${esc(it.date)}` : ""} · Avis ${esc(r.source || "Google")}</figcaption>
       </figure>`
     )
     .join("");
-  return `<!--reviews--><section class="section section--white">
+  const rating = r.rating
+    ? `<a class="rating" href="${mapsUrl}" rel="noopener">
+        <strong>${esc(r.rating)}<span>/5</span></strong>
+        <span class="rating__stars" aria-hidden="true">★★★★★</span>
+        <span>${r.count ? esc(r.count) + " avis " : "Avis "}${esc(r.source || "Google")}</span>
+      </a>`
+    : "";
+  return `<section class="section section--cream" id="avis">
   <div class="container">
     <div class="reviews-head">
       <div>
-        <span class="section__kicker">Avis clients</span>
-        <h2>Ce qu'en disent nos joueurs</h2>
+        <span class="section__kicker">Avis</span>
+        <h2>Ils sont passés à table</h2>
       </div>
-      <a class="rating" href="${mapsUrl}" rel="noopener">
-        <strong>${esc(r.rating)}<span>/5</span></strong>
-        <span class="rating__stars" aria-hidden="true">★★★★★</span>
-        <span>${esc(r.count)} avis ${esc(r.source)}</span>
-      </a>
+      ${rating}
     </div>
     ${cards ? `<div class="grid grid--3">${cards}</div>` : ""}
-    <p class="reviews-more"><a class="btn btn--dark" href="${mapsUrl}" rel="noopener">Lire tous les avis sur ${esc(r.source)}</a></p>
+    <div class="review-ask">
+      <div>
+        <h3>Vous avez aimé ? Dites-le !</h3>
+        <p>Un avis Google, ça prend 30 secondes et c'est ce qui aide le plus un restaurant de quartier à se faire connaître.</p>
+      </div>
+      <a class="btn btn--primary" href="${mapsUrl}" rel="noopener">Laisser un avis</a>
+    </div>
   </div>
-</section><!--/reviews-->`;
+</section>`;
 }
+
+const shareBlock = () => `<section class="section section--dark share" id="partager">
+  <div class="container share__inner">
+    <div>
+      <span class="section__kicker">Le bouche-à-oreille</span>
+      <h2>Vous connaissez des gourmands ?</h2>
+      <p>Dio vit grâce à ses clients. Si vous avez passé un bon moment, parlez-en : un message à un ami, un collègue, un voisin fait toute la différence.</p>
+    </div>
+    <div class="share__actions">
+      <button class="btn btn--primary" type="button" data-share data-title="Dio Ristorante" data-text="Pizzas au feu de bois et pâtes à Villeneuve-d'Ascq, parking gratuit derrière le restaurant. Je recommande !">Recommander Dio</button>
+      <a class="btn btn--light" href="${mapsUrl}" rel="noopener">Laisser un avis</a>
+    </div>
+  </div>
+</section>`;
 
 const mapBlock = () => `<!--map--><div class="map-embed" data-src="${esc(mapEmbedUrl)}">
   <div class="map-embed__placeholder">
@@ -190,21 +192,29 @@ const heroPhoto =
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "SportsActivityLocation",
+  "@type": "Restaurant",
   name: site.name,
   url: site.baseUrl + "/",
-  telephone: site.phones.adulte.tel,
-  email: site.email,
-  priceRange: "14 € - 50 €",
+  image: site.baseUrl + "/assets/img/og.png",
+  servesCuisine: ["Italienne", "Pizza", "Pâtes"],
+  acceptsReservations: true,
+  ...(hasPhone ? { telephone: phone.tel } : {}),
+  ...(site.email ? { email: site.email } : {}),
   address: {
     "@type": "PostalAddress",
-    streetAddress: site.address.street,
+    ...(site.address.street ? { streetAddress: site.address.street } : {}),
     postalCode: site.address.postalCode,
     addressLocality: site.address.city,
     addressRegion: site.address.region,
     addressCountry: site.address.country,
   },
-  sameAs: Object.values(site.social),
+  amenityFeature: [
+    { "@type": "LocationFeatureSpecification", name: "Parking gratuit", value: true },
+    { "@type": "LocationFeatureSpecification", name: "Privatisation", value: true },
+    { "@type": "LocationFeatureSpecification", name: "Vente à emporter", value: true },
+  ],
+  hasMenu: site.baseUrl + "/la-carte/",
+  sameAs: Object.values(site.social).filter(Boolean),
 };
 
 // ---------- Actualités (src/actualites/*.md, éditables depuis l'administration) ----------
@@ -285,7 +295,7 @@ const newsCard = (n) => `<a class="activity activity--dark news-card" href="/act
 // Description de page toujours assez longue, même si l'article est très court.
 function newsDescription(n) {
   const text = `${n.summary} ${n.html.replace(/<[^>]+>/g, " ")}`.replace(/\s+/g, " ").trim();
-  const d = text.length >= 60 ? text : `${n.title}. ${text} Actualité du terrain Paintball Lille, à 10 minutes de Lille.`;
+  const d = text.length >= 60 ? text : `${n.title}. ${text} Actualité de Dio Ristorante, Villeneuve-d'Ascq.`;
   return d.length > 155 ? d.slice(0, 152).trimEnd() + "…" : d;
 }
 
@@ -295,7 +305,7 @@ function newsSection() {
   <div class="container">
     <div class="section__head">
       <span class="section__kicker">Actualités</span>
-      <h2>Les dernières nouvelles du terrain</h2>
+      <h2>Les dernières nouvelles de Dio</h2>
     </div>
     <div class="grid grid--3">${news.slice(0, 3).map(newsCard).join("")}</div>
     <p class="reviews-more"><a class="btn btn--dark" href="/actualites/">Toutes les actualités</a></p>
@@ -305,55 +315,58 @@ function newsSection() {
 
 // ---------- Rendu ----------
 
-const SPLAT_PATH =
-  "M100 20C115 20 118 45 130 42C145 38 150 15 165 25C178 34 160 55 170 65C182 77 198 70 198 88C198 104 175 100 172 112C169 125 190 138 180 152C170 165 152 150 142 160C132 170 140 195 122 196C104 197 108 172 96 170C84 168 78 190 62 184C46 178 58 158 48 148C38 138 12 150 8 132C4 114 30 112 30 100C30 88 6 80 12 64C18 48 40 60 50 52C60 44 52 22 68 18C84 14 86 20 100 20Z";
-const splat = (cls) =>
-  `<svg class="${cls}" viewBox="0 0 200 200" aria-hidden="true" focusable="false"><path d="${SPLAT_PATH}" fill="currentColor"/><circle cx="188" cy="30" r="7" fill="currentColor"/><circle cx="20" cy="185" r="9" fill="currentColor"/><circle cx="160" cy="190" r="5" fill="currentColor"/></svg>`;
-
 const tokens = {
   logo: () => logoImg,
   map: mapBlock,
+  parking: parkingBlock,
   reviewsSection,
-  rating: () =>
-    site.reviews
-      ? `<!--reviews--><li><strong>${esc(site.reviews.rating)}/5</strong>${esc(site.reviews.count)} avis ${esc(site.reviews.source)}</li><!--/reviews-->`
-      : "",
-  ratingText: () =>
-    site.reviews
-      ? `<!--reviews-->Noté ${esc(site.reviews.rating)}/5 sur ${esc(site.reviews.source)} (${esc(site.reviews.count)} avis).<!--/reviews-->`
-      : "",
-  splatA: () => splat("hero__splat hero__splat--a"),
-  splatB: () => splat("hero__splat hero__splat--b"),
-  splatC: () => splat("hero__splat hero__splat--c"),
-  splatPanel: () => splat("panel__splat"),
+  shareBlock,
   year: () => String(new Date().getFullYear()),
-  email: () => `<a href="mailto:${site.email}">${site.email}</a>`,
+  email: () => (site.email ? `<a href="mailto:${site.email}">${site.email}</a>` : ""),
   emailRaw: () => site.email,
   address: () => esc(addressLine),
   mapsUrl: () => mapsUrl,
   hours: () => esc(site.hours),
-  discount: () => esc(site.groupDiscount),
-  facilities,
-  promo: promoBanner,
+  services: () => esc(site.services.join(" · ")),
+  menuNote: () => esc(site.menuNote),
+  menuNav,
+  menuAll: () => site.menu.map(menuSection).join("\n"),
+  menuPreview: () =>
+    site.menu
+      .filter((c) => ["pizzas", "pates"].includes(c.id))
+      .map((c) => `<article class="card card--menu"><h3>${esc(c.title)}</h3><ul>${c.items.slice(0, 4).map((it) => `<li><strong>${esc(it.name)}</strong> ${esc(it.desc)}</li>`).join("")}</ul></article>`)
+      .join(""),
+  formulas,
+  privIntro: () => esc(site.privatisation.intro),
+  topPhone: () => (hasPhone ? `<a href="tel:${phone.tel}">${phone.display}</a>` : `<a href="/reservation/">Réserver en ligne</a>`),
+  callBtn: () => callBtn(),
+  callBtnLight: () => callBtn("btn btn--light"),
+  callLink: () => (hasPhone ? `<a href="tel:${phone.tel}" class="mobile-bar__call">Appeler</a>` : `<a href="${mapsUrl}" class="mobile-bar__call" rel="noopener">Itinéraire</a>`),
+  phoneCard: () => (hasPhone ? `<div class="contact-card"><h3>${esc(phone.label)}</h3><a href="tel:${phone.tel}">${phone.display}</a></div>` : ""),
+  phoneLine: () => (hasPhone ? `Téléphone : <a href="tel:${phone.tel}">${phone.display}</a><br>` : ""),
   cta: () => ctaBand(),
+  ctaPriv: () => ctaBand("Un événement à organiser ?", "Entreprise, anniversaire, fête : parlons de votre date et de vos envies."),
   gallery,
   heroClass: () => (heroPhoto ? "hero hero--photo" : "hero"),
   heroStyle: () => (heroPhoto ? ` style="--hero-img: url('${esc(heroPhoto)}')"` : ""),
   news: newsSection,
   formEndpoint: () => esc(site.formEndpoint),
-  facebook: () => site.social.facebook,
-  instagram: () => site.social.instagram,
-  tiktok: () => site.social.tiktok,
+  socialRow: () => {
+    const icons = {
+      facebook: '<path d="M14 8h3V4h-3c-2.8 0-4 1.8-4 4.3V10H7v4h3v8h4v-8h3l1-4h-4V8.5c0-.4.3-.5 1-.5Z"/>',
+      instagram: '<path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM17.3 5.5a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4Z"/>',
+      tiktok: '<path d="M16.6 2c.4 2.6 2 4.2 4.4 4.4v3.3c-1.6 0-3-.5-4.3-1.3v6.5A6.1 6.1 0 1 1 10.6 9v3.4a2.8 2.8 0 1 0 2.8 2.8V2h3.2Z"/>',
+    };
+    const links = Object.entries(site.social).filter(([, url]) => url);
+    if (!links.length) return "";
+    return `<p class="social-row">${links
+      .map(([k, url]) => `<a href="${esc(url)}" rel="noopener" aria-label="${k}"><svg viewBox="0 0 24 24" aria-hidden="true">${icons[k]}</svg></a>`)
+      .join("")}</p>`;
+  },
 };
 
 function render(str) {
   return str.replace(/\{\{\s*([\w]+)(?::([\w]+))?\s*\}\}/g, (m, name, arg) => {
-    if (name === "tarifs") return priceCards(arg);
-    if (name === "priceSummary")
-      return site.tarifs[arg].items.map((it) => `${esc(it.balls)} ${esc(it.price)}`).join(" · ");
-    if (name === "phone") return phoneLink(arg);
-    if (name === "tel") return site.phones[arg].tel;
-    if (name === "phoneDisplay") return site.phones[arg].display;
     if (name === "legal") {
       const v = site.legal[arg];
       if (v) return esc(v);
@@ -375,11 +388,6 @@ function render(str) {
         return "";
       }
       return ` À défaut, il peut recourir gratuitement au médiateur de la consommation : ${esc(site.legal.mediator)}.`;
-    }
-    if (name === "phoneLabel") return esc(site.phones[arg].label);
-    if (name === "from") {
-      const nums = site.tarifs[arg].items.map((it) => parseFloat(it.price));
-      return `${Math.min(...nums)} €`;
     }
     if (tokens[name]) return tokens[name]();
     throw new Error(`Balise inconnue : ${m}`);
@@ -436,15 +444,15 @@ for (const file of fs.readdirSync(path.join(SRC, "pages")).sort()) {
 // Actualités : une page de liste + une page par article
 writePage(
   {
-    title: "Actualités – Paintball Lille",
-    description: "Les nouveautés du terrain Paintball Lille à Vendeville : offres, événements, nouveaux scénarios et infos pratiques.",
+    title: "Actualités – Dio Ristorante",
+    description: "Les nouveautés de Dio Ristorante à Villeneuve-d'Ascq : plats du moment, soirées, événements et infos pratiques.",
     nav: "actualites",
   },
-  `<section class="page-hero">{{splatA}}<div class="container"><h1>Actualités</h1><p>Offres, événements et nouveautés du terrain.</p></div></section>
+  `<section class="page-hero"><div class="container"><h1>Actualités</h1><p>Plats du moment, soirées et nouveautés de la maison.</p></div></section>
 <section class="section"><div class="container">${
     news.length
       ? `<div class="grid grid--3">${news.map(newsCard).join("")}</div>`
-      : `<div class="empty-gallery"><p>Aucune actualité pour le moment. Suivez-nous sur les réseaux pour ne rien manquer.</p></div>`
+      : `<div class="empty-gallery"><p>Aucune actualité pour le moment. Revenez bientôt !</p></div>`
   }</div></section>
 {{cta}}`,
   "/actualites/",
@@ -453,11 +461,11 @@ writePage(
 for (const n of news) {
   writePage(
     {
-      title: `${n.title} – Paintball Lille`,
+      title: `${n.title} – Dio Ristorante`,
       description: newsDescription(n),
       nav: "actualites",
     },
-    `<section class="page-hero">{{splatA}}<div class="container"><span class="hero__eyebrow">${frDate(n.date)}</span><h1>${esc(n.title)}</h1>${
+    `<section class="page-hero"><div class="container"><span class="hero__eyebrow">${frDate(n.date)}</span><h1>${esc(n.title)}</h1>${
       n.summary ? `<p>${esc(n.summary)}</p>` : ""
     }</div></section>
 <section class="section"><div class="container prose">${
