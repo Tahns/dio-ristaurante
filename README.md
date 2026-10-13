@@ -3,7 +3,7 @@
 Site statique, rapide, sans cookies de suivi ni dépendance, pour DIO Ristorante (Villeneuve-d'Ascq).
 
 - **Pages** : accueil, la carte, privatisation (entreprises et particuliers), réservation (table, emporter, privatisation, traiteur), accès et parking, galerie, FAQ, actualités, mentions légales, confidentialité, 404.
-- **Parking** : le parking gratuit derrière le restaurant est annoncé en haut de chaque page, sur l'accueil, la réservation, l'accès, la privatisation, le pied de page et la FAQ (texte modifiable dans l'admin).
+- **Parking** : le parking gratuit à côté du restaurant est annoncé en haut de chaque page, sur l'accueil, la réservation, l'accès, la privatisation, le pied de page et la FAQ (texte modifiable dans l'admin).
 - **Bouche-à-oreille** : bouton « Recommander DIO » (partage WhatsApp/SMS) et invitation à laisser un avis Google sur l'accueil.
 - **Avis** : note et derniers avis Google mis à jour chaque jour (si `GOOGLE_MAPS_API_KEY` et `GOOGLE_PLACE_ID` sont configurés), sinon saisis dans l'admin.
 - **SEO** : une meta description et un H1 par page, données structurées Restaurant + FAQ, sitemap.

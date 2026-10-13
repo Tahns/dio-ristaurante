@@ -116,7 +116,7 @@ const orderApp = () => {
         <label class="field field--check"><input type="checkbox" name="annulation" required><span>Je préviendrai le restaurant si je dois annuler ma commande. Je paie sur place au retrait.</span></label>
         <button class="btn btn--primary btn--lg" type="submit">Valider ma commande</button>
         <p class="form__status" role="status" aria-live="polite"></p>
-        <p class="form__note">Retrait au ${esc(addressLine)}, parking gratuit derrière le restaurant. Commande à passer au moins 30 minutes à l'avance. Elle est confirmée une fois validée par le restaurant.</p>
+        <p class="form__note">Retrait au ${esc(addressLine)}, parking gratuit à côté du restaurant. Commande à passer au moins 30 minutes à l'avance. Elle est confirmée une fois validée par le restaurant.</p>
       </form>
     </div>
   </aside>
@@ -169,7 +169,7 @@ const hoursPanel = () => {
 const parkingMap = () => `<figure class="parking-map">
   <svg viewBox="0 0 800 560" role="img" aria-labelledby="pm-t pm-d" xmlns="http://www.w3.org/2000/svg">
     <title id="pm-t">Plan : où se garer et où entrer chez DIO</title>
-    <desc id="pm-d">Le restaurant est au bord de la rue Émile Zola. L'entrée est sur le côté de la rue. Le parking gratuit est dans la boucle de la rue, juste derrière le restaurant.</desc>
+    <desc id="pm-d">Le restaurant est au bord de la rue Émile Zola. L'entrée du restaurant donne sur le parking gratuit, dans la boucle de la rue Émile Zola.</desc>
     <rect width="800" height="560" fill="#f4f1ea"/>
     <rect x="18" y="0" width="64" height="560" fill="#b4bdca"/><rect x="100" y="0" width="64" height="560" fill="#b4bdca"/>
     <text x="52" y="300" transform="rotate(-90 52 300)" text-anchor="middle" font-size="17" font-weight="600" fill="#fff" font-family="Inter,system-ui,sans-serif">Bd de l'Ouest</text>
@@ -193,7 +193,7 @@ const parkingMap = () => `<figure class="parking-map">
     <text x="372" y="388" text-anchor="middle" font-size="20" font-weight="800" fill="#d93a2b" font-family="Inter,system-ui,sans-serif">ENTRÉE</text>
     <text x="16" y="548" font-size="13" fill="#5f5a52" font-family="Inter,system-ui,sans-serif">Plan simplifié, pas à l'échelle</text>
   </svg>
-  <figcaption>L'entrée est côté rue. Le parking gratuit est dans la boucle de la rue Émile Zola, juste derrière le restaurant.</figcaption>
+  <figcaption>Le parking gratuit est dans la boucle de la rue Émile Zola, juste à côté du restaurant, en face de l'entrée.</figcaption>
 </figure>`;
 
 const parkingSteps = () =>
@@ -364,7 +364,7 @@ const shareBlock = () => `<section class="section section--dark share" id="parta
       <p>Dites-le à un ami ou à un collègue : c'est ce qui nous fait le plus plaisir.</p>
     </div>
     <div class="share__actions">
-      <button class="btn btn--primary" type="button" data-share data-title="DIO Ristorante" data-text="Pizzas à Villeneuve-d'Ascq, parking gratuit derrière le restaurant. Je recommande !">Recommander DIO</button>
+      <button class="btn btn--primary" type="button" data-share data-title="DIO Ristorante" data-text="Pizzas à Villeneuve-d'Ascq, parking gratuit à côté du restaurant. Je recommande !">Recommander DIO</button>
       <a class="btn btn--light" href="${reviewUrl}" rel="noopener">Laisser un avis</a>
     </div>
   </div>

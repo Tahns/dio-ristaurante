@@ -10,12 +10,12 @@
     "country": "FR"
   },
   "parking": {
-    "title": "Parking gratuit derrière le restaurant",
-    "text": "Le parking est gratuit et il est juste derrière le restaurant. Garez-vous, vous êtes arrivés.",
+    "title": "Parking gratuit à côté du restaurant",
+    "text": "Le parking est gratuit et il est juste à côté du restaurant, en face de l'entrée. Garez-vous, vous êtes arrivés.",
     "detail": "",
     "steps": [
       "Arrivez devant le restaurant.",
-      "Le parking gratuit est juste derrière.",
+      "Le parking gratuit est juste à côté, en face de l'entrée.",
       "Garez-vous et entrez : on vous attend."
     ]
   },
@@ -707,7 +707,7 @@
         "author": "Camille D.",
         "rating": 5,
         "date": "",
-        "text": "Une vraie pizza cuite au four à bois, la pâte est légère et bien dorée. On a été accueillis avec le sourire et on a même pu se garer juste derrière.",
+        "text": "Une vraie pizza cuite au four à bois, la pâte est légère et bien dorée. On a été accueillis avec le sourire et on a même pu se garer juste à côté.",
         "example": true
       },
       {
