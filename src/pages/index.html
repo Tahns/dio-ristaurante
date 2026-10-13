@@ -6,7 +6,7 @@
 <section class="{{heroClass}}"{{heroStyle}}>
   <div class="container hero__inner">
     <span class="hero__eyebrow">Benvenuti da Dio !</span>
-    <h1>Dio <em>Ristorante</em>, cuisine italienne à Villeneuve-d'Ascq</h1>
+    <h1>Cuisine <em>italienne</em> à Villeneuve-d'Ascq</h1>
     <p class="hero__lead">Pizzas au four à bois, pâtes, risottos et un excellent café. Venez comme vous êtes, on vous trouve une table.</p>
     <div class="hero__actions">
       <a class="btn btn--primary btn--lg" href="/reservation/">Réserver une table</a>
@@ -15,6 +15,13 @@
     <p class="hero__services">{{services}}</p>
   </div>
 </section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span>Pizza</span><i>✦</i><span>Pasta</span><i>✦</i><span>Risotto</span><i>✦</i><span>Burrata</span><i>✦</i><span>Tiramisù</span><i>✦</i><span>Caffè</span><i>✦</i><span>Vino</span><i>✦</i><span>Dolce vita</span><i>✦</i>
+    <span>Pizza</span><i>✦</i><span>Pasta</span><i>✦</i><span>Risotto</span><i>✦</i><span>Burrata</span><i>✦</i><span>Tiramisù</span><i>✦</i><span>Caffè</span><i>✦</i><span>Vino</span><i>✦</i><span>Dolce vita</span><i>✦</i>
+  </div>
+</div>
 
 <section class="section section--tight">
   <div class="container">
@@ -27,6 +34,22 @@
     <div>
       <span class="section__kicker">La cucina</span>
       <h2>Au four à bois</h2>
+      <svg class="pizza" viewBox="0 0 300 300" role="img" aria-label="Une pizza qui tourne">
+        <g class="pizza__spin">
+          <circle cx="150" cy="150" r="140" fill="#d9a05b"/>
+          <circle cx="150" cy="150" r="140" fill="none" stroke="#b97a35" stroke-width="4"/>
+          <circle cx="150" cy="150" r="122" fill="#c8321e"/>
+          <g class="pz pz--cheese" fill="#f6e7b8">
+            <path d="M90 100c14-18 40-14 46 4s-8 36-28 34-30-20-18-38z"/><path d="M170 86c20-8 44 6 42 26s-24 28-40 18-14-36-2-44z"/>
+            <path d="M82 180c10-14 34-10 38 8s-10 32-26 28-22-22-12-36z"/><path d="M172 176c18-10 40 2 40 22s-22 30-38 20-12-34-2-42z"/>
+            <path d="M120 130c12-8 34 0 34 16s-18 24-30 16-12-24-4-32z"/>
+          </g>
+          <g class="pz pz--pep" fill="#8f2a1a"><circle cx="112" cy="84" r="14"/><circle cx="196" cy="142" r="14"/><circle cx="100" cy="208" r="14"/><circle cx="186" cy="216" r="14"/><circle cx="148" cy="96" r="12"/><circle cx="62" cy="150" r="12"/></g>
+          <g class="pz pz--pep" fill="#b94a30"><circle cx="108" cy="80" r="3"/><circle cx="192" cy="138" r="3"/><circle cx="96" cy="204" r="3"/><circle cx="182" cy="212" r="3"/></g>
+          <g class="pz pz--basil" fill="#2f8f3e"><ellipse cx="140" cy="172" rx="16" ry="8" transform="rotate(-30 140 172)"/><ellipse cx="206" cy="96" rx="15" ry="7" transform="rotate(25 206 96)"/><ellipse cx="72" cy="120" rx="14" ry="7" transform="rotate(50 72 120)"/><ellipse cx="156" cy="232" rx="14" ry="7" transform="rotate(-10 156 232)"/></g>
+          <g stroke="#7a2a12" stroke-width="1.6" opacity=".45"><path d="M150 28v244M28 150h244M63 63l174 174M237 63L63 237"/></g>
+        </g>
+      </svg>
     </div>
     <div class="intro__text">
       <p>Chez Dio, les pizzas cuisent au four à bois : la croûte gonfle, le fromage fond, le tout en quelques minutes. Il y a aussi des pâtes, nature ou gratinées au four, des risottos, des spécialités et des planches à partager. Les pizzas démarrent à 7,90 € à emporter, les pâtes à 9 €.</p>

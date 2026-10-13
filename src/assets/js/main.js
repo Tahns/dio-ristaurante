@@ -172,7 +172,7 @@ if (form) {
 if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObserver" in window) {
   document.documentElement.classList.add("motion");
   const targets = document.querySelectorAll(
-    ".section .container > *:not(.menu-set):not(.gallery), .feature, .card, .menu-item, .gallery a, .quote, .steps li, .flyer, .parking, .trio img"
+    ".section .container > *:not(.menu-set):not(.gallery), .section h2, .pizza, .feature, .card, .menu-item, .gallery a, .quote, .steps li, .flyer, .parking, .trio img"
   );
   const io = new IntersectionObserver(
     (entries) =>
@@ -193,18 +193,6 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObse
     }
     io.observe(el);
   });
-  const hero = document.querySelector(".hero--photo");
-  if (hero) {
-    const box = document.createElement("div");
-    box.className = "embers";
-    box.setAttribute("aria-hidden", "true");
-    for (let i = 0; i < 16; i++) {
-      const b = document.createElement("i");
-      b.style.cssText = `left:${(i * 37) % 100}%;--s:${3 + (i % 4) * 2}px;--t:${6 + (i % 5) * 1.6}s;--w:${(i % 7) * 0.9}s;--x:${(i % 2 ? 1 : -1) * (20 + (i % 5) * 18)}px`;
-      box.appendChild(b);
-    }
-    hero.appendChild(box);
-  }
 }
 
 // Carte : onglets Sur place / À emporter (les deux restent visibles sans JavaScript)
@@ -225,3 +213,120 @@ if (menuTabs.length) {
   );
   show(location.hash.startsWith("#emporter") ? "emporter" : "surplace");
 }
+
+// ---------- Motion design ----------
+(() => {
+  const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Titres du hero : les mots montent un par un
+  document.querySelectorAll(".hero h1").forEach((h) => {
+    let i = 0;
+    const walk = (node) => {
+      [...node.childNodes].forEach((n) => {
+        if (n.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach((t) => {
+            if (!t) return;
+            if (/^\s+$/.test(t)) return frag.append(t);
+            const w = document.createElement("span");
+            w.className = "w";
+            const inner = document.createElement("span");
+            inner.textContent = t;
+            inner.style.setProperty("--i", i++);
+            w.append(inner);
+            frag.append(w);
+          });
+          n.replaceWith(frag);
+        } else if (n.nodeType === 1) walk(n);
+      });
+    };
+    h.setAttribute("aria-label", h.textContent.replace(/\s+/g, " ").trim());
+    walk(h);
+    if (calm) h.querySelectorAll(".w>span").forEach((s) => (s.style.transform = "none"));
+  });
+
+  // Pizza : chaque garniture arrive à son tour
+  document.querySelectorAll(".pizza .pz > *").forEach((el, i) => el.style.setProperty("--k", i % 9));
+
+  if (calm) return;
+
+  // Parallaxe douce
+  let ticking = false;
+  const root = document.documentElement;
+  addEventListener(
+    "scroll",
+    () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        root.style.setProperty("--sy", String(Math.min(scrollY, 900)));
+        ticking = false;
+      });
+    },
+    { passive: true }
+  );
+
+  // Flammes dans le hero (canvas, en pause hors écran)
+  const hero = document.querySelector(".hero--photo");
+  if (!hero || !HTMLCanvasElement.prototype.getContext) return;
+  const cv = document.createElement("canvas");
+  cv.className = "fire";
+  cv.setAttribute("aria-hidden", "true");
+  hero.prepend(cv);
+  const ctx = cv.getContext("2d");
+  const small = innerWidth < 700;
+  const N = small ? 70 : 150;
+  let W = 0, H = 0, parts = [], running = false, last = 0;
+  const dpr = Math.min(devicePixelRatio || 1, 1.5);
+  const size = () => {
+    W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  };
+  const spawn = (p) => {
+    // flammes plus fournies sur la gauche, où se trouve le texte
+    p.x = Math.random() * W * (0.25 + Math.random() * 0.75);
+    p.y = H + 10;
+    p.r = 18 + Math.random() * (small ? 26 : 44);
+    p.vy = 40 + Math.random() * 90;
+    p.life = 0;
+    p.max = 1.4 + Math.random() * 1.6;
+    p.ph = Math.random() * 6.28;
+    p.sp = Math.random() < 0.12; // étincelle
+    if (p.sp) { p.r = 1.5 + Math.random() * 2; p.vy = 90 + Math.random() * 160; p.max = 2 + Math.random() * 2; }
+    return p;
+  };
+  size();
+  parts = Array.from({ length: N }, () => { const p = spawn({}); p.life = Math.random() * p.max; return p; });
+  const frame = (t) => {
+    if (!running) return;
+    const dt = Math.min((t - last) / 1000 || 0.016, 0.05);
+    last = t;
+    ctx.clearRect(0, 0, W, H);
+    ctx.globalCompositeOperation = "lighter";
+    for (const p of parts) {
+      p.life += dt;
+      if (p.life > p.max) spawn(p);
+      const k = p.life / p.max;
+      p.y -= p.vy * dt;
+      const x = p.x + Math.sin(p.ph + p.life * 3) * (p.sp ? 18 : 10) * (0.4 + k);
+      const r = p.r * (p.sp ? 1 : 1 - k * 0.7);
+      const a = p.sp ? 0.9 * (1 - k) : 0.5 * Math.sin(Math.PI * Math.min(k * 1.2, 1)) * (1 - k * 0.3);
+      const g = ctx.createRadialGradient(x, p.y, 0, x, p.y, r);
+      if (p.sp) { g.addColorStop(0, `rgba(255,214,130,${a})`); g.addColorStop(1, "rgba(255,160,40,0)"); }
+      else {
+        g.addColorStop(0, `rgba(255,${190 - k * 90 | 0},${70 - k * 50 | 0},${a})`);
+        g.addColorStop(0.5, `rgba(${230 - k * 40 | 0},${90 - k * 50 | 0},20,${a * 0.6})`);
+        g.addColorStop(1, "rgba(120,30,10,0)");
+      }
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(x, p.y, r, 0, 6.2832); ctx.fill();
+    }
+    requestAnimationFrame(frame);
+  };
+  const start = () => { if (!running && !document.hidden) { running = true; last = performance.now(); requestAnimationFrame(frame); } };
+  const stop = () => { running = false; };
+  new IntersectionObserver((e) => (e[0].isIntersecting ? start() : stop()), { threshold: 0 }).observe(hero);
+  document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
+  addEventListener("resize", size);
+})();
