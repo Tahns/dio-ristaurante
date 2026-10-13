@@ -1,5 +1,5 @@
 {
-  "name": "Dio Ristorante",
+  "name": "DIO Ristorante",
   "baseUrl": "https://www.dioristaurante.com",
   "tagline": "Pizzas au four à bois, rigatoni et desserts maison à Villeneuve-d'Ascq",
   "address": {
@@ -231,7 +231,7 @@
             "price": "13,90 €"
           },
           {
-            "name": "Dio",
+            "name": "DIO",
             "desc": "Crème fraîche, jambon, champignons.",
             "price": "13,90 €"
           },
@@ -485,7 +485,7 @@
             "price": "9 €"
           },
           {
-            "name": "Dio",
+            "name": "DIO",
             "desc": "Crème fraîche, jambon, champignons.",
             "price": "9 €"
           },
@@ -602,7 +602,7 @@
             "price": "11,50 €"
           },
           {
-            "name": "Dio",
+            "name": "DIO",
             "desc": "Sauce tomate, mozzarella, jambon, chorizo, champignons, oignons, olives, œuf.",
             "price": "12 €"
           },
@@ -668,7 +668,7 @@
     ]
   },
   "privatisation": {
-    "intro": "Dio accueille les groupes : repas d'équipe, séminaires, anniversaires, fêtes. Écrivez-nous la date, le nombre de personnes et ce que vous imaginez, on vous répond.",
+    "intro": "DIO accueille les groupes : repas d'équipe, séminaires, anniversaires, fêtes. Écrivez-nous la date, le nombre de personnes et ce que vous imaginez, on vous répond.",
     "capacity": "",
     "formulas": [
       {

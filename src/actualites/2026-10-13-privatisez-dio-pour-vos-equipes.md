@@ -1,5 +1,5 @@
 ---
-title: "Votre déjeuner d'équipe chez Dio"
+title: "Votre déjeuner d'équipe chez DIO"
 date: 2026-10-12
 summary: "Repas assis ou apéritif dînatoire : on accueille les équipes."
 ---

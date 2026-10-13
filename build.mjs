@@ -21,13 +21,16 @@ const esc = (s) =>
   String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 const addressLine = [site.address.street, `${site.address.postalCode} ${site.address.city}`].filter(Boolean).join(", ");
-const mapsQuery = `Dio Ristorante ${addressLine}`;
+const mapsQuery = `DIO Ristorante ${addressLine}`;
 const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}`;
 // Lien « laisser un avis » : direct si l'identifiant de la fiche Google est renseigné, sinon la fiche sur Google Maps.
 const reviewUrl = site.googlePlaceId
   ? `https://search.google.com/local/writereview?placeid=${encodeURIComponent(site.googlePlaceId)}`
   : mapsUrl;
 const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(mapsQuery)}&output=embed`;
+const reviewsReadUrl = site.googlePlaceId
+  ? `https://search.google.com/local/reviews?placeid=${encodeURIComponent(site.googlePlaceId)}`
+  : mapsUrl;
 const phone = site.phones.resto;
 const hasPhone = Boolean(phone.tel);
 
@@ -119,7 +122,7 @@ const formulas = () =>
     .join("")}</div>`;
 
 const ctaBand = (
-  title = "Une table chez Dio ?",
+  title = "Une table chez DIO ?",
   text = "Un coup de fil suffit, on vous trouve une table."
 ) => `
 <section class="cta-band">
@@ -206,10 +209,10 @@ function reviewsSection() {
     ${cards ? `<div class="grid grid--3">${cards}</div>` : ""}
     <div class="review-ask">
       <div>
-        <h3>Un bon moment chez Dio ?</h3>
+        <h3>Un bon moment chez DIO ?</h3>
         <p>Un avis Google prend trente secondes et aide les autres à nous trouver.</p>
       </div>
-      <a class="btn btn--primary" href="${reviewUrl}" rel="noopener">Laisser un avis</a>
+      <p class="review-ask__actions"><a class="btn btn--primary" href="${reviewUrl}" rel="noopener">Laisser un avis</a> <a class="btn btn--light" href="${reviewsReadUrl}" rel="noopener">Lire les avis</a></p>
     </div>
   </div>
 </section>`;
@@ -223,20 +226,18 @@ const shareBlock = () => `<section class="section section--dark share" id="parta
       <p>Dites-le à un ami ou à un collègue : c'est ce qui nous fait le plus plaisir.</p>
     </div>
     <div class="share__actions">
-      <button class="btn btn--primary" type="button" data-share data-title="Dio Ristorante" data-text="Pizzas-d'Ascq, parking gratuit derrière le restaurant. Je recommande !">Recommander Dio</button>
+      <button class="btn btn--primary" type="button" data-share data-title="DIO Ristorante" data-text="Pizzas à Villeneuve-d'Ascq, parking gratuit derrière le restaurant. Je recommande !">Recommander DIO</button>
       <a class="btn btn--light" href="${reviewUrl}" rel="noopener">Laisser un avis</a>
     </div>
   </div>
 </section>`;
 
-const mapBlock = () => `<!--map--><div class="map-embed" data-src="${esc(mapEmbedUrl)}">
-  <div class="map-embed__placeholder">
-    <p>La carte est fournie par Google Maps. En l'affichant, vous acceptez que Google dépose des cookies.</p>
-    <p class="map-embed__actions">
-      <button class="btn btn--dark" type="button">Afficher la carte</button>
-      <a class="btn btn--ghost" href="${mapsUrl}" rel="noopener">Ouvrir dans Google Maps</a>
-    </p>
-  </div>
+const mapBlock = () => `<!--map--><div class="map-embed">
+  <iframe src="${esc(mapEmbedUrl)}" title="DIO Ristorante sur Google Maps : emplacement, note et avis" width="600" height="420" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+  <p class="map-embed__actions">
+    <a class="btn btn--dark" href="${mapsUrl}" rel="noopener">Itinéraire</a>
+    <a class="btn btn--ghost" href="${reviewsReadUrl}" rel="noopener">Lire les avis sur Google</a>
+  </p>
 </div><!--/map-->`;
 const heroPhoto =
   site.images?.hero || (fs.existsSync(path.join(SRC, "assets/photos/hero.jpg")) ? "/assets/photos/hero.jpg" : "");
@@ -368,7 +369,7 @@ const newsCard = (n, lvl = 3) => `<a class="news-card" href="/actualites/${n.slu
 // Description de page toujours assez longue, même si l'article est très court.
 function newsDescription(n) {
   const text = `${n.summary} ${n.html.replace(/<[^>]+>/g, " ")}`.replace(/\s+/g, " ").trim();
-  const d = text.length >= 60 ? text : `${n.title}. ${text} Actualité de Dio Ristorante, Villeneuve-d'Ascq.`;
+  const d = text.length >= 60 ? text : `${n.title}. ${text} Actualité de DIO Ristorante, Villeneuve-d'Ascq.`;
   return d.length > 155 ? d.slice(0, 152).trimEnd() + "…" : d;
 }
 
@@ -378,7 +379,7 @@ function newsSection() {
   <div class="container">
     <div class="section__head">
       <span class="section__kicker">Actualités</span>
-      <h2>Les dernières nouvelles de Dio</h2>
+      <h2>Les dernières nouvelles de DIO</h2>
     </div>
     <div class="grid grid--3">${news.slice(0, 3).map(newsCard).join("")}</div>
     <p class="reviews-more"><a class="btn btn--dark" href="/actualites/">Toutes les actualités</a></p>
@@ -532,8 +533,8 @@ for (const file of fs.readdirSync(path.join(SRC, "pages")).sort()) {
 // Actualités : une page de liste + une page par article
 writePage(
   {
-    title: "Actualités – Dio Ristorante",
-    description: "Les nouveautés de Dio Ristorante à Villeneuve-d'Ascq : plats du moment, soirées, événements et infos pratiques.",
+    title: "Actualités – DIO Ristorante",
+    description: "Les nouveautés de DIO Ristorante à Villeneuve-d'Ascq : plats du moment, soirées, événements et infos pratiques.",
     nav: "actualites",
   },
   `<section class="page-hero"><div class="container"><h1>Actualités</h1><p>Plats du moment, soirées et nouveautés de la maison.</p></div></section>
@@ -549,7 +550,7 @@ writePage(
 for (const n of news) {
   writePage(
     {
-      title: `${n.title} – Dio Ristorante`,
+      title: `${n.title} – DIO Ristorante`,
       description: newsDescription(n),
       nav: "actualites",
     },
