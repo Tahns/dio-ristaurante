@@ -25,7 +25,7 @@ Les QR codes pointent vers `https://www.dioristaurante.com/` : les régénérer 
 
 Dans `src/data/site.json` (ou l'admin `/admin`) :
 
-1. **Adresse** (`address.street`), **téléphone** (`phones.resto`), **e-mail**, **horaires** (`hours`). Tant que le téléphone est vide, les boutons « Appeler » sont masqués.
+1. **E-mail** et **horaires complets** (`hoursTable`). L'adresse (21 rue Emile Zola, 59650 Villeneuve-d'Ascq) et le téléphone (03 20 85 57 37) sont renseignés. Nom de domaine à confirmer (`baseUrl`, QR codes).
 2. **Prix de la carte** : la carte est un brouillon construit à partir des photos ; vérifier les plats et ajouter les prix (`menu`).
 3. **Réseaux sociaux** (vides = masqués) et **infos légales** (`legal`, obligatoires avant mise en ligne).
 4. **Réservations** : renseigner `formEndpoint` avec un formulaire gratuit [Formspree](https://formspree.io) pour recevoir les demandes directement par e-mail. Sans cela, le formulaire ouvre la messagerie du visiteur (moins fiable).

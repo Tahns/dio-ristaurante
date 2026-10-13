@@ -3,7 +3,7 @@
   "baseUrl": "https://www.dioristaurante.com",
   "tagline": "Pizzas au four à bois, rigatoni et desserts maison à Villeneuve-d'Ascq",
   "address": {
-    "street": "",
+    "street": "21 Rue Emile Zola",
     "postalCode": "59650",
     "city": "Villeneuve-d'Ascq",
     "region": "Hauts-de-France",
@@ -22,8 +22,8 @@
   "phones": {
     "resto": {
       "label": "Réservations et commandes",
-      "display": "",
-      "tel": ""
+      "display": "03 20 85 57 37",
+      "tel": "+33320855737"
     }
   },
   "email": "",
@@ -38,7 +38,8 @@
     "Sur place",
     "À emporter",
     "Livraison",
-    "Traiteur"
+    "Traiteur",
+    "10–20 € par personne"
   ],
   "formEndpoint": "",
   "menuNote": "Carte indicative : les plats et les prix peuvent varier. Demandez l'ardoise du jour sur place.",
@@ -240,5 +241,6 @@
     "title": "Le coup de pouce du milieu de semaine",
     "text": "",
     "until": ""
-  }
+  },
+  "priceRange": "10–20 €"
 }
