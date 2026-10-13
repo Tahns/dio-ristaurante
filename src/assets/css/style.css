@@ -346,3 +346,15 @@ html{scroll-padding-top:72px}
 .stars{color:var(--ochre-light);font-size:1.6rem;letter-spacing:.25em;margin:0 0 12px}
 .thanks{max-width:620px;margin:0 auto;text-align:center;background:#fff;border:1px solid var(--line);border-top:4px solid var(--ochre);border-radius:var(--radius);padding:32px;box-shadow:0 10px 24px rgba(21,21,21,.08)}
 .thanks .signature{margin:12px 0 0}
+
+/* Carte : deux colonnes sur grand écran, rubriques en fiches */
+@media (min-width:980px){
+  .menu{max-width:1120px}
+  .menu-set{column-count:2;column-gap:40px}
+  .menu-set__intro,.menu-nav{column-span:all}
+  .menu-banner{max-height:320px}
+}
+.menu-cat{break-inside:avoid;background:#fff;border:1px solid var(--line);border-top:4px solid var(--ochre);border-radius:var(--radius);padding:8px 24px 16px;margin-top:24px;box-shadow:0 6px 18px rgba(21,21,21,.06)}
+.menu-cat h2{margin-top:18px}
+.menu-item:last-child{border-bottom:0}
+.menu-item__price{white-space:nowrap}
