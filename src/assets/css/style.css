@@ -575,3 +575,9 @@ h3{font-weight:600}
 .parking{border-left:2px solid var(--ink)}
 .tag-example{background:none;border:1px solid var(--ochre-dark);color:var(--ochre-dark)}
 .hero__float a{background:transparent}
+
+.topbar__info{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 22px}
+.topbar__info li{white-space:nowrap}
+.topbar__info b{color:var(--ochre-light);font-weight:700;margin-right:4px}
+.topbar__phones{font-weight:700}
+@media (max-width:700px){.topbar{font-size:.9rem}.topbar__info{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;width:100%}.topbar__info li{white-space:normal}.topbar__info b{display:block;margin:0}.topbar__phones{width:100%}}
