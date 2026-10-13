@@ -71,7 +71,7 @@
     "10–20 € par personne"
   ],
   "formEndpoint": "",
-  "menuNote": "Carte indicative : les plats et les prix peuvent varier. Demandez l'ardoise du jour sur place.",
+  "menuNote": "Carte indicative, mise à jour d'après les plateformes en ligne : les plats et les prix peuvent changer. Demandez l'ardoise du jour sur place.",
   "menu": [
     {
       "id": "antipasti",
@@ -79,23 +79,33 @@
       "intro": "À partager au milieu de la table.",
       "items": [
         {
-          "name": "Planche de charcuteries",
-          "desc": "Jambon cru, coppa, mortadelle, olives, focaccia chaude.",
-          "price": ""
-        },
-        {
-          "name": "Planche de fromages",
-          "desc": "Sélection de fromages italiens, tomates cerises, roquette.",
-          "price": ""
+          "name": "Planche de charcuterie",
+          "desc": "Sélection de charcuteries italiennes.",
+          "price": "12 €"
         },
         {
           "name": "Burrata",
-          "desc": "Burrata crémeuse, tomates, roquette, huile d'olive.",
-          "price": ""
+          "desc": "Burrata crémeuse, tomates, roquette.",
+          "price": "10 €"
         },
         {
-          "name": "Focaccia à l'ail",
-          "desc": "Pain maison tiède, ail et herbes.",
+          "name": "Carpaccio de bœuf",
+          "desc": "",
+          "price": "12 €"
+        },
+        {
+          "name": "Jambon speck",
+          "desc": "",
+          "price": "9 €"
+        },
+        {
+          "name": "Pain à l'ail maison",
+          "desc": "",
+          "price": "3 €"
+        },
+        {
+          "name": "Planche de fromages",
+          "desc": "Sélection de fromages, roquette, tomates cerises.",
           "price": ""
         }
       ]
@@ -107,32 +117,42 @@
       "items": [
         {
           "name": "Margherita",
-          "desc": "Tomate, mozzarella, basilic.",
+          "desc": "Tomate, mozzarella.",
+          "price": "9 €"
+        },
+        {
+          "name": "4 Saisons",
+          "desc": "",
+          "price": "11,50 €"
+        },
+        {
+          "name": "Pizza du chef",
+          "desc": "",
+          "price": "12 €"
+        },
+        {
+          "name": "Barbecue",
+          "desc": "",
+          "price": "13,90 €"
+        },
+        {
+          "name": "Maroilles",
+          "desc": "Mozzarella, maroilles.",
           "price": ""
         },
         {
-          "name": "Diavola",
-          "desc": "Tomate, mozzarella, pepperoni.",
+          "name": "Tartiflette",
+          "desc": "Mozzarella, pommes de terre, lardons, jambon cru, reblochon.",
+          "price": ""
+        },
+        {
+          "name": "Juventine",
+          "desc": "Mozzarella, jambon, chorizo, poivron, œuf.",
           "price": ""
         },
         {
           "name": "Burrata",
           "desc": "Tomate, mozzarella, burrata, roquette, tomates cerises.",
-          "price": ""
-        },
-        {
-          "name": "Bianca",
-          "desc": "Crème, mozzarella, pommes de terre, jambon.",
-          "price": ""
-        },
-        {
-          "name": "Chorizo",
-          "desc": "Tomate, mozzarella, chorizo.",
-          "price": ""
-        },
-        {
-          "name": "Quattro formaggi",
-          "desc": "Sélection de quatre fromages.",
           "price": ""
         }
       ]
@@ -140,7 +160,7 @@
     {
       "id": "pates",
       "title": "Pâtes",
-      "intro": "Des rigatoni, et gratinés au four si vous le souhaitez.",
+      "intro": "Des rigatoni et d'autres pâtes, gratinés au four si vous le souhaitez.",
       "items": [
         {
           "name": "Arrabbiata",
@@ -149,22 +169,29 @@
         },
         {
           "name": "Bolognaise",
-          "desc": "Sauce à la viande mijotée, parmesan.",
+          "desc": "Sauce à la viande, parmesan.",
           "price": ""
         },
         {
           "name": "Crème et champignons",
           "desc": "Crème, champignons, roquette.",
           "price": ""
-        },
+        }
+      ]
+    },
+    {
+      "id": "plats",
+      "title": "Plats",
+      "intro": "Pour les grosses faims.",
+      "items": [
         {
-          "name": "Cacio e pepe",
-          "desc": "Parmesan, poivre noir.",
+          "name": "Lasagne de bœuf",
+          "desc": "",
           "price": ""
         },
         {
-          "name": "Rigatoni gratinés",
-          "desc": "Sauce tomate, mozzarella, gratinés au four.",
+          "name": "Escalope gratinée",
+          "desc": "Jambon cru, gorgonzola.",
           "price": ""
         }
       ]
@@ -183,11 +210,6 @@
           "name": "Pain perdu brioché",
           "desc": "Glace vanille, caramel, chantilly.",
           "price": ""
-        },
-        {
-          "name": "Café gourmand",
-          "desc": "Un expresso et ses petites douceurs.",
-          "price": ""
         }
       ]
     },
@@ -197,7 +219,7 @@
       "intro": "Un grand choix de vins, des bières, des cocktails et un excellent café.",
       "items": [
         {
-          "name": "Vins italiens",
+          "name": "Vins",
           "desc": "Rouges, blancs et rosés.",
           "price": ""
         },
@@ -208,7 +230,7 @@
         },
         {
           "name": "Cocktails et apéritifs",
-          "desc": "Spritz et autres apéritifs italiens.",
+          "desc": "Cocktails et apéritifs.",
           "price": ""
         },
         {
@@ -243,7 +265,7 @@
   },
   "legal": {
     "company": "",
-    "siret": "",
+    "siret": "852 747 310 00013",
     "registration": "",
     "vat": "",
     "director": "",
@@ -262,7 +284,7 @@
   },
   "gallery": [],
   "googlePlaceId": "",
-  "reserveUrl": "",
+  "reserveUrl": "https://www.thefork.fr/restaurant/dio-ristorante-villeneuve-d-ascq-r811320",
   "whatsapp": "",
   "orderDirect": "Commandez directement chez nous : on prépare, vous récupérez, sans intermédiaire.",
   "promo": {

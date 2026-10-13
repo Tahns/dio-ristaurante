@@ -46,7 +46,7 @@ const promoBar = () =>
 // Boutons de réservation en plus du formulaire : lien de réservation en ligne et WhatsApp, s'ils sont renseignés.
 const reserveExtras = () =>
   [
-    site.reserveUrl ? `<a class="btn btn--dark" href="${esc(site.reserveUrl)}" rel="noopener">Réserver en ligne (plateforme)</a>` : "",
+    site.reserveUrl ? `<a class="btn btn--dark" href="${esc(site.reserveUrl)}" rel="noopener">Réserver sur TheFork</a>` : "",
     site.whatsapp ? `<a class="btn btn--dark" href="https://wa.me/${esc(site.whatsapp.replace(/\D/g, ""))}" rel="noopener">Écrire sur WhatsApp</a>` : "",
   ].join("");
 
