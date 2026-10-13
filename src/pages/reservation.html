@@ -12,75 +12,7 @@
 
 <section class="section">
   <div class="container grid grid--2 grid--top">
-    <form id="booking-form" class="form" data-endpoint="{{formEndpoint}}" data-email="{{emailRaw}}" novalidate>
-      <div class="field">
-        <label for="type">Votre demande</label>
-        <select id="type" name="type" required>
-          <option value="table">Réserver une table</option>
-          <option value="emporter">Commande à emporter</option>
-          <option value="privatisation-entreprise">Privatisation pour une entreprise ou un séminaire</option>
-          <option value="privatisation-prive">Privatisation pour un anniversaire ou une fête</option>
-          <option value="traiteur">Traiteur</option>
-        </select>
-      </div>
-      <div class="form__row">
-        <div class="field">
-          <label for="nom">Nom et prénom</label>
-          <input id="nom" name="nom" autocomplete="name" required>
-        </div>
-        <div class="field">
-          <label for="telephone">Téléphone</label>
-          <input id="telephone" name="telephone" type="tel" autocomplete="tel" required>
-        </div>
-      </div>
-      <div class="field">
-        <label for="email">E-mail</label>
-        <input id="email" name="email" type="email" autocomplete="email" required>
-      </div>
-      <div class="field" data-show-for="privatisation-entreprise,traiteur" hidden>
-        <label for="societe">Société</label>
-        <input id="societe" name="societe" autocomplete="organization">
-      </div>
-      <div class="form__row">
-        <div class="field">
-          <label for="date">Date souhaitée</label>
-          <input id="date" name="date" type="date" required>
-        </div>
-        <div class="field">
-          <label for="service">Service</label>
-          <select id="service" name="service">
-            <option value="dejeuner" selected>Midi (11 h 30 – 14 h 30)</option>
-            <option value="diner">Soir (18 h – 21 h)</option>
-          </select>
-        </div>
-      </div>
-      <div class="form__row">
-        <div class="field">
-          <label for="heure">Heure souhaitée</label>
-          <input id="heure" name="heure" type="time">
-        </div>
-        <div class="field">
-          <label for="convives" id="convives-label">Nombre de personnes</label>
-          <input id="convives" name="convives" type="number" min="1" max="80" inputmode="numeric" required>
-        </div>
-      </div>
-      <div class="field">
-        <label for="message">Précisions (allergies, poussette, budget, etc.)</label>
-        <textarea id="message" name="message"></textarea>
-      </div>
-      <label class="field field--check">
-        <input type="checkbox" name="consentement" required>
-        <span>J'accepte que mes informations soient utilisées pour traiter ma demande. Voir notre <a href="/confidentialite/">politique de confidentialité</a>.</span>
-      </label>
-      <button class="btn btn--primary btn--lg" type="submit">Envoyer ma demande</button>
-      <div class="form__fallback" hidden>
-        <p>Si votre messagerie ne s'est pas ouverte, copiez votre demande et envoyez-la à <strong class="form__to"></strong>.</p>
-        <textarea readonly rows="7" aria-label="Votre demande à copier"></textarea>
-        <button class="btn btn--dark" type="button" data-copy>Copier la demande</button>
-      </div>
-      <p class="form__status" role="status" aria-live="polite"></p>
-      <p class="form__note">Le soir, on mange sur place le vendredi et le samedi ; du mardi au jeudi, c'est à emporter uniquement (jusqu'à 20 h 30). Fermé le dimanche. Votre réservation est confirmée une fois validée par le restaurant. Pensez à vous garer sur le parking gratuit derrière le restaurant.</p>
-    </form>
+    {{bookingForm}}
 
     <div class="contact-cards">
       {{phoneCard}}

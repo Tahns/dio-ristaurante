@@ -331,3 +331,9 @@ html{scroll-padding-top:72px}
 .section--dark h2::after{background:var(--ochre)}
 .hero h1::after{display:none}
 .menu-banner{width:100%;max-height:260px;object-fit:cover;object-position:center 60%;border-radius:4px;margin-bottom:20px}
+.call-card{background:var(--ink);color:var(--cream);border-radius:6px;padding:clamp(24px,4vw,40px);border-top:6px solid var(--ochre)}
+.call-card .section__kicker{color:var(--ochre-light)}
+.call-card__num{display:block;font:800 clamp(2rem,6vw,3rem)/1.1 var(--serif);color:var(--ochre);text-decoration:none;margin:12px 0 18px}
+.call-card .hours div{border-color:#3b3b3b}
+.call-card__note{color:#cfc8b8;font-size:.95rem;margin-top:14px}
+.call-card h2::after{display:none}

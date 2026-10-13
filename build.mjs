@@ -50,6 +50,20 @@ const reserveExtras = () =>
     site.whatsapp ? `<a class="btn btn--dark" href="https://wa.me/${esc(site.whatsapp.replace(/\D/g, ""))}" rel="noopener">Écrire sur WhatsApp</a>` : "",
   ].join("");
 
+// Formulaire de réservation : affiché seulement s'il peut vraiment envoyer quelque chose (service d'envoi ou e-mail).
+// Sinon, grand bloc « appelez pour réserver ».
+const bookingForm = () => {
+  if (site.formEndpoint || site.email) return fs.readFileSync(path.join(SRC, "partials/booking-form.html"), "utf8");
+  return `<div class="call-card">
+      <span class="section__kicker">Réserver</span>
+      <h2>Le plus simple : un coup de fil</h2>
+      <p>Appelez-nous, on vous trouve une table, une commande à emporter ou une date pour votre groupe.</p>
+      ${hasPhone ? `<a class="call-card__num" href="tel:${phone.tel}">${phone.display}</a>` : ""}
+      ${hoursList()}
+      <p class="call-card__note">Le soir, on mange sur place le vendredi et le samedi. Du mardi au jeudi, le soir est à emporter uniquement (jusqu'à 20 h 30). Fermé le dimanche.</p>
+    </div>`;
+};
+
 const hoursList = () =>
   site.hoursTable?.length
     ? `<dl class="hours">${site.hoursTable.map((h) => `<div><dt>${esc(h.day)}</dt><dd>${esc(h.hours)}</dd></div>`).join("")}</dl>`
@@ -378,6 +392,7 @@ const tokens = {
   logo: () => logoImg,
   map: mapBlock,
   parking: parkingBlock,
+  bookingForm,
   promoBar,
   reserveExtras,
   hoursList,

@@ -184,6 +184,7 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObse
       }),
     { threshold: 0, rootMargin: "0px 0px -8% 0px" }
   );
+  addEventListener("beforeprint", () => document.querySelectorAll(".reveal").forEach((el) => el.classList.add("in")));
   targets.forEach((el, i) => {
     el.classList.add("reveal");
     el.style.setProperty("--d", (i % 4) * 0.08 + "s");
