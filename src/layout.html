@@ -14,7 +14,7 @@
 <meta property="og:description" content="{{pageDescription}}">
 <meta property="og:url" content="{{canonical}}">
 <meta property="og:image" content="https://www.dioristaurante.com/assets/img/og.png">
-<meta name="theme-color" content="#202224">
+<meta name="theme-color" content="#151515">
 <link rel="icon" href="/assets/img/favicon.png" type="image/png">
 <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/style.css">
@@ -24,6 +24,7 @@
 <body>
 <a class="skip" href="#contenu">Aller au contenu</a>
 
+{{promoBar}}
 <div class="topbar">
   <div class="container topbar__inner">
     <span>Villeneuve-d'Ascq · {{hours}} · <strong>Parking gratuit derrière le restaurant</strong></span>
@@ -94,6 +95,7 @@
         <a href="{{mapsUrl}}" rel="noopener">Itinéraire</a>
       </address>
       <p>{{phoneLine}}{{email}}</p>
+      {{hoursList}}
       <p>{{services}}</p>
     </div>
   </div>

@@ -47,6 +47,26 @@ document.querySelectorAll("[data-share]").forEach((btn) => {
   });
 });
 
+// Copie de la demande (si la messagerie ne s'ouvre pas)
+document.querySelectorAll("[data-copy]").forEach((btn) => {
+  btn.addEventListener("click", async () => {
+    const ta = btn.parentElement.querySelector("textarea");
+    ta.select();
+    try {
+      await navigator.clipboard.writeText(ta.value);
+      btn.textContent = "Demande copiée !";
+    } catch {
+      document.execCommand?.("copy");
+    }
+  });
+});
+
+// Offre du moment : masquée après sa date de fin, même sans nouvelle génération du site
+const today = new Date().toISOString().slice(0, 10);
+document.querySelectorAll(".promo[data-until]").forEach((el) => {
+  if (today > el.dataset.until) el.remove();
+});
+
 // Formulaire de réservation
 const form = document.getElementById("booking-form");
 if (form) {
@@ -121,5 +141,12 @@ if (form) {
     const subject = `Demande – ${label("type")} – ${data.get("date")}`;
     location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
     setStatus(`Votre messagerie s'ouvre avec la demande pré-remplie : il ne reste plus qu'à l'envoyer à ${to}.`, true);
+    // Si aucun client mail ne s'ouvre, la demande reste copiable.
+    const fb = form.querySelector(".form__fallback");
+    if (fb) {
+      fb.hidden = false;
+      fb.querySelector(".form__to").textContent = to;
+      fb.querySelector("textarea").value = `À : ${to}\nObjet : ${subject}\n\n${lines.join("\n")}`;
+    }
   });
 }

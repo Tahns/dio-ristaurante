@@ -9,6 +9,18 @@ Site statique, rapide, sans cookies de suivi ni dépendance, pour Dio Ristorante
 - **SEO** : une meta description et un H1 par page, données structurées Restaurant + FAQ, sitemap.
 - **Mobile** : barre fixe « Appeler / Réserver ».
 
+## Ce que le site règle (d'après le SWOT)
+
+- **Réservation fiable** : formulaire + téléphone + e-mail, avec repli « copier la demande » si la messagerie ne s'ouvre pas. Boutons facultatifs vers une plateforme de réservation (`reserveUrl`) et WhatsApp (`whatsapp`).
+- **Avis** : page `/avis/` (lien direct vers l'avis Google si `googlePlaceId` est renseigné) et page `/affichette/` à imprimer, avec QR codes (avis, réservation) et rappel du parking.
+- **Emplacement discret** : parking annoncé partout, étapes « comment trouver le parking » sur la page Accès, affichette parking.
+- **Communication** : trois actualités de départ (`src/actualites/`), à remplacer par les vôtres depuis `/admin`.
+- **Commissions de livraison** : message « commandez directement chez nous » sur la carte.
+- **Creux de semaine** : bandeau « offre du moment » activable depuis l'admin (`promo`).
+- **Horaires** : tableau dans `hoursTable`, affiché sur Accès et dans le pied de page.
+
+Les QR codes pointent vers `https://www.dioristaurante.com/` : les régénérer si le nom de domaine change.
+
 ## À compléter (infos introuvables en ligne)
 
 Dans `src/data/site.json` (ou l'admin `/admin`) :

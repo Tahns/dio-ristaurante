@@ -12,7 +12,12 @@
   "parking": {
     "title": "Parking gratuit derrière le restaurant",
     "text": "Le restaurant se trouve en retrait de la rue : garez-vous sur le parking gratuit situé juste derrière, l'entrée du parking est signalée.",
-    "detail": ""
+    "detail": "",
+    "steps": [
+      "Repérez le restaurant depuis la rue.",
+      "Prenez l'accès au parking situé juste derrière le bâtiment.",
+      "Garez-vous : c'est gratuit, et l'entrée est à quelques pas."
+    ]
   },
   "phones": {
     "resto": {
@@ -225,5 +230,15 @@
     "hero": "",
     "logo": ""
   },
-  "gallery": []
+  "gallery": [],
+  "googlePlaceId": "",
+  "reserveUrl": "",
+  "whatsapp": "",
+  "orderDirect": "Commandez directement chez nous : pas de commission de plateforme, c'est le restaurant qui prépare et qui encaisse.",
+  "promo": {
+    "active": false,
+    "title": "Le coup de pouce du milieu de semaine",
+    "text": "",
+    "until": ""
+  }
 }

@@ -23,6 +23,10 @@ const esc = (s) =>
 const addressLine = [site.address.street, `${site.address.postalCode} ${site.address.city}`].filter(Boolean).join(", ");
 const mapsQuery = `Dio Ristorante ${addressLine}`;
 const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}`;
+// Lien « laisser un avis » : direct si l'identifiant de la fiche Google est renseigné, sinon la fiche sur Google Maps.
+const reviewUrl = site.googlePlaceId
+  ? `https://search.google.com/local/writereview?placeid=${encodeURIComponent(site.googlePlaceId)}`
+  : mapsUrl;
 const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(mapsQuery)}&output=embed`;
 const phone = site.phones.resto;
 const hasPhone = Boolean(phone.tel);
@@ -32,6 +36,27 @@ const hasPhone = Boolean(phone.tel);
 // Boutons « Appeler » : n'apparaissent que si un numéro est renseigné.
 const callBtn = (cls = "btn btn--ghost") =>
   hasPhone ? `<a class="${cls}" href="tel:${phone.tel}">Appeler le ${phone.display}</a>` : "";
+
+const promoActive = () => site.promo?.active && site.promo.text && (!site.promo.until || new Date() <= new Date(site.promo.until + "T23:59:59"));
+const promoBar = () =>
+  promoActive()
+    ? `<div class="promo"${site.promo.until ? ` data-until="${site.promo.until}"` : ""}><div class="container promo__inner"><strong>${esc(site.promo.title)}</strong> <span>${esc(site.promo.text)}</span> <a href="/reservation/">Réserver</a></div></div>`
+    : "";
+
+// Boutons de réservation en plus du formulaire : lien de réservation en ligne et WhatsApp, s'ils sont renseignés.
+const reserveExtras = () =>
+  [
+    site.reserveUrl ? `<a class="btn btn--dark" href="${esc(site.reserveUrl)}" rel="noopener">Réserver en ligne (plateforme)</a>` : "",
+    site.whatsapp ? `<a class="btn btn--dark" href="https://wa.me/${esc(site.whatsapp.replace(/\D/g, ""))}" rel="noopener">Écrire sur WhatsApp</a>` : "",
+  ].join("");
+
+const hoursList = () =>
+  site.hoursTable?.length
+    ? `<dl class="hours">${site.hoursTable.map((h) => `<div><dt>${esc(h.day)}</dt><dd>${esc(h.hours)}</dd></div>`).join("")}</dl>`
+    : "";
+
+const parkingSteps = () =>
+  site.parking.steps?.length ? `<ol class="steps steps--compact">${site.parking.steps.map((t) => `<li>${esc(t)}</li>`).join("")}</ol>` : "";
 
 const parkingBlock = () => `<aside class="parking" aria-label="Parking">
   <svg class="parking__icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4" fill="currentColor"/><path d="M9.5 17V7h3.6a3 3 0 0 1 0 6h-3.6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -116,12 +141,12 @@ const LEGAL_LABELS = {
 // Logo : celui choisi dans l'administration, sinon src/assets/img/logo-dio.*, sinon logo générique.
 const clientLogo =
   site.images?.logo ||
-  ["png", "webp", "svg", "jpg"]
+  ["svg", "png", "webp", "jpg"]
     .map((ext) => `/assets/img/logo-dio.${ext}`)
     .find((f) => fs.existsSync(path.join(SRC, f)));
 const logoImg = clientLogo
-  ? `<img class="logo__img" src="${esc(clientLogo)}" alt="" width="44" height="44">`
-  : `<img class="logo__img" src="/assets/img/logo.svg" alt="" width="44" height="44">`;
+  ? `<img class="logo__img" src="${esc(clientLogo)}" alt="" width="60" height="50">`
+  : `<img class="logo__img" src="/assets/img/logo.svg" alt="" width="60" height="50">`;
 
 // Avis : note affichée seulement si elle est renseignée ; l'invitation à laisser un avis est toujours là.
 function reviewsSection() {
@@ -158,7 +183,7 @@ function reviewsSection() {
         <h3>Un bon moment chez Dio ?</h3>
         <p>Un avis Google prend trente secondes, et c'est ce qui aide le plus un petit restaurant comme le nôtre à se faire connaître.</p>
       </div>
-      <a class="btn btn--primary" href="${mapsUrl}" rel="noopener">Laisser un avis</a>
+      <a class="btn btn--primary" href="${reviewUrl}" rel="noopener">Laisser un avis</a>
     </div>
   </div>
 </section>`;
@@ -173,7 +198,7 @@ const shareBlock = () => `<section class="section section--dark share" id="parta
     </div>
     <div class="share__actions">
       <button class="btn btn--primary" type="button" data-share data-title="Dio Ristorante" data-text="Pizzas au feu de bois et pâtes à Villeneuve-d'Ascq, parking gratuit derrière le restaurant. Je recommande !">Recommander Dio</button>
-      <a class="btn btn--light" href="${mapsUrl}" rel="noopener">Laisser un avis</a>
+      <a class="btn btn--light" href="${reviewUrl}" rel="noopener">Laisser un avis</a>
     </div>
   </div>
 </section>`;
@@ -319,6 +344,12 @@ const tokens = {
   logo: () => logoImg,
   map: mapBlock,
   parking: parkingBlock,
+  promoBar,
+  reserveExtras,
+  hoursList,
+  parkingSteps,
+  reviewUrl: () => reviewUrl,
+  orderDirect: () => esc(site.orderDirect || ""),
   reviewsSection,
   shareBlock,
   year: () => String(new Date().getFullYear()),

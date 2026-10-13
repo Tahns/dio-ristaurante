@@ -73,12 +73,18 @@
         <span>J'accepte que mes informations soient utilisées pour traiter ma demande. Voir notre <a href="/confidentialite/">politique de confidentialité</a>.</span>
       </label>
       <button class="btn btn--primary btn--lg" type="submit">Envoyer ma demande</button>
+      <div class="form__fallback" hidden>
+        <p>Si votre messagerie ne s'est pas ouverte, copiez votre demande et envoyez-la à <strong class="form__to"></strong>.</p>
+        <textarea readonly rows="7" aria-label="Votre demande à copier"></textarea>
+        <button class="btn btn--dark" type="button" data-copy>Copier la demande</button>
+      </div>
       <p class="form__status" role="status" aria-live="polite"></p>
       <p class="form__note">Votre table est confirmée une fois validée par le restaurant. Pensez à vous garer sur le parking gratuit derrière le restaurant.</p>
     </form>
 
     <div class="contact-cards">
       {{phoneCard}}
+      <p class="reserve-extras">{{reserveExtras}}</p>
       <div class="contact-card contact-card--light">
         <h3>Adresse</h3>
         <p>Dio Ristorante<br>{{address}}<br><a href="{{mapsUrl}}" rel="noopener">Itinéraire</a></p>
