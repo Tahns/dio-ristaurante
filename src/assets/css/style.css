@@ -585,3 +585,5 @@ h3{font-weight:600}
 
 .map-fallback{display:grid;place-content:center;gap:6px;text-align:center;min-height:300px;padding:24px;background:var(--kraft);border:1px solid var(--line)}
 .mapband .map-fallback{min-height:600px;border:0}
+.logo__img{width:56px;height:56px}
+.hero__logo{padding:0;background:none;border-radius:0;width:150px;height:auto}

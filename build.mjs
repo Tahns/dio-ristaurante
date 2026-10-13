@@ -360,7 +360,7 @@ const clientLogo =
     .map((ext) => `/assets/img/logo-dio.${ext}`)
     .find((f) => fs.existsSync(path.join(SRC, f)));
 const logoImg = clientLogo
-  ? `<img class="logo__img" src="${esc(clientLogo)}" alt="" width="60" height="50">`
+  ? `<img class="logo__img" src="${esc(clientLogo)}" alt="" width="56" height="56">`
   : `<img class="logo__img" src="/assets/img/logo.svg" alt="" width="60" height="50">`;
 
 // Avis : note affichée seulement si elle est renseignée ; l'invitation à laisser un avis est toujours là.
@@ -446,7 +446,7 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Restaurant",
   "@id": site.baseUrl + "/#restaurant",
-  logo: site.baseUrl + "/assets/img/logo-dio.svg",
+  logo: site.baseUrl + "/assets/img/logo-dio.png",
   hasMap: mapsUrl,
   ...(site.priceRange ? { priceRange: site.priceRange } : {}),
   ...(site.geo ? { geo: { "@type": "GeoCoordinates", latitude: site.geo.lat, longitude: site.geo.lng } } : {}),
