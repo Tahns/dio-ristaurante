@@ -204,3 +204,10 @@ document.querySelectorAll("[data-open-now]").forEach((el) => {
   el.className = "open-now is-closed";
   el.textContent = `Fermé pour le moment, on rouvre ${msg}`;
 });
+
+// Jour d'aujourd'hui mis en évidence dans les listes d'horaires (heure de Paris)
+{
+  const wd = new Intl.DateTimeFormat("fr-FR", { timeZone: "Europe/Paris", weekday: "short" }).format(new Date());
+  const dow = ["dim.", "lun.", "mar.", "mer.", "jeu.", "ven.", "sam."].indexOf(wd);
+  if (dow >= 0) document.querySelectorAll(`[data-dow="${dow}"]`).forEach((el) => el.classList.add("is-today"));
+}

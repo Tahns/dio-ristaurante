@@ -67,16 +67,27 @@ const bookingForm = () => {
     </div>`;
 };
 
+const fmtT = (t) => t.replace(/^0/, "").replace(/:00$/, " h").replace(":", " h ");
+const fmtR = (r) => (r ? r.split("–").map(fmtT).join(" – ") : "");
+const modeLabel = (m) => (m === "emporter" ? "À emporter uniquement" : m === "surplace" ? "Sur place et à emporter" : "");
 const hoursList = () =>
-  site.hoursTable?.length
-    ? `<dl class="hours">${site.hoursTable.map((h) => `<div><dt>${esc(h.day)}</dt><dd>${esc(h.hours)}</dd></div>`).join("")}</dl>`
+  site.hoursGrid?.length
+    ? `<dl class="hours">${site.hoursGrid
+        .map((h) => {
+          const parts = [h.midi ? `Midi ${fmtR(h.midi)}` : "", h.soir ? `Soir ${fmtR(h.soir)}${h.soirMode === "emporter" ? " (à emporter)" : ""}` : h.midi ? "Soir fermé" : ""].filter(Boolean);
+          return `<div data-dow="${h.dow}"><dt>${esc(h.day)}</dt><dd>${parts.length ? parts.map((x) => `<span>${esc(x)}</span>`).join("") : "Fermé"}</dd></div>`;
+        })
+        .join("")}</dl>`
     : "";
 
 const hoursPanel = () => {
   const rows = (site.hoursGrid || [])
     .map((h) => {
-      const cell = (v, note) => (v === "Fermé" ? `<td class="is-closed">Fermé</td>` : `<td>${esc(v)}${note ? `<small>${esc(note)}</small>` : ""}</td>`);
-      return `<tr><th scope="row">${esc(h.day)}</th>${cell(h.midi)}${cell(h.soir, h.soirNote)}</tr>`;
+      const mid = h.midi ? `<td>${esc(fmtR(h.midi))}</td>` : `<td class="is-closed">Fermé</td>`;
+      const soir = h.soir
+        ? `<td>${esc(fmtR(h.soir))}<small class="mode mode--${h.soirMode}">${esc(modeLabel(h.soirMode))}</small></td>`
+        : `<td class="is-closed">Fermé</td>`;
+      return `<tr data-dow="${h.dow}"><th scope="row">${esc(h.day)}<span class="today-tag">Aujourd'hui</span></th>${mid}${soir}</tr>`;
     })
     .join("");
   return `<section class="section section--cream hours-band" id="horaires">
@@ -85,7 +96,7 @@ const hoursPanel = () => {
       <span class="section__kicker">Quand venir</span>
       <h2>On vous attend midi et soir</h2>
       <p class="open-now" data-open-now data-slots="${esc(JSON.stringify(site.hoursSlots || []))}" aria-live="polite"></p>
-      <p>Le midi, on est là du lundi au samedi. Le soir, on vous reçoit sur place le vendredi et le samedi. Du mardi au jeudi, le soir, on prépare tout à emporter. Le dimanche, on se repose.</p>
+      <ul class="hours-legend"><li><strong>Midi</strong> : du lundi au samedi.</li><li><strong>Soir sur place</strong> : le vendredi et le samedi.</li><li><strong>Soir à emporter</strong> : du mardi au jeudi, on prépare votre commande.</li><li><strong>Dimanche</strong> : fermé.</li></ul>
       <p><a class="btn btn--primary" href="/reservation/">Réserver une table</a> ${hasPhone ? `<a class="btn btn--dark" href="tel:${phone.tel}">Appeler le ${phone.display}</a>` : ""}</p>
     </div>
     <table class="hours-table">

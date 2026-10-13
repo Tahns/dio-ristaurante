@@ -334,3 +334,24 @@ html{scroll-padding-top:72px}
 .hours-table tr:last-child>*{border-bottom:0}
 .hero__hours{margin:18px 0 0;font-weight:600;color:var(--cream)}
 .hero__hours a{color:var(--ochre-light);font-weight:700}
+
+/* Horaires plus lisibles */
+.hours-table td{white-space:nowrap;font-variant-numeric:tabular-nums}
+.hours-table td small.mode{display:inline-block;margin-top:4px;padding:2px 8px;border-radius:999px;font-size:.75rem;font-weight:600;background:#f3e9d6;color:#6b4a12}
+.hours-table td small.mode--surplace{background:#e6f3ea;color:#1c5a33}
+.today-tag{display:none;margin-left:8px;padding:2px 8px;border-radius:999px;background:var(--ochre);color:#1b1b1b;font-size:.72rem;font-weight:700;vertical-align:2px}
+tr.is-today{background:#fff3d6}.hours-table tr.is-today>*{border-bottom-color:#e8c97c}
+tr.is-today .today-tag{display:inline-block}
+.hours div.is-today{font-weight:700}
+.hours div.is-today dt::after{content:" · aujourd'hui";font-weight:600;color:var(--ochre-dark)}
+.footer .hours div.is-today dt::after{color:var(--ochre-light)}
+.hours-legend{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:6px}
+.hours-legend li{padding-left:18px;position:relative}
+.hours-legend li::before{content:"";position:absolute;left:0;top:.65em;width:8px;height:8px;border-radius:50%;background:var(--ochre)}
+@media (max-width:520px){.hours-table th,.hours-table td{padding:12px 10px}.hours-table td{white-space:normal}}
+.hours{max-width:440px}.hours dd{text-align:right}.hours dt{white-space:nowrap}
+.hours dd span{display:block}
+.hours div{align-items:flex-start}
+.hours-table td small.mode{display:table}
+.hours-table td{white-space:normal}
+.call-card .hours div.is-today dt::after,.footer .hours div.is-today dt::after{color:var(--ochre-light)}

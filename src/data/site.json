@@ -745,25 +745,52 @@
   "hoursGrid": [
     {
       "day": "Lundi",
+      "dow": 1,
       "midi": "11:30–14:30",
-      "soir": "Fermé"
+      "soir": "",
+      "soirMode": ""
     },
     {
-      "day": "Mardi, mercredi, jeudi",
+      "day": "Mardi",
+      "dow": 2,
       "midi": "11:30–14:30",
       "soir": "18:00–20:30",
-      "soirNote": "à emporter"
+      "soirMode": "emporter"
     },
     {
-      "day": "Vendredi, samedi",
+      "day": "Mercredi",
+      "dow": 3,
+      "midi": "11:30–14:30",
+      "soir": "18:00–20:30",
+      "soirMode": "emporter"
+    },
+    {
+      "day": "Jeudi",
+      "dow": 4,
+      "midi": "11:30–14:30",
+      "soir": "18:00–20:30",
+      "soirMode": "emporter"
+    },
+    {
+      "day": "Vendredi",
+      "dow": 5,
       "midi": "11:30–14:30",
       "soir": "18:00–21:00",
-      "soirNote": "sur place et à emporter"
+      "soirMode": "surplace"
+    },
+    {
+      "day": "Samedi",
+      "dow": 6,
+      "midi": "11:30–14:30",
+      "soir": "18:00–21:00",
+      "soirMode": "surplace"
     },
     {
       "day": "Dimanche",
-      "midi": "Fermé",
-      "soir": "Fermé"
+      "dow": 0,
+      "midi": "",
+      "soir": "",
+      "soirMode": ""
     }
   ],
   "hoursSlots": [
