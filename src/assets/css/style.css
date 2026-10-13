@@ -123,7 +123,7 @@ p{margin:0 0 1em}
 .menu-nav a{padding:8px 16px;border-radius:4px;background:var(--kraft);color:var(--ink);text-decoration:none;font-weight:600;font-size:.9rem}
 .menu-nav a:hover{background:var(--ochre-dark);color:#fff}
 .menu-note{color:var(--muted);font-style:italic}
-.menu-cat{padding-top:36px;scroll-margin-top:130px}
+.menu-cat{padding-top:36px;scroll-margin-top:70px}
 .menu-cat__intro{color:var(--muted)}
 .menu-list{list-style:none;padding:0;margin:0}
 .menu-item{padding:14px 0;border-bottom:1px dashed var(--line)}
@@ -285,3 +285,5 @@ details p{color:var(--muted)}
 .gallery{padding-bottom:16px}
 body{overflow-x:clip}
 @media (prefers-reduced-motion:reduce){.gallery a,.split__img{transform:none!important}}
+html{scroll-padding-top:72px}
+@media (max-width:700px){.menu-nav{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch}.menu-nav a{white-space:nowrap}}
