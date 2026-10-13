@@ -133,12 +133,13 @@ const fmtR = (r) => (r ? r.split("–").map(fmtT).join(" – ") : "");
 const modeLabel = (m) => (m === "emporter" ? "À emporter uniquement" : m === "surplace" ? "Sur place et à emporter" : "");
 const hoursList = () =>
   site.hoursGrid?.length
-    ? `<dl class="hours">${site.hoursGrid
+    ? `<table class="hours-mini"><caption class="sr-only">Horaires d'ouverture</caption><thead><tr><th scope="col">Jour</th><th scope="col">Midi</th><th scope="col">Soir</th></tr></thead><tbody>${site.hoursGrid
         .map((h) => {
-          const parts = [h.midi ? `Midi ${fmtR(h.midi)}` : "", h.soir ? `Soir ${fmtR(h.soir)}${h.soirMode === "emporter" ? " (à emporter)" : ""}` : h.midi ? "Soir fermé" : ""].filter(Boolean);
-          return `<div data-dow="${h.dow}"><dt>${esc(h.day)}</dt><dd>${parts.length ? parts.map((x) => `<span>${esc(x)}</span>`).join("") : "Fermé"}</dd></div>`;
+          const mid = h.midi ? esc(fmtR(h.midi).replace(/ – /g, "–")) : "Fermé";
+          const soir = h.soir ? `${esc(fmtR(h.soir).replace(/ – /g, "–"))}${h.soirMode === "emporter" ? "<small>à emporter</small>" : ""}` : "Fermé";
+          return `<tr data-dow="${h.dow}"><th scope="row">${esc(h.day)}</th><td>${mid}</td><td>${soir}</td></tr>`;
         })
-        .join("")}</dl>`
+        .join("")}</tbody></table>`
     : "";
 
 const hoursPanel = () => {
@@ -198,6 +199,9 @@ const parkingMap = () => `<figure class="parking-map">
   </svg>
   <figcaption>Le parking gratuit est dans la boucle de la rue Émile Zola, juste à côté du restaurant, en face de l'entrée.</figcaption>
 </figure>`;
+
+const mapFull = () =>
+  `<iframe class="mapband__frame" src="${esc(mapEmbedUrl)}" title="DIO Ristorante sur Google Maps" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>`;
 
 const parkingSteps = () =>
   site.parking.steps?.length ? `<ol class="steps steps--compact">${site.parking.steps.map((t) => `<li>${esc(t)}</li>`).join("")}</ol>` : "";
@@ -536,6 +540,7 @@ const tokens = {
   parking: parkingBlock,
   bookingForm,
   parkingMap,
+  mapFull,
   orderApp,
   phoneTel: () => (hasPhone ? phone.tel : ""),
   phoneDisplay: () => (hasPhone ? phone.display : ""),

@@ -462,3 +462,53 @@ tr.is-today .today-tag{display:inline-block}
 .fact-address:hover{text-decoration:underline}
 .about__points{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
 .about__points li{padding:8px 16px;border-radius:999px;background:var(--kraft);font-weight:600}
+
+/* Accueil façon vitrine : hero centré, carte « Qui sommes-nous ? », carte plein écran */
+.hero--center{text-align:center}
+.hero__center{display:flex;flex-direction:column;align-items:center;gap:12px;padding:clamp(40px,7vw,80px) 0 clamp(48px,8vw,96px);max-width:820px}
+.hero--center .open-now{margin:0}
+.hero__logo{width:150px;height:150px;border-radius:50%;background:#fff;padding:10px;object-fit:contain;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.hero__name{margin:0;font:700 1rem var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--ochre-light)}
+.hero--center h1{font-size:clamp(1.8rem,4.5vw,3rem);margin:8px 0 0}
+.hero--center .hero__lead{margin:0 auto}
+.hero--center .hero__actions{justify-content:center;margin:12px 0 0}
+.hero__float{display:none}
+@media (min-width:1100px){
+  .hero__float{display:flex;flex-direction:column;gap:10px;position:absolute;right:32px;top:50%;transform:translateY(-50%);z-index:3}
+  .hero__float a{display:block;padding:10px 18px;border:1px solid rgba(255,255,255,.55);border-radius:999px;color:#fff;text-decoration:none;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(21,21,21,.5)}
+  .hero__float a:hover{background:var(--ochre);color:#1b1b1b;border-color:var(--ochre)}
+  .hero--center .hero__actions{display:none}
+}
+.about__grid{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:48px;align-items:start}
+@media (max-width:820px){.about__grid{grid-template-columns:minmax(0,1fr);gap:24px}}
+.about__title{padding:12px 0;background:radial-gradient(circle,rgba(31,31,31,.18) 1.2px,transparent 1.6px) 0 0/14px 14px}
+.about__title .section__kicker,.about__title h2{background:var(--paper);display:inline-block;padding-right:10px}
+.about__title h2{font-weight:600}
+.about__card{background:#fff;border-left:5px solid var(--ochre);box-shadow:0 10px 30px rgba(21,21,21,.1);padding:clamp(22px,4vw,40px);text-align:center}
+.about__card p{max-width:60ch;margin-inline:auto}
+.about__card .about__points{justify-content:center}
+.mapband{position:relative;min-height:520px;background:var(--kraft)}
+.mapband__frame{display:block;width:100%;height:520px;border:0}
+.mapband__card{position:absolute;left:max(16px,calc((100% - 1120px) / 2));top:50%;transform:translateY(-50%);width:min(380px,calc(100% - 32px));background:#fff;border-radius:var(--radius);box-shadow:0 14px 40px rgba(0,0,0,.28);padding:22px}
+.mapband__addr{display:flex;gap:12px;align-items:flex-start;font-weight:700;color:var(--ink);text-decoration:none;margin-bottom:14px}
+.mapband__addr svg{flex:none;color:var(--ember)}
+.mapband__card .hours{max-width:none;margin:0 0 14px}
+.mapband__actions{margin:0}
+@media (max-width:700px){.mapband{min-height:0}.mapband__frame{height:300px}.mapband__card{position:static;transform:none;width:auto;margin:-24px 16px 0;position:relative}}
+.hours dd span{white-space:nowrap}
+.footer .hours div{flex-direction:column;gap:2px}.footer .hours dd{text-align:left}
+.mapband__card .hours div{flex-direction:column;gap:2px;padding:7px 0}.mapband__card .hours dd{text-align:left}
+@media (min-width:701px){.mapband,.mapband__frame{min-height:640px;height:640px}}
+
+.hours-mini{width:100%;border-collapse:collapse;margin:0 0 14px;font-size:.93rem}
+.hours-mini th,.hours-mini td{padding:6px 8px 6px 0;text-align:left;vertical-align:top;border-bottom:1px dashed var(--line);font-weight:400}
+.hours-mini thead th{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.hours-mini tbody th{font-weight:700;white-space:nowrap}
+.hours-mini td{white-space:nowrap}
+.hours-mini small{display:block;color:var(--muted);font-size:.75rem}
+.hours-mini tr.is-today>*{background:#fff3d6;font-weight:700}
+.footer .hours-mini th,.footer .hours-mini td{border-color:#3b3f42;color:var(--cream)}
+.footer .hours-mini thead th,.footer .hours-mini small{color:#b9b1a2}
+.footer .hours-mini tr.is-today>*{background:#2b2d2f;color:var(--ochre-light)}
+.mapband__card .hours-mini{margin-bottom:14px}
+@media (min-width:701px){.mapband,.mapband__frame{min-height:600px;height:600px}}
