@@ -124,7 +124,7 @@ if (form) {
         if (!res.ok) throw new Error(res.status);
         form.reset();
         adapt();
-        setStatus("Merci ! Votre demande est bien envoyée. Nous vous recontactons rapidement pour confirmer.", true);
+        setStatus("Merci ! Votre demande est bien envoyée. Nous vous recontactons pour confirmer.", true);
         return;
       } catch {
         setStatus("L'envoi n'a pas fonctionné. Appelez-nous directement ou réessayez dans un instant.", false);
@@ -149,4 +149,43 @@ if (form) {
       fb.querySelector("textarea").value = `À : ${to}\nObjet : ${subject}\n\n${lines.join("\n")}`;
     }
   });
+}
+
+// Mouvement : apparition au défilement et braises dans le hero (sauf préférence « moins d'animations »)
+if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObserver" in window) {
+  document.documentElement.classList.add("motion");
+  const targets = document.querySelectorAll(
+    ".section .container > *, .feature, .card, .menu-item, .gallery a, .quote, .steps li, .flyer, .parking, .trio img"
+  );
+  const io = new IntersectionObserver(
+    (entries) =>
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add("in");
+          io.unobserve(e.target);
+        }
+      }),
+    { threshold: 0.12 }
+  );
+  targets.forEach((el, i) => {
+    el.classList.add("reveal");
+    el.style.setProperty("--d", (i % 4) * 0.08 + "s");
+    if (el.matches(".gallery a")) {
+      const cs = getComputedStyle(el).transform;
+      el.style.setProperty("--rot", i % 2 ? "1deg" : "-1.2deg");
+    }
+    io.observe(el);
+  });
+  const hero = document.querySelector(".hero--photo");
+  if (hero) {
+    const box = document.createElement("div");
+    box.className = "embers";
+    box.setAttribute("aria-hidden", "true");
+    for (let i = 0; i < 16; i++) {
+      const b = document.createElement("i");
+      b.style.cssText = `left:${(i * 37) % 100}%;--s:${3 + (i % 4) * 2}px;--t:${6 + (i % 5) * 1.6}s;--w:${(i % 7) * 0.9}s;--x:${(i % 2 ? 1 : -1) * (20 + (i % 5) * 18)}px`;
+      box.appendChild(b);
+    }
+    hero.appendChild(box);
+  }
 }

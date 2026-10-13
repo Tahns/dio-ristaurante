@@ -1,7 +1,7 @@
 {
   "name": "Dio Ristorante",
   "baseUrl": "https://www.dioristaurante.com",
-  "tagline": "Pizzas au feu de bois et pâtes fraîches à Villeneuve-d'Ascq",
+  "tagline": "Pizzas au four à bois, rigatoni et desserts maison à Villeneuve-d'Ascq",
   "address": {
     "street": "",
     "postalCode": "59650",
@@ -11,12 +11,12 @@
   },
   "parking": {
     "title": "Parking gratuit derrière le restaurant",
-    "text": "Le restaurant se trouve en retrait de la rue : garez-vous sur le parking gratuit situé juste derrière, l'entrée du parking est signalée.",
+    "text": "Le parking est gratuit et il est juste derrière le restaurant. Garez-vous, vous êtes arrivés.",
     "detail": "",
     "steps": [
-      "Repérez le restaurant depuis la rue.",
-      "Prenez l'accès au parking situé juste derrière le bâtiment.",
-      "Garez-vous : c'est gratuit, et l'entrée est à quelques pas."
+      "Arrivez devant le restaurant.",
+      "Le parking gratuit est juste derrière.",
+      "Garez-vous et entrez : on vous attend."
     ]
   },
   "phones": {
@@ -41,12 +41,12 @@
     "Traiteur"
   ],
   "formEndpoint": "",
-  "menuNote": "Carte indicative : les plats et les prix peuvent varier selon la saison. Demandez l'ardoise du jour sur place.",
+  "menuNote": "Carte indicative : les plats et les prix peuvent varier. Demandez l'ardoise du jour sur place.",
   "menu": [
     {
       "id": "antipasti",
       "title": "Antipasti",
-      "intro": "Pour commencer, à partager au milieu de la table.",
+      "intro": "À partager au milieu de la table.",
       "items": [
         {
           "name": "Planche de charcuteries",
@@ -72,8 +72,8 @@
     },
     {
       "id": "pizzas",
-      "title": "Pizze",
-      "intro": "Pâte maison, cuites au four à bois.",
+      "title": "Pizzas",
+      "intro": "Cuites au four à bois.",
       "items": [
         {
           "name": "Margherita",
@@ -109,8 +109,8 @@
     },
     {
       "id": "pates",
-      "title": "Paste",
-      "intro": "Des rigatoni, des sauces maison, et gratinés au four si vous le voulez.",
+      "title": "Pâtes",
+      "intro": "Des rigatoni, et gratinés au four si vous le souhaitez.",
       "items": [
         {
           "name": "Arrabbiata",
@@ -141,8 +141,8 @@
     },
     {
       "id": "desserts",
-      "title": "Dolci",
-      "intro": "Faits maison, et le café va avec.",
+      "title": "Desserts",
+      "intro": "Faits maison, avec le café.",
       "items": [
         {
           "name": "Tiramisu",
@@ -163,12 +163,12 @@
     },
     {
       "id": "boissons",
-      "title": "Bevande",
-      "intro": "Vins italiens, bières, cocktails et un excellent café.",
+      "title": "Boissons",
+      "intro": "Un grand choix de vins, des bières, des cocktails et un excellent café.",
       "items": [
         {
           "name": "Vins italiens",
-          "desc": "Rouges, blancs et rosés, au verre ou à la bouteille.",
+          "desc": "Rouges, blancs et rosés.",
           "price": ""
         },
         {
@@ -190,24 +190,24 @@
     }
   ],
   "privatisation": {
-    "intro": "Dio se privatise pour vos repas d'équipe, séminaires, anniversaires et fêtes. Dites-nous la date, le nombre de convives et l'ambiance voulue : nous vous répondons avec une proposition sur mesure.",
+    "intro": "Dio accueille les groupes : repas d'équipe, séminaires, anniversaires, fêtes. Écrivez-nous la date, le nombre de personnes et ce que vous imaginez, on vous répond.",
     "capacity": "",
     "formulas": [
       {
         "name": "Repas assis",
-        "text": "Menu unique ou à choix : antipasti, pizzas ou pâtes, dessert, café."
+        "text": "Un repas complet à table : entrées à partager, pizzas ou pâtes, dessert, café."
       },
       {
         "name": "Apéritif dînatoire",
-        "text": "Planches, focaccia, mini-pizzas et boissons, debout et convivial."
+        "text": "Planches et petites bouchées à partager, boissons, debout et sans cérémonie."
       },
       {
-        "name": "Pizza party",
-        "text": "Pizzas cuites au feu de bois à volonté, idéal pour les groupes."
+        "name": "Pizzas à partager",
+        "text": "Des pizzas cuites au four à bois pour toute la tablée."
       },
       {
         "name": "Traiteur",
-        "text": "Nos plats préparés pour vos événements, à emporter ou livrés."
+        "text": "Nos plats pour vos événements, à emporter ou livrés."
       }
     ]
   },
@@ -234,7 +234,7 @@
   "googlePlaceId": "",
   "reserveUrl": "",
   "whatsapp": "",
-  "orderDirect": "Commandez directement chez nous : pas de commission de plateforme, c'est le restaurant qui prépare et qui encaisse.",
+  "orderDirect": "Commandez directement chez nous : on prépare, vous récupérez, sans intermédiaire.",
   "promo": {
     "active": false,
     "title": "Le coup de pouce du milieu de semaine",

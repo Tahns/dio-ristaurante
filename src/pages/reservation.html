@@ -1,12 +1,12 @@
 <!-- {
   "title": "Réserver une table ou privatiser | Dio Ristorante",
-  "description": "Réservez une table chez Dio Ristorante à Villeneuve-d'Ascq, commandez à emporter ou demandez un devis de privatisation. Réponse rapide, parking gratuit derrière le restaurant.",
+  "description": "Réservez une table chez Dio Ristorante à Villeneuve-d'Ascq, commandez à emporter ou demandez un devis de privatisation. Parking gratuit derrière le restaurant.",
   "nav": "reservation"
 } -->
 <section class="page-hero">
   <div class="container">
     <h1>Réserver</h1>
-    <p>Une table ce soir, une commande à emporter, un événement à organiser : dites-nous ce qu'il vous faut, on vous confirme vite.</p>
+    <p>Une table ce soir, une commande à emporter, un événement à organiser : dites-nous ce qu'il vous faut, on vous recontacte pour confirmer.</p>
   </div>
 </section>
 
@@ -18,8 +18,8 @@
         <select id="type" name="type" required>
           <option value="table">Réserver une table</option>
           <option value="emporter">Commande à emporter</option>
-          <option value="privatisation-entreprise">Privatisation : entreprise, séminaire</option>
-          <option value="privatisation-prive">Privatisation : anniversaire, EVG/EVJF, fête</option>
+          <option value="privatisation-entreprise">Privatisation pour une entreprise ou un séminaire</option>
+          <option value="privatisation-prive">Privatisation pour un anniversaire ou une fête</option>
           <option value="traiteur">Traiteur</option>
         </select>
       </div>
@@ -61,11 +61,11 @@
         </div>
         <div class="field">
           <label for="convives" id="convives-label">Nombre de personnes</label>
-          <input id="convives" name="convives" type="number" min="1" max="200" inputmode="numeric" required>
+          <input id="convives" name="convives" type="number" min="1" max="80" inputmode="numeric" required>
         </div>
       </div>
       <div class="field">
-        <label for="message">Précisions (allergies, poussette, budget, ambiance…)</label>
+        <label for="message">Précisions (allergies, poussette, budget, etc.)</label>
         <textarea id="message" name="message"></textarea>
       </div>
       <label class="field field--check">
@@ -79,7 +79,7 @@
         <button class="btn btn--dark" type="button" data-copy>Copier la demande</button>
       </div>
       <p class="form__status" role="status" aria-live="polite"></p>
-      <p class="form__note">Votre table est confirmée une fois validée par le restaurant. Pensez à vous garer sur le parking gratuit derrière le restaurant.</p>
+      <p class="form__note">Votre réservation est confirmée une fois validée par le restaurant. Pensez à vous garer sur le parking gratuit derrière le restaurant.</p>
     </form>
 
     <div class="contact-cards">

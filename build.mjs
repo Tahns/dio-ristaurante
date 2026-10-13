@@ -94,7 +94,7 @@ const formulas = () =>
 
 const ctaBand = (
   title = "Une table pour ce soir ?",
-  text = "Une minute pour réserver. On vous confirme dès que possible."
+  text = "Remplissez le formulaire, on vous recontacte pour confirmer."
 ) => `
 <section class="cta-band">
   <div class="container cta-band__inner">
@@ -173,7 +173,7 @@ function reviewsSection() {
     <div class="reviews-head">
       <div>
         <span class="section__kicker">Les avis</span>
-        <h2>Ils sont venus, ils ont mangé, ils en parlent</h2>
+        <h2>${cards ? "Ce que disent nos clients" : "Votre avis nous intéresse"}</h2>
       </div>
       ${rating}
     </div>
@@ -181,7 +181,7 @@ function reviewsSection() {
     <div class="review-ask">
       <div>
         <h3>Un bon moment chez Dio ?</h3>
-        <p>Un avis Google prend trente secondes, et c'est ce qui aide le plus un petit restaurant comme le nôtre à se faire connaître.</p>
+        <p>Un avis Google prend trente secondes et aide les autres à nous trouver.</p>
       </div>
       <a class="btn btn--primary" href="${reviewUrl}" rel="noopener">Laisser un avis</a>
     </div>
@@ -193,11 +193,11 @@ const shareBlock = () => `<section class="section section--dark share" id="parta
   <div class="container share__inner">
     <div>
       <span class="section__kicker">Passez le mot</span>
-      <h2>Vous connaissez des gourmands ?</h2>
-      <p>Dio vit grâce à ceux qui en parlent. Si vous avez bien mangé, dites-le à un ami, un collègue, un voisin : c'est la meilleure publicité qu'on puisse avoir.</p>
+      <h2>Un bon repas ? Passez le mot</h2>
+      <p>Dites-le à un ami ou à un collègue : c'est ce qui nous fait le plus plaisir.</p>
     </div>
     <div class="share__actions">
-      <button class="btn btn--primary" type="button" data-share data-title="Dio Ristorante" data-text="Pizzas au feu de bois et pâtes à Villeneuve-d'Ascq, parking gratuit derrière le restaurant. Je recommande !">Recommander Dio</button>
+      <button class="btn btn--primary" type="button" data-share data-title="Dio Ristorante" data-text="Pizzas-d'Ascq, parking gratuit derrière le restaurant. Je recommande !">Recommander Dio</button>
       <a class="btn btn--light" href="${reviewUrl}" rel="noopener">Laisser un avis</a>
     </div>
   </div>
@@ -456,6 +456,15 @@ function writePage(meta, body, urlPath, outFile) {
     .replace(/\{\{(content|pageTitle|pageDescription|canonical|robots|jsonLd)\}\}/g, (_, k) => pageVars[k])
     .replace(/\{\{nav:(\w+)\}\}/g, (_, k) => (k === meta.nav ? ' aria-current="page"' : ""));
   html = withBase(render(html));
+  // Typographie française : espaces insécables avant : ; ? ! et dans « », apostrophes courbes, dans le texte uniquement.
+  html = html
+    .split(/(<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<[^>]+>)/g)
+    .map((part) =>
+      part.startsWith("<")
+        ? part
+        : part.replace(/ ([:;?!»])/g, "\u00a0$1").replace(/« /g, "«\u00a0").replace(/(\w)'(\w)/g, "$1\u2019$2")
+    )
+    .join("");
   const dest = path.join(OUT, outFile);
   fs.mkdirSync(path.dirname(dest), { recursive: true });
   fs.writeFileSync(dest, html);
