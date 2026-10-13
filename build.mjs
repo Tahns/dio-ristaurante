@@ -123,7 +123,10 @@ const orderInfo = () => {
 
 const orderApp = () => {
   const cats = (site.menu.emporter || []).map((c) => ({ ...c, items: c.items.filter((it) => parsePrice(it.price) > 0) })).filter((c) => c.items.length);
-  const nav = (site.compose ? `<a href="#o-compose">Composer ma pizza</a>` : "") + cats.map((c) => `<a href="#o-${esc(c.id)}">${esc(c.title)}</a>`).join("");
+  const lastPizza = cats.map((c) => c.id).filter((id) => id.startsWith("pizzas")).pop();
+  const nav = cats
+    .map((c) => `<a href="#o-${esc(c.id)}">${esc(c.title)}</a>` + (site.compose && c.id === lastPizza ? `<a href="#o-compose">Composer ma pizza</a>` : ""))
+    .join("");
   const sections = cats
     .map(
       (c) => `<section class="order-cat" id="o-${esc(c.id)}">
@@ -137,13 +140,12 @@ const orderApp = () => {
       </li>`
         )
         .join("")}</ul>
-    </section>`
+    </section>` + (site.compose && c.id === lastPizza ? composeBlock() : "")
     )
     .join("");
   return `<div class="order" id="order" data-endpoint="${esc(site.formEndpoint)}" data-email="${esc(site.email)}" data-min="${parsePrice(site.clickCollect?.minimum)}" data-lead="${site.clickCollect?.prepMinutes || 30}" data-slots='${JSON.stringify(site.hoursSlots || [])}' data-tel="${hasPhone ? phone.tel : ""}" data-phone="${hasPhone ? phone.display : ""}">
   <div class="order__menu">
     <nav class="menu-nav" aria-label="Rubriques de la carte à emporter">${nav}</nav>
-    ${composeBlock()}
     ${sections}
   </div>
   <aside class="order__cart" id="cart" aria-label="Votre commande">
