@@ -668,7 +668,7 @@
     ]
   },
   "privatisation": {
-    "intro": "DIO accueille les groupes : repas d'équipe, séminaires, anniversaires, fêtes. Écrivez-nous la date, le nombre de personnes et ce que vous imaginez, on vous répond.",
+    "intro": "Un repas d'équipe, un anniversaire, une fête ? DIO accueille les groupes. Dites-nous la date, le nombre de personnes et ce que vous imaginez : on s'occupe du reste.",
     "capacity": "",
     "formulas": [
       {
@@ -740,6 +740,64 @@
       ],
       "opens": "18:00",
       "closes": "21:00"
+    }
+  ],
+  "hoursGrid": [
+    {
+      "day": "Lundi",
+      "midi": "11:30–14:30",
+      "soir": "Fermé"
+    },
+    {
+      "day": "Mardi, mercredi, jeudi",
+      "midi": "11:30–14:30",
+      "soir": "18:00–20:30",
+      "soirNote": "à emporter"
+    },
+    {
+      "day": "Vendredi, samedi",
+      "midi": "11:30–14:30",
+      "soir": "18:00–21:00",
+      "soirNote": "sur place et à emporter"
+    },
+    {
+      "day": "Dimanche",
+      "midi": "Fermé",
+      "soir": "Fermé"
+    }
+  ],
+  "hoursSlots": [
+    {
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "from": "11:30",
+      "to": "14:30",
+      "mode": "sur place ou à emporter"
+    },
+    {
+      "days": [
+        2,
+        3,
+        4
+      ],
+      "from": "18:00",
+      "to": "20:30",
+      "mode": "à emporter"
+    },
+    {
+      "days": [
+        5,
+        6
+      ],
+      "from": "18:00",
+      "to": "21:00",
+      "mode": "sur place ou à emporter"
     }
   ]
 }

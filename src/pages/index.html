@@ -7,14 +7,17 @@
   <div class="container hero__inner">
     <span class="hero__eyebrow">Benvenuti da DIO !</span>
     <h1>Cuisine <em>italienne</em> à Villeneuve-d'Ascq</h1>
-    <p class="hero__lead">Pizzas au four à bois, pâtes, risottos et un excellent café. Venez comme vous êtes, on vous trouve une table.</p>
+    <p class="hero__lead">Une pizza qui sort du four à bois, des pâtes gratinées, un bon café pour finir. Passez à midi ou le soir : on vous installe, ou on vous prépare tout à emporter.</p>
     <div class="hero__actions">
       <a class="btn btn--primary btn--lg" href="/reservation/">Réserver une table</a>
       <a class="btn btn--ghost btn--lg" href="/la-carte/">Voir la carte</a>
     </div>
-    <p class="hero__services">{{services}}</p>
+    <p class="open-now" data-open-now data-slots='{{slotsJson}}' aria-live="polite"></p>
+    <p class="hero__hours">Midi du lundi au samedi · Soir du mardi au samedi · <a href="#horaires">Tous les horaires</a></p>
   </div>
 </section>
+
+{{hoursPanel}}
 
 <section class="section section--tight">
   <div class="container">
@@ -30,8 +33,8 @@
       <img class="photo-card" src="/assets/photos/four-et-cartons.jpg" alt="Le four à bois en mosaïque et les boîtes à pizza à emporter" width="660" height="440" loading="lazy">
     </div>
     <div class="intro__text">
-      <p>Chez DIO, les pizzas cuisent au four à bois : la croûte gonfle, le fromage fond, le tout en quelques minutes. Il y a aussi des pâtes, nature ou gratinées au four, des risottos, des spécialités et des planches à partager. Les pizzas démarrent à 7,90 € à emporter, les pâtes à 9 €.</p>
-      <p>Pour finir, un tiramisu, un pain perdu brioché au caramel ou simplement un expresso. Le café, ici, on y tient.</p>
+      <p>Chez DIO, la pizza passe par le four à bois : la pâte gonfle, le fromage fond, et c'est prêt en quelques minutes. À côté, il y a des pâtes (nature ou gratinées au four), des risottos, des spécialités pour les grosses faims et des planches à partager. À emporter, les pizzas démarrent à 7,90 € et les pâtes à 9 €.</p>
+      <p>On finit volontiers par un tiramisu ou un pain perdu brioché au caramel. Et le café, on y tient.</p>
       <p class="signature">Buon appetito !</p>
     </div>
   </div>
@@ -55,10 +58,10 @@
     <div>
       <span class="section__kicker">Pour les grandes tablées</span>
       <h2>Une grande tablée chez DIO</h2>
-      <p>Déjeuner d'équipe, anniversaire, EVG : on accueille les groupes et on peut privatiser le restaurant. Pour les plus gros événements, il y a aussi le traiteur.</p>
+      <p>Un déjeuner d'équipe, un anniversaire, un EVG ? Venez à plusieurs, on s'occupe du reste. On peut aussi privatiser le restaurant, et pour les plus gros événements, on vous livre en traiteur.</p>
       <ul class="ticks">
         <li>Repas assis, apéritif dînatoire ou pizza party</li>
-        <li>Une demande par écrit, une réponse de notre part</li>
+        <li>Dites-nous la date et le nombre de personnes, on vous répond</li>
         <li>Le parking gratuit pour tous vos invités</li>
       </ul>
       <p><a class="btn btn--primary" href="/privatisation/">Découvrir la privatisation</a></p>

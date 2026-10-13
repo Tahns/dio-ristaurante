@@ -171,3 +171,36 @@ if (menuTabs.length) {
   );
   show(location.hash.startsWith("#emporter") ? "emporter" : "surplace");
 }
+
+// « Ouvert maintenant » : calculé avec l'heure de Paris à partir des créneaux du site
+document.querySelectorAll("[data-open-now]").forEach((el) => {
+  let slots;
+  try { slots = JSON.parse(el.dataset.slots); } catch { return; }
+  const min = (t) => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };
+  const label = (t) => t.replace(":00", " h").replace(":", " h ").replace(/ h $/, " h");
+  const parts = new Intl.DateTimeFormat("fr-FR", { timeZone: "Europe/Paris", weekday: "short", hour: "numeric", minute: "numeric", hourCycle: "h23" }).formatToParts(new Date());
+  const get = (type) => parts.find((p) => p.type === type).value;
+  const day = ["dim.", "lun.", "mar.", "mer.", "jeu.", "ven.", "sam."].indexOf(get("weekday"));
+  const now = Number(get("hour")) * 60 + Number(get("minute"));
+  if (day < 0) return;
+  const names = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
+  const today = slots.filter((s) => s.days.includes(day)).sort((a, b) => min(a.from) - min(b.from));
+  const open = today.find((s) => now >= min(s.from) && now < min(s.to));
+  if (open) {
+    el.className = "open-now is-open";
+    el.textContent = `Ouvert maintenant jusqu'à ${label(open.to)} (${open.mode})`;
+    return;
+  }
+  const next = today.find((s) => min(s.from) > now);
+  let msg;
+  if (next) msg = `aujourd'hui à ${label(next.from)}`;
+  else {
+    for (let i = 1; i <= 7; i++) {
+      const d = (day + i) % 7;
+      const s = slots.filter((x) => x.days.includes(d)).sort((a, b) => min(a.from) - min(b.from))[0];
+      if (s) { msg = (i === 1 ? "demain" : names[d]) + ` à ${label(s.from)}`; break; }
+    }
+  }
+  el.className = "open-now is-closed";
+  el.textContent = `Fermé pour le moment, on rouvre ${msg}`;
+});

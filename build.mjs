@@ -72,6 +72,31 @@ const hoursList = () =>
     ? `<dl class="hours">${site.hoursTable.map((h) => `<div><dt>${esc(h.day)}</dt><dd>${esc(h.hours)}</dd></div>`).join("")}</dl>`
     : "";
 
+const hoursPanel = () => {
+  const rows = (site.hoursGrid || [])
+    .map((h) => {
+      const cell = (v, note) => (v === "Fermé" ? `<td class="is-closed">Fermé</td>` : `<td>${esc(v)}${note ? `<small>${esc(note)}</small>` : ""}</td>`);
+      return `<tr><th scope="row">${esc(h.day)}</th>${cell(h.midi)}${cell(h.soir, h.soirNote)}</tr>`;
+    })
+    .join("");
+  return `<section class="section section--cream hours-band" id="horaires">
+  <div class="container hours-band__inner">
+    <div>
+      <span class="section__kicker">Quand venir</span>
+      <h2>On vous attend midi et soir</h2>
+      <p class="open-now" data-open-now data-slots="${esc(JSON.stringify(site.hoursSlots || []))}" aria-live="polite"></p>
+      <p>Le midi, on est là du lundi au samedi. Le soir, on vous reçoit sur place le vendredi et le samedi. Du mardi au jeudi, le soir, on prépare tout à emporter. Le dimanche, on se repose.</p>
+      <p><a class="btn btn--primary" href="/reservation/">Réserver une table</a> ${hasPhone ? `<a class="btn btn--dark" href="tel:${phone.tel}">Appeler le ${phone.display}</a>` : ""}</p>
+    </div>
+    <table class="hours-table">
+      <caption class="sr-only">Horaires d'ouverture</caption>
+      <thead><tr><th scope="col">Jour</th><th scope="col">Midi</th><th scope="col">Soir</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  </div>
+</section>`;
+};
+
 const parkingSteps = () =>
   site.parking.steps?.length ? `<ol class="steps steps--compact">${site.parking.steps.map((t) => `<li>${esc(t)}</li>`).join("")}</ol>` : "";
 
@@ -397,6 +422,8 @@ const tokens = {
   promoBar,
   reserveExtras,
   hoursList,
+  hoursPanel,
+  slotsJson: () => JSON.stringify(site.hoursSlots || []),
   parkingSteps,
   reviewUrl: () => reviewUrl,
   orderDirect: () => esc(site.orderDirect || ""),
