@@ -14,13 +14,16 @@
       </div>
 
       <div class="field">
-        <label for="date">Quel jour ?</label>
-        <input id="date" name="date" type="date" required>
+        <span class="label" id="date-label">Quel jour ?</span>
+        <div class="cal" id="cal" aria-labelledby="date-label"></div>
+        <input type="hidden" id="date" name="date">
+        <p class="field__hint" id="date-picked" aria-live="polite"></p>
       </div>
 
       <div class="field" data-hide-for="groupe">
-        <span class="label" id="heure-label">À quelle heure ?</span>
-        <div class="slots" id="slots" role="radiogroup" aria-labelledby="heure-label"><p class="slots__hint">Choisissez d'abord un jour.</p></div>
+        <label for="heure">À quelle heure ?</label>
+        <select id="heure" name="heure" required disabled><option value="">Choisissez d'abord un jour</option></select>
+        <p class="slots__hint" id="heure-hint"></p>
       </div>
       <div class="field" data-show-for="groupe" hidden>
         <label for="heure-libre">Heure souhaitée</label>

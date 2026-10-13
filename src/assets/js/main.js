@@ -81,41 +81,84 @@ const slotGroups = (slots, iso, kind, lead) => {
     });
 };
 
-const renderSlots = (box, groups, name, emptyMsg) => {
+// Liste déroulante des heures, avec les groupes Midi / Soir
+const renderTimes = (select, hintEl, groups, emptyMsg) => {
   const total = groups.reduce((n, g) => n + g.times.length, 0);
-  box.replaceChildren();
-  if (!total) {
-    const p = document.createElement("p");
-    p.className = "slots__hint";
-    p.textContent = emptyMsg;
-    box.append(p);
-    return;
-  }
+  select.replaceChildren();
+  const first = document.createElement("option");
+  first.value = "";
+  first.textContent = total ? "Choisir une heure" : "Aucune heure disponible";
+  select.append(first);
   groups.filter((g) => g.times.length).forEach((g) => {
-    const wrap = document.createElement("div");
-    wrap.className = "slots__group";
-    const h = document.createElement("p");
-    h.className = "slots__label";
-    h.textContent = g.label;
-    wrap.append(h);
-    const row = document.createElement("div");
-    row.className = "slots__row";
+    const og = document.createElement("optgroup");
+    og.label = g.label;
     g.times.forEach((m) => {
-      const label = document.createElement("label");
-      label.className = "slot";
-      const input = document.createElement("input");
-      input.type = "radio";
-      input.name = name;
-      input.value = fmtH(m);
-      input.required = true;
-      const span = document.createElement("span");
-      span.textContent = fmtH(m);
-      label.append(input, span);
-      row.append(label);
+      const o = document.createElement("option");
+      o.value = fmtH(m);
+      o.textContent = fmtH(m);
+      og.append(o);
     });
-    wrap.append(row);
-    box.append(wrap);
+    select.append(og);
   });
+  select.disabled = !total;
+  if (hintEl) hintEl.textContent = total ? "" : emptyMsg;
+};
+
+// Calendrier du mois : les jours fermés ou passés sont grisés
+const makeCalendar = (box, { min, max, isClosed, onPick }) => {
+  const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  const minD = new Date(min + "T12:00:00");
+  const maxD = new Date(max + "T12:00:00");
+  let view = new Date(minD.getFullYear(), minD.getMonth(), 1);
+  let selected = "";
+  const btn = (text, label, onClick, disabled) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.textContent = text;
+    b.setAttribute("aria-label", label);
+    b.disabled = disabled;
+    if (onClick) b.addEventListener("click", onClick);
+    return b;
+  };
+  const render = () => {
+    box.replaceChildren();
+    const head = document.createElement("div");
+    head.className = "cal__head";
+    const title = document.createElement("strong");
+    title.setAttribute("aria-live", "polite");
+    title.textContent = `${MONTHS[view.getMonth()][0].toUpperCase()}${MONTHS[view.getMonth()].slice(1)} ${view.getFullYear()}`;
+    const prevOff = view.getFullYear() * 12 + view.getMonth() <= minD.getFullYear() * 12 + minD.getMonth();
+    const nextOff = view.getFullYear() * 12 + view.getMonth() >= maxD.getFullYear() * 12 + maxD.getMonth();
+    head.append(
+      btn("‹", "Mois précédent", () => { view = new Date(view.getFullYear(), view.getMonth() - 1, 1); render(); }, prevOff),
+      title,
+      btn("›", "Mois suivant", () => { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); render(); }, nextOff)
+    );
+    const grid = document.createElement("div");
+    grid.className = "cal__grid";
+    ["L", "M", "M", "J", "V", "S", "D"].forEach((d, i) => {
+      const w = document.createElement("span");
+      w.className = "cal__dow";
+      w.setAttribute("aria-hidden", "true");
+      w.textContent = d;
+      grid.append(w);
+    });
+    const offset = (view.getDay() + 6) % 7;
+    for (let i = 0; i < offset; i++) grid.append(document.createElement("span"));
+    const days = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+    for (let n = 1; n <= days; n++) {
+      const d = new Date(view.getFullYear(), view.getMonth(), n, 12);
+      const key = iso(d);
+      const off = key < min || key > max || isClosed(key);
+      const b = btn(n, longDate(key) + (off ? " (indisponible)" : ""), () => { selected = key; onPick(key); render(); }, off);
+      b.className = "cal__day" + (key === selected ? " is-selected" : "") + (key === parisNow().date ? " is-today" : "");
+      b.setAttribute("aria-pressed", key === selected ? "true" : "false");
+      grid.append(b);
+    }
+    box.append(head, grid);
+  };
+  render();
+  return { get value() { return selected; } };
 };
 
 // Envoi : service d'envoi (Formspree…), sinon e-mail, sinon récapitulatif à confirmer par téléphone.
@@ -196,11 +239,10 @@ if (form) {
   const status = form.querySelector(".form__status");
   const typeOf = () => form.elements.type.value;
   const date = form.elements.date;
+  const select = form.elements.heure;
   const now = parisNow();
-  date.min = now.date;
   const max = new Date(now.date + "T12:00:00");
   max.setDate(max.getDate() + 120);
-  date.max = max.toISOString().slice(0, 10);
 
   const params = new URLSearchParams(location.search);
   if (params.get("type")?.startsWith("privatisation") || params.get("type") === "traiteur") form.querySelector('input[name="type"][value="groupe"]').checked = true;
@@ -216,22 +258,27 @@ if (form) {
   form.querySelectorAll("[data-step]").forEach((b) => b.addEventListener("click", () => { qty.value = (Number(qty.value) || 1) + Number(b.dataset.step); clampQty(); }));
   qty.addEventListener("change", clampQty);
 
-  const refreshSlots = () => {
-    const box = document.getElementById("slots");
-    if (!date.value) return renderSlots(box, [], "heure", "Choisissez d'abord un jour.");
-    const d = dayOf(date.value);
-    let msg = "Aucun créneau disponible ce jour-là.";
-    if (d === 0) msg = "Le restaurant est fermé le dimanche. Choisissez un autre jour.";
-    else if (d >= 2 && d <= 4) msg = "Le soir du mardi au jeudi, on prépare uniquement des plats à emporter. Choisissez le midi, ou un vendredi ou un samedi soir.";
-    const groups = slotGroups(slots, date.value, "table", 0);
-    renderSlots(box, groups, "heure", groups.some((g) => g.times.length) ? "" : msg);
-    if (groups.some((g) => g.times.length) && d >= 2 && d <= 4) {
-      const note = document.createElement("p");
-      note.className = "slots__hint";
-      note.textContent = "Le soir du mardi au jeudi, uniquement à emporter : voir la page « Commander ».";
-      box.append(note);
-    }
+  const refreshTimes = () => {
+    const iso = date.value;
+    const hintEl = document.getElementById("heure-hint");
+    if (!iso) return renderTimes(select, null, [], "");
+    const d = dayOf(iso);
+    let msg = "Aucune heure disponible ce jour-là.";
+    if (d >= 2 && d <= 4) msg = "Du mardi au jeudi soir, on prépare uniquement des plats à emporter.";
+    const groups = slotGroups(slots, iso, "table", 0);
+    renderTimes(select, hintEl, groups, msg);
+    if (groups.some((g) => g.times.length) && d >= 2 && d <= 4) hintEl.textContent = "Le soir du mardi au jeudi, c'est uniquement à emporter : voir la page « Commander ».";
   };
+  const cal = makeCalendar(document.getElementById("cal"), {
+    min: now.date,
+    max: max.toISOString().slice(0, 10),
+    isClosed: (iso) => dayOf(iso) === 0,
+    onPick: (iso) => {
+      date.value = iso;
+      document.getElementById("date-picked").textContent = "Jour choisi : " + longDate(iso);
+      refreshTimes();
+    },
+  });
   const adapt = () => {
     form.querySelectorAll("[data-show-for]").forEach((el) => (el.hidden = !el.dataset.showFor.split(",").includes(typeOf())));
     form.querySelectorAll("[data-hide-for]").forEach((el) => (el.hidden = el.dataset.hideFor.split(",").includes(typeOf())));
@@ -239,9 +286,7 @@ if (form) {
     document.getElementById("convives-label").textContent = typeOf() === "groupe" ? "Combien de convives ?" : "Combien de personnes ?";
   };
   form.elements.type.forEach((r) => r.addEventListener("change", adapt));
-  date.addEventListener("change", refreshSlots);
   adapt();
-  refreshSlots();
 
   const setStatus = (msg, ok) => { status.textContent = msg; status.className = "form__status " + (ok ? "form__status--ok" : "form__status--err"); };
 
@@ -249,9 +294,8 @@ if (form) {
     e.preventDefault();
     setStatus("", true);
     const groupe = typeOf() === "groupe";
-    if (!groupe) form.querySelectorAll("#slots input").forEach((i) => (i.required = true));
-    else form.querySelectorAll("#slots input").forEach((i) => (i.required = false));
-    if (date.value && dayOf(date.value) === 0) return setStatus("Le restaurant est fermé le dimanche : choisissez un autre jour.", false);
+    select.required = !groupe;
+    if (!date.value) return setStatus("Choisissez un jour dans le calendrier.", false);
     if (!form.reportValidity()) return;
     const d = new FormData(form);
     const heure = groupe ? d.get("heure_libre") && fmtH(toMin(d.get("heure_libre"))) : d.get("heure");
@@ -340,28 +384,29 @@ if (order) {
     });
   });
 
-  // Jours de retrait : les 7 prochains jours ouverts qui ont encore au moins un créneau
-  const daySel = document.getElementById("o-date");
+  // Jour de retrait : calendrier sur 14 jours, seuls les jours qui ont encore une heure disponible sont cliquables
+  const dateEl = document.getElementById("o-date");
+  const timeSel = document.getElementById("o-heure");
   const now = parisNow();
-  for (let i = 0; i < 10 && daySel.options.length < 7; i++) {
-    const dt = new Date(now.date + "T12:00:00");
-    dt.setDate(dt.getDate() + i);
-    const iso = dt.toISOString().slice(0, 10);
-    if (!slotGroups(slots, iso, "emporter", LEAD).some((g) => g.times.length)) continue;
-    const opt = document.createElement("option");
-    opt.value = iso;
-    opt.textContent = (i === 0 ? "Aujourd'hui · " : i === 1 ? "Demain · " : "") + longDate(iso);
-    daySel.append(opt);
-  }
-  const refresh = () => renderSlots(document.getElementById("o-slots"), slotGroups(slots, daySel.value, "emporter", LEAD), "heure", "Plus de créneau disponible ce jour-là.");
-  daySel.addEventListener("change", refresh);
-  refresh();
+  const maxD = new Date(now.date + "T12:00:00");
+  maxD.setDate(maxD.getDate() + 14);
+  makeCalendar(document.getElementById("o-cal"), {
+    min: now.date,
+    max: maxD.toISOString().slice(0, 10),
+    isClosed: (iso) => !slotGroups(slots, iso, "emporter", LEAD).some((g) => g.times.length),
+    onPick: (iso) => {
+      dateEl.value = iso;
+      document.getElementById("o-date-picked").textContent = "Retrait le " + longDate(iso);
+      renderTimes(timeSel, document.getElementById("o-heure-hint"), slotGroups(slots, iso, "emporter", LEAD), "Plus d'heure disponible ce jour-là.");
+    },
+  });
   paint();
 
   const setStatus = (msg, ok) => { status.textContent = msg; status.className = "form__status " + (ok ? "form__status--ok" : "form__status--err"); };
   oform.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (!cart.size) return setStatus("Ajoutez au moins un plat à votre commande.", false);
+    if (!dateEl.value) return setStatus("Choisissez le jour de retrait dans le calendrier.", false);
     if (!oform.reportValidity()) return;
     const d = new FormData(oform);
     const lines = [

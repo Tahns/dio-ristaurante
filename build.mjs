@@ -102,12 +102,15 @@ const orderApp = () => {
       <p class="cart-total" hidden><span>Total</span><strong>0 €</strong></p>
       <form id="order-form" class="order-form" novalidate>
         <div class="field">
-          <label for="o-date">Jour de retrait</label>
-          <select id="o-date" name="date" required></select>
+          <span class="label" id="o-date-label">Jour de retrait</span>
+          <div class="cal" id="o-cal" aria-labelledby="o-date-label"></div>
+          <input type="hidden" id="o-date" name="date">
+          <p class="field__hint" id="o-date-picked" aria-live="polite"></p>
         </div>
         <div class="field">
-          <span class="label" id="o-heure-label">Heure de retrait</span>
-          <div class="slots" id="o-slots" role="radiogroup" aria-labelledby="o-heure-label"><p class="slots__hint">Choisissez d'abord un jour.</p></div>
+          <label for="o-heure">Heure de retrait</label>
+          <select id="o-heure" name="heure" required disabled><option value="">Choisissez d'abord un jour</option></select>
+          <p class="slots__hint" id="o-heure-hint"></p>
         </div>
         <div class="field"><label for="o-nom">Votre nom</label><input id="o-nom" name="nom" autocomplete="name" required></div>
         <div class="field"><label for="o-tel">Téléphone</label><input id="o-tel" name="telephone" type="tel" autocomplete="tel" required></div>

@@ -1,9 +1,9 @@
 {
   "name": "DIO Ristorante",
   "baseUrl": "https://www.dioristaurante.com",
-  "tagline": "Pizzas au four à bois, rigatoni et desserts maison à Villeneuve-d'Ascq",
+  "tagline": "Pizzas au four à bois, pâtes, risottos et desserts maison à Villeneuve-d'Ascq",
   "address": {
-    "street": "21 Rue Emile Zola",
+    "street": "21 Rue Émile Zola",
     "postalCode": "59650",
     "city": "Villeneuve-d'Ascq",
     "region": "Hauts-de-France",
@@ -32,7 +32,7 @@
     "instagram": "",
     "tiktok": ""
   },
-  "hours": "Midi lun–sam · soir mar–sam",
+  "hours": "Midi lun–sam · soir sur place ven–sam, à emporter mar–jeu",
   "hoursTable": [
     {
       "day": "Lundi",
