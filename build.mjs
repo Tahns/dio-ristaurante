@@ -93,7 +93,7 @@ const formulas = () =>
     .join("")}</div>`;
 
 const ctaBand = (
-  title = "Une table pour ce soir ?",
+  title = "Une table chez Dio ?",
   text = "Remplissez le formulaire, on vous recontacte pour confirmer."
 ) => `
 <section class="cta-band">

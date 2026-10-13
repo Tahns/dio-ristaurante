@@ -32,8 +32,37 @@
     "instagram": "",
     "tiktok": ""
   },
-  "hours": "Déjeuner et dîner",
-  "hoursTable": [],
+  "hours": "Midi lun–sam · soir ven–sam",
+  "hoursTable": [
+    {
+      "day": "Lundi",
+      "hours": "11:30–14:00"
+    },
+    {
+      "day": "Mardi",
+      "hours": "11:30–14:00"
+    },
+    {
+      "day": "Mercredi",
+      "hours": "11:30–14:00"
+    },
+    {
+      "day": "Jeudi",
+      "hours": "11:30–14:00"
+    },
+    {
+      "day": "Vendredi",
+      "hours": "11:30–14:00, 19:00–21:00"
+    },
+    {
+      "day": "Samedi",
+      "hours": "11:30–14:00, 19:00–21:00"
+    },
+    {
+      "day": "Dimanche",
+      "hours": "Fermé"
+    }
+  ],
   "services": [
     "Sur place",
     "À emporter",
@@ -242,5 +271,27 @@
     "text": "",
     "until": ""
   },
-  "priceRange": "10–20 €"
+  "priceRange": "10–20 €",
+  "hoursSpec": [
+    {
+      "days": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      "opens": "11:30",
+      "closes": "14:00"
+    },
+    {
+      "days": [
+        "Friday",
+        "Saturday"
+      ],
+      "opens": "19:00",
+      "closes": "21:00"
+    }
+  ]
 }
