@@ -53,18 +53,76 @@ const reserveExtras = () =>
     site.whatsapp ? `<a class="btn btn--dark" href="https://wa.me/${esc(site.whatsapp.replace(/\D/g, ""))}" rel="noopener">Écrire sur WhatsApp</a>` : "",
   ].join("");
 
-// Formulaire de réservation : affiché seulement s'il peut vraiment envoyer quelque chose (service d'envoi ou e-mail).
-// Sinon, grand bloc « appelez pour réserver ».
-const bookingForm = () => {
-  if (site.formEndpoint || site.email) return fs.readFileSync(path.join(SRC, "partials/booking-form.html"), "utf8");
-  return `<div class="call-card">
-      <span class="section__kicker">Réserver</span>
-      <h2>Le plus simple : un coup de fil</h2>
-      <p>Appelez-nous, on vous trouve une table, une commande à emporter ou une date pour votre groupe.</p>
-      ${hasPhone ? `<a class="call-card__num" href="tel:${phone.tel}">${phone.display}</a>` : ""}
-      ${hoursList()}
-      <p class="call-card__note">Le soir, on mange sur place le vendredi et le samedi. Du mardi au jeudi, le soir est à emporter uniquement (jusqu'à 20 h 30). Fermé le dimanche.</p>
-    </div>`;
+// Formulaire de réservation : toujours affiché. L'envoi dépend de la configuration :
+// service d'envoi (formEndpoint), sinon e-mail, sinon récapitulatif à confirmer par téléphone.
+const bookingForm = () =>
+  fs
+    .readFileSync(path.join(SRC, "partials/booking-form.html"), "utf8")
+    .replaceAll("{{formEndpoint}}", esc(site.formEndpoint || ""))
+    .replaceAll("{{emailRaw}}", esc(site.email || ""))
+    .replaceAll("{{slotsJson}}", JSON.stringify(site.hoursSlots || []))
+    .replaceAll("{{phoneTel}}", hasPhone ? phone.tel : "")
+    .replaceAll("{{phoneDisplay}}", hasPhone ? phone.display : "le restaurant");
+
+const parsePrice = (s) => {
+  const m = String(s || "").replace(/\s/g, "").match(/(\d+)(?:[,.](\d{1,2}))?/);
+  return m ? Number(m[1]) * 100 + Number((m[2] || "0").padEnd(2, "0")) : 0;
+};
+
+// Commande à emporter : les plats de la carte « à emporter » avec un compteur, et le panier à côté.
+const orderApp = () => {
+  const cats = (site.menu.emporter || []).map((c) => ({ ...c, items: c.items.filter((it) => parsePrice(it.price) > 0) })).filter((c) => c.items.length);
+  const nav = cats.map((c) => `<a href="#o-${esc(c.id)}">${esc(c.title)}</a>`).join("");
+  const sections = cats
+    .map(
+      (c) => `<section class="order-cat" id="o-${esc(c.id)}">
+      <h2>${esc(c.title)}</h2>
+      ${c.intro ? `<p class="menu-cat__intro">${esc(c.intro)}</p>` : ""}
+      <ul class="order-list">${c.items
+        .map(
+          (it, i) => `<li class="order-item" data-id="${esc(c.id)}-${i}" data-name="${esc(it.name)}" data-price="${parsePrice(it.price)}">
+        <div class="order-item__info"><h3>${esc(it.name)}</h3>${it.desc ? `<p>${esc(it.desc)}</p>` : ""}<span class="order-item__price">${esc(it.price)}</span></div>
+        <div class="qty"><button type="button" data-act="minus" aria-label="Retirer : ${esc(it.name)}" hidden>−</button><output aria-live="polite" hidden>0</output><button type="button" data-act="plus" class="qty__add" aria-label="Ajouter : ${esc(it.name)}">+</button></div>
+      </li>`
+        )
+        .join("")}</ul>
+    </section>`
+    )
+    .join("");
+  return `<div class="order" id="order" data-endpoint="${esc(site.formEndpoint)}" data-email="${esc(site.email)}" data-slots='${JSON.stringify(site.hoursSlots || [])}' data-tel="${hasPhone ? phone.tel : ""}" data-phone="${hasPhone ? phone.display : ""}">
+  <div class="order__menu">
+    <nav class="menu-nav" aria-label="Rubriques de la carte à emporter">${nav}</nav>
+    ${sections}
+  </div>
+  <aside class="order__cart" id="cart" aria-label="Votre commande">
+    <div class="order__panel">
+      <h2>Votre commande</h2>
+      <p class="cart-empty">Votre panier est vide. Ajoutez des plats avec le bouton +.</p>
+      <ul class="cart-lines"></ul>
+      <p class="cart-total" hidden><span>Total</span><strong>0 €</strong></p>
+      <form id="order-form" class="order-form" novalidate>
+        <div class="field">
+          <label for="o-date">Jour de retrait</label>
+          <select id="o-date" name="date" required></select>
+        </div>
+        <div class="field">
+          <span class="label" id="o-heure-label">Heure de retrait</span>
+          <div class="slots" id="o-slots" role="radiogroup" aria-labelledby="o-heure-label"><p class="slots__hint">Choisissez d'abord un jour.</p></div>
+        </div>
+        <div class="field"><label for="o-nom">Votre nom</label><input id="o-nom" name="nom" autocomplete="name" required></div>
+        <div class="field"><label for="o-tel">Téléphone</label><input id="o-tel" name="telephone" type="tel" autocomplete="tel" required></div>
+        <div class="field"><label for="o-msg">Une remarque ? (allergie, sans oignons…)</label><textarea id="o-msg" name="message" rows="3"></textarea></div>
+        <p class="cancel-note"><strong>Un empêchement ?</strong> Prévenez-nous au ${hasPhone ? phone.display : "restaurant"} dès que possible si vous ne pouvez plus venir chercher votre commande.</p>
+        <label class="field field--check"><input type="checkbox" name="annulation" required><span>Je préviendrai le restaurant si je dois annuler ma commande. Je paie sur place au retrait.</span></label>
+        <button class="btn btn--primary btn--lg" type="submit">Valider ma commande</button>
+        <p class="form__status" role="status" aria-live="polite"></p>
+        <p class="form__note">Retrait au ${esc(addressLine)}, parking gratuit derrière le restaurant. Commande à passer au moins 30 minutes à l'avance. Elle est confirmée une fois validée par le restaurant.</p>
+      </form>
+    </div>
+  </aside>
+  <div class="recap" id="order-recap" hidden></div>
+  <a class="order-bar" href="#cart" hidden><span class="order-bar__count">0</span> <span>Voir ma commande</span> <strong class="order-bar__total">0 €</strong></a>
+</div>`;
 };
 
 const fmtT = (t) => t.replace(/^0/, "").replace(/:00$/, " h").replace(":", " h ");
@@ -214,23 +272,36 @@ const logoImg = clientLogo
   : `<img class="logo__img" src="/assets/img/logo.svg" alt="" width="60" height="50">`;
 
 // Avis : note affichée seulement si elle est renseignée ; l'invitation à laisser un avis est toujours là.
+const hasExamples = () => (site.reviews?.items || []).some((it) => it.example);
+const ratingBadge = () => {
+  const r = site.reviews?.rating;
+  if (!r) return "";
+  const n = Number(String(r).replace(",", "."));
+  return `<a class="rating-badge" href="#avis" aria-label="Note Google : ${esc(r)} sur 5">
+    <span class="stars-bar" style="--r:${n}" aria-hidden="true">★★★★★</span>
+    <strong>${esc(r)}/5</strong> <span>sur Google</span>
+  </a>`;
+};
+
+// Avis : la note est affichée dès qu'elle est renseignée ; les avis marqués « example » sont des exemples, jamais présentés comme réels.
 function reviewsSection() {
   const r = site.reviews || {};
   const cards = (r.items || [])
     .slice(0, 6)
     .map(
       (it) => `<figure class="quote">
-        <p class="quote__stars" role="img" aria-label="${esc(it.rating)} sur 5">${"★".repeat(Math.round(Number(it.rating) || 5))}</p>
+        <p class="quote__stars stars-bar" style="--r:${Number(it.rating) || 5}" role="img" aria-label="${esc(it.rating)} sur 5">★★★★★</p>
         <blockquote><p>${esc(it.text)}</p></blockquote>
-        <figcaption>${esc(it.author)}${it.date ? ` · ${esc(it.date)}` : ""} · Avis ${esc(r.source || "Google")}</figcaption>
+        <figcaption>${esc(it.author)}${it.date ? ` · ${esc(it.date)}` : ""} · ${it.example ? `<span class="tag-example">Exemple d'avis</span>` : `Avis ${esc(r.source || "Google")}`}</figcaption>
       </figure>`
     )
     .join("");
+  const n = Number(String(r.rating || "").replace(",", "."));
   const rating = r.rating
-    ? `<a class="rating" href="${mapsUrl}" rel="noopener">
+    ? `<a class="rating rating--big" href="${reviewsReadUrl}" rel="noopener">
         <strong>${esc(r.rating)}<span>/5</span></strong>
-        <span class="rating__stars" aria-hidden="true">★★★★★</span>
-        <span>${r.count ? esc(r.count) + " avis " : "Avis "}${esc(r.source || "Google")}</span>
+        <span class="stars-bar rating__stars" style="--r:${n}" aria-hidden="true">★★★★★</span>
+        <span>${r.count ? esc(r.count) + " avis " : "Note "}${esc(r.source || "Google")}</span>
       </a>`
     : "";
   return `<section class="section section--cream" id="avis">
@@ -242,7 +313,8 @@ function reviewsSection() {
       </div>
       ${rating}
     </div>
-    ${cards ? `<div class="grid grid--3">${cards}</div>` : ""}
+    ${cards ? `<div class="grid grid--2">${cards}</div>` : ""}
+    ${hasExamples() ? `<p class="reviews-example-note">Les avis ci-dessus sont des exemples pour la maquette. Ils seront remplacés par les vrais avis Google.</p>` : ""}
     <div class="review-ask">
       <div>
         <h3>Un bon moment chez DIO ?</h3>
@@ -430,6 +502,9 @@ const tokens = {
   map: mapBlock,
   parking: parkingBlock,
   bookingForm,
+  orderApp,
+  phoneTel: () => (hasPhone ? phone.tel : ""),
+  phoneDisplay: () => (hasPhone ? phone.display : ""),
   promoBar,
   reserveExtras,
   hoursList,
@@ -439,6 +514,7 @@ const tokens = {
   reviewUrl: () => reviewUrl,
   orderDirect: () => esc(site.orderDirect || ""),
   reviewsSection,
+  ratingBadge,
   shareBlock,
   year: () => String(new Date().getFullYear()),
   email: () => (site.email ? `<a href="mailto:${site.email}">${site.email}</a>` : ""),

@@ -699,10 +699,39 @@
     "host": "IONOS SARL, 7 place de la Gare, BP 70109, 57201 Sarreguemines Cedex, 09 70 80 89 11"
   },
   "reviews": {
-    "rating": "",
+    "rating": "4,5",
     "count": "",
     "source": "Google",
-    "items": []
+    "items": [
+      {
+        "author": "Camille D.",
+        "rating": 5,
+        "date": "",
+        "text": "Une vraie pizza cuite au four à bois, la pâte est légère et bien dorée. On a été accueillis avec le sourire et on a même pu se garer juste derrière.",
+        "example": true
+      },
+      {
+        "author": "Thomas B.",
+        "rating": 5,
+        "date": "",
+        "text": "Nous étions huit pour un déjeuner d'équipe. Tout s'est bien passé, les plats sont arrivés ensemble et c'était très copieux. On reviendra.",
+        "example": true
+      },
+      {
+        "author": "Sophie L.",
+        "rating": 4,
+        "date": "",
+        "text": "Les pâtes gratinées au four sont délicieuses et le tiramisu est excellent. Un bon rapport qualité-prix pour un repas entre amis.",
+        "example": true
+      },
+      {
+        "author": "Julien M.",
+        "rating": 5,
+        "date": "",
+        "text": "Commande à emporter prête à l'heure, pizza encore bien chaude. Pratique le soir en semaine.",
+        "example": true
+      }
+    ]
   },
   "images": {
     "hero": "",

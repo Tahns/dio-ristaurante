@@ -355,3 +355,82 @@ tr.is-today .today-tag{display:inline-block}
 .hours-table td small.mode{display:table}
 .hours-table td{white-space:normal}
 .call-card .hours div.is-today dt::after,.footer .hours div.is-today dt::after{color:var(--ochre-light)}
+
+/* Note Google */
+.stars-bar{--p:calc(var(--r) / 5 * 100%);display:inline-block;letter-spacing:.12em;line-height:1;background:linear-gradient(90deg,#f0b429 var(--p),#cfc6b0 var(--p));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.rating-badge{display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 14px;padding:10px 18px;border-radius:999px;background:#fff;color:var(--ink);text-decoration:none;font-size:1.05rem;box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.rating-badge .stars-bar{font-size:1.3rem}
+.rating-badge:hover{text-decoration:underline}
+.hero .rating-badge{display:flex;width:fit-content;max-width:100%}
+.rating--big strong{font-size:2.6rem}
+.rating--big .stars-bar{font-size:1.6rem}
+.quote__stars{font-size:1.25rem}
+.tag-example{display:inline-block;padding:1px 8px;border-radius:999px;background:#f3e9d6;color:#6b4a12;font-size:.75rem;font-weight:700}
+.reviews-example-note{margin:14px 0 0;color:var(--muted);font-size:.88rem;font-style:italic}
+
+/* ---------- Réservation et commande ---------- */
+.label{display:block;font-weight:600;font-size:.9rem;margin-bottom:8px}
+.booking__head h2{margin:0 0 6px}.booking__head p{margin:0;color:var(--muted)}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg label{margin:0;cursor:pointer}
+.seg input,.slot input{position:absolute;opacity:0;width:1px;height:1px}
+.seg span,.slot span{display:inline-block;padding:11px 18px;border:2px solid var(--ink);border-radius:999px;font-weight:600;background:#fff;color:var(--ink);cursor:pointer}
+.seg input:checked+span,.slot input:checked+span{background:var(--ink);color:#fff}
+.seg input:focus-visible+span,.slot input:focus-visible+span{outline:3px solid var(--ochre);outline-offset:2px}
+.slots__group+.slots__group{margin-top:14px}
+.slots__label{margin:0 0 6px;font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.slots__row{display:flex;flex-wrap:wrap;gap:8px}
+.slot{margin:0}
+.slot span{padding:9px 14px;border-width:1px;border-radius:8px;border-color:#867659;font-variant-numeric:tabular-nums}
+.slot:hover span{border-color:var(--ink)}
+.slots__hint{margin:0;color:var(--muted);font-style:italic}
+.stepper{display:inline-flex;align-items:center;border:2px solid var(--ink);border-radius:999px;overflow:hidden;background:#fff}
+.stepper button{width:48px;height:48px;border:0;background:var(--ink);color:#fff;font:700 1.5rem/1 var(--sans);cursor:pointer}
+.stepper button:hover{background:var(--ochre-dark)}
+.stepper input{width:64px;border:0;text-align:center;font:700 1.3rem var(--sans);padding:8px 0;-moz-appearance:textfield;background:#fff;color:var(--ink)}
+.stepper input::-webkit-outer-spin-button,.stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.field__hint{margin:6px 0 0;color:var(--ochre-dark);font-weight:600;font-size:.9rem}
+.cancel-note{margin:0;padding:14px 16px;border-left:5px solid var(--ember);background:#fdf3dd;border-radius:4px;color:var(--ink)}
+
+/* Récapitulatif */
+.recap{background:#fff;border:1px solid var(--line);border-top:6px solid var(--ochre);border-radius:var(--radius);padding:clamp(20px,4vw,32px);display:grid;gap:14px}
+.recap h2{margin:0}
+.recap__badge{margin:0;display:inline-block;width:fit-content;padding:6px 14px;border-radius:999px;font-weight:700;background:#e6f3ea;color:#1c5a33}
+.recap__badge--call{background:#fdf3dd;color:#6b4a12}
+.recap__text{margin:0;padding:16px;background:var(--paper);border:1px dashed #8a6a3e;border-radius:6px;white-space:pre-wrap;font:inherit}
+.recap__actions{margin:0;display:flex;flex-wrap:wrap;gap:10px}
+
+/* Commande à emporter */
+.order{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:32px;align-items:start}
+.order .recap{grid-column:1/-1;max-width:720px;margin-inline:auto;width:100%}
+@media (max-width:900px){.order{grid-template-columns:minmax(0,1fr)}}
+.order__menu .menu-nav{top:69px}
+.order-cat{padding-top:28px;scroll-margin-top:130px}
+.order-list{list-style:none;margin:0;padding:0}
+.order-item{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 12px;border-bottom:1px dashed var(--line);border-radius:6px}
+.order-item.is-in{background:#fff3d6}
+.order-item h3{margin:0;font-size:1.1rem;font-style:italic}
+.order-item p{margin:2px 0 0;color:var(--muted);font-size:.93rem}
+.order-item__price{display:block;margin-top:4px;font-weight:700;color:var(--ochre-dark)}
+.qty{display:flex;align-items:center;gap:8px;flex:none}
+.qty button{width:40px;height:40px;border-radius:50%;border:2px solid var(--ink);background:#fff;color:var(--ink);font:700 1.3rem/1 var(--sans);cursor:pointer}
+.qty .qty__add{background:var(--ink);color:#fff}
+.qty button:hover{background:var(--ochre-dark);color:#fff;border-color:var(--ochre-dark)}
+.qty output{min-width:1.5ch;text-align:center;font-weight:700;font-size:1.1rem}
+.order__cart{position:sticky;top:84px}
+@media (max-width:900px){.order__cart{position:static}}
+.order__panel{background:#fff;border:1px solid var(--line);border-top:6px solid var(--ochre);border-radius:var(--radius);padding:20px;display:grid;gap:14px;box-shadow:0 8px 22px rgba(21,21,21,.1)}
+.order__panel h2{margin:0}
+.cart-empty{margin:0;color:var(--muted);font-style:italic}
+.cart-lines{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.cart-lines li{display:flex;justify-content:space-between;gap:12px;padding-bottom:6px;border-bottom:1px dashed var(--line)}
+.cart-total{margin:0;display:flex;justify-content:space-between;font-size:1.2rem}
+.cart-total[hidden]{display:none}
+.order-form{display:grid;gap:14px}
+.order-bar{position:fixed;left:12px;right:12px;bottom:70px;z-index:55;display:flex;align-items:center;gap:10px;padding:14px 18px;background:var(--ochre);color:#1b1b1b;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 8px 22px rgba(0,0,0,.35)}
+.order-bar[hidden]{display:none}
+.order-bar__count{display:inline-grid;place-items:center;min-width:28px;height:28px;border-radius:50%;background:var(--ink);color:#fff}
+.order-bar strong{margin-left:auto}
+@media (min-width:901px){.order-bar{display:none!important}}
+.hours div.is-today{font-weight:400}.hours div.is-today dt{font-weight:700}
+.footer .hours dt{white-space:normal}
