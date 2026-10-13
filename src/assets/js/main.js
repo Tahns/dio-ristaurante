@@ -67,7 +67,7 @@ const parisNow = () => {
 const dayOf = (iso) => new Date(iso + "T12:00:00").getDay();
 const longDate = (iso) => { const d = new Date(iso + "T12:00:00"); return `${DAYS_LONG[d.getDay()]} ${d.getDate()} ${MONTHS[d.getMonth()]}`; };
 
-// Créneaux d'un jour : toutes les 30 minutes, jusqu'à 30 minutes avant la fermeture.
+// Créneaux d'un jour : toutes les 15 minutes, jusqu'à 30 minutes avant la fermeture.
 // kind « table » : seulement les services sur place. « emporter » : tous, avec un délai de préparation.
 const slotGroups = (slots, iso, kind, lead) => {
   const now = parisNow();
@@ -76,7 +76,7 @@ const slotGroups = (slots, iso, kind, lead) => {
     .sort((a, b) => toMin(a.from) - toMin(b.from))
     .map((s) => {
       const times = [];
-      for (let m = toMin(s.from); m <= toMin(s.to) - 30; m += 30) if (iso !== now.date || m >= now.minutes + lead) times.push(m);
+      for (let m = toMin(s.from); m <= toMin(s.to) - 30; m += 15) if (iso !== now.date || m >= now.minutes + lead) times.push(m);
       return { label: toMin(s.from) < 15 * 60 ? "Midi" : "Soir", mode: s.mode, times };
     });
 };
