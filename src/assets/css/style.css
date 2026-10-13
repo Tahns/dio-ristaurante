@@ -613,3 +613,5 @@ h3{font-weight:600}
 .menu-cat{margin:0;padding:34px 0 8px;border-top:0;background:linear-gradient(var(--ink),var(--ink)) 0 34px/100% 2px no-repeat}
 .menu-cat h2{margin-top:14px}
 @media (max-width:979px){.menu-cat{background-position:0 34px}}
+.open-now.is-soon{background:#fff1d6;border-color:#e3b567;color:#7a4d0b}.open-now.is-soon::before{background:#e08a00}
+.hero .open-now.is-soon{background:rgba(227,181,103,.16);border-color:rgba(227,181,103,.6);color:#f3d9a4}.hero .open-now.is-soon::before{background:#f0a830}
