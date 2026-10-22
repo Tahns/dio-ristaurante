@@ -22,3 +22,6 @@ html.has-motion .btn.mf-anim{transition:none}
 /* éléments animés par GSAP : pas de décalage de défilement horizontal */
 .cart-lines,.recap{overflow-x:clip}
 .cart-lines li.mf-ghost{pointer-events:none;overflow:hidden}
+
+/* `display:grid` de style.css l'emporte sur l'attribut hidden : on le rétablit pour le formulaire et le récapitulatif */
+.form[hidden],.recap[hidden]{display:none}
