@@ -1,1 +1,17 @@
-/* motion-menu : styles de mouvement de cette zone uniquement */
+/* motion-menu : styles de mouvement de La carte et de Click & Collect */
+
+/* filet du haut de chaque rubrique : dessiné via la variable --r (0 → 1) */
+html.has-motion .menu-cat.m-rule{background-size:calc(var(--r,1)*100%) 2px}
+
+/* titres de rubrique découpés en mots : l'espace vient du gap du flex */
+.menu-cat h2[data-m-split],.order-cat h2[data-m-split]{column-gap:.26em}
+
+/* rubrique en cours dans la barre de navigation (scrollspy) */
+html.has-motion .menu-nav a{transition:color .2s,border-color .25s}
+html.has-motion .menu-nav a.is-current{border-bottom-color:var(--ochre);color:var(--ink)}
+
+/* onglets : le soulignement actif glisse en fondu */
+html.has-motion .menu-tab{transition:color .2s,border-color .25s}
+
+/* puces et bases animées : l'état est rendu au CSS à la fin (survols, sélection) */
+html.has-motion .chip,html.has-motion .base{will-change:auto}

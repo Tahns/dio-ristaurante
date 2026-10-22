@@ -1,1 +1,8 @@
-/* motion-pages : styles de mouvement de cette zone uniquement */
+/* motion-pages : en-têtes de page et pages secondaires. Valeurs par défaut = état final (rien de caché sans JS). */
+html.has-motion .page-hero::after{transform-origin:left center;transform:scaleX(var(--m-bar,1))}
+html.has-motion .page-hero h1::after{transform-origin:left center;transform:scaleX(var(--m-line,1))}
+html.has-motion .page-hero .container{will-change:transform}
+html.has-motion .stars .m-star{display:inline-block}
+html.has-motion .parking-map svg{overflow:hidden}
+html.has-motion details>summary{transition:color .2s}
+@media print{.page-hero::after,.page-hero h1::after{transform:none!important}}

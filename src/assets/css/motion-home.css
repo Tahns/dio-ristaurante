@@ -1,1 +1,5 @@
 /* motion-home : styles de mouvement de cette zone uniquement */
+.scroll-band{overflow:hidden;background:var(--ochre);color:var(--ink);border-block:1px solid rgba(21,21,21,.2)}
+.scroll-band__track{display:flex;gap:2.2rem;width:max-content;padding:14px 0;white-space:nowrap;font:700 clamp(1.1rem,3vw,1.7rem)/1 var(--serif);text-transform:uppercase;letter-spacing:.08em;will-change:transform}
+.scroll-band__track span::after{content:"\2022";margin-left:2.2rem;opacity:.55}
+.hero__center{will-change:transform}

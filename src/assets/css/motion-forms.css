@@ -1,1 +1,24 @@
 /* motion-forms : styles de mouvement de cette zone uniquement */
+
+/* champs : focus net, sans décalage de mise en page */
+html.has-motion .field input,
+html.has-motion .field select,
+html.has-motion .field textarea{transition:border-color .18s,box-shadow .18s}
+html.has-motion .field input:focus-visible,
+html.has-motion .field select:focus-visible,
+html.has-motion .field textarea:focus-visible{border-color:var(--ink);box-shadow:0 0 0 3px rgba(200,140,40,.35)}
+
+/* jours du calendrier et puces : retour au toucher */
+html.has-motion .cal__day,
+html.has-motion .chip>span,
+html.has-motion .seg span{transition:background .15s,color .15s,border-color .15s}
+html.has-motion .cal__day:active:not(:disabled),
+html.has-motion .stepper button:active,
+html.has-motion .qty button:active{filter:brightness(.9)}
+
+/* les boutons du récapitulatif sont animés par GSAP : on coupe la transition de transform le temps de l'entrée */
+html.has-motion .btn.mf-anim{transition:none}
+
+/* éléments animés par GSAP : pas de décalage de défilement horizontal */
+.cart-lines,.recap{overflow-x:clip}
+.cart-lines li.mf-ghost{pointer-events:none;overflow:hidden}
