@@ -29,12 +29,7 @@ window.DIO && window.DIO.ok && window.DIO.modules.push((D) => {
   // ============================== Réservation =================================
   const form = q("#booking-form");
   if (form) {
-    // Titre de page en mots, puis intro du formulaire en cascade rapide
-    const h1 = q(".page-hero h1");
-    if (h1 && !h1.dataset.mSplit) D.words(h1, { now: true, duration: 0.8, stagger: 0.06 });
-    const heroP = q(".page-hero p");
-    if (heroP) gsap.from(heroP, { opacity: 0, y: 16, duration: 0.6, delay: 0.25, ease: D.ease, clearProps: CLEAR });
-
+    // Intro du formulaire en cascade rapide (le titre de page est animé par motion-pages.js)
     const blocks = [...form.children].filter((el) => !el.hidden);
     gsap.from(blocks, { opacity: 0, y: 22, duration: 0.5, stagger: 0.045, delay: 0.1, ease: D.ease, clearProps: CLEAR });
     const days = $(".cal__day", q("#cal"));
