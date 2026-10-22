@@ -3,7 +3,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const ROOT = "site";
+const ROOT = process.env.SITE_OUT || "site";
 const errors = [];
 const warnings = [];
 

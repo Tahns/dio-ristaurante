@@ -1,0 +1,32 @@
+/* Mouvement : noyau commun. Rien n'est masqué sans JavaScript ni quand l'utilisateur demande moins d'animations. */
+html.has-motion:not(.m-ready) main{visibility:hidden}
+
+/* mots des titres (masque de révélation) */
+.m-w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.14em;margin-bottom:-.14em}
+.m-wi{display:inline-block;will-change:transform}
+
+/* barre de progression de la page */
+.m-progress{position:fixed;left:0;top:0;height:4px;width:100%;background:var(--ochre);transform:scaleX(0);transform-origin:left;z-index:90;pointer-events:none}
+
+/* barre du haut : se cache en descendant, revient en remontant */
+html.has-motion .header{transition:transform .35s ease}
+html.has-motion .header.is-hidden{transform:translateY(-100%)}
+
+/* boutons */
+html.has-motion .btn{transition:transform .2s ease,background .15s,box-shadow .2s}
+html.has-motion .btn:hover{transform:translateY(-3px) scale(1.03)}
+html.has-motion .btn:active{transform:scale(.97)}
+
+/* transitions entre pages (navigateurs qui les gèrent) */
+@media (prefers-reduced-motion:no-preference){
+  @view-transition{navigation:auto}
+  ::view-transition-old(root){animation:m-vt-out .3s ease both}
+  ::view-transition-new(root){animation:m-vt-in .55s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes m-vt-out{to{opacity:0;transform:translateY(-28px) scale(.985)}}
+  @keyframes m-vt-in{from{opacity:0;transform:translateY(44px)}}
+}
+
+/* centrage sans transform (GSAP anime transform sur ces éléments) */
+.mapband__card{top:0;bottom:0;margin-block:auto;height:fit-content;transform:none}
+@media (max-width:700px){.mapband__card{margin-block:0;margin:-24px 16px 0;height:auto}}
+@media (min-width:1100px){.hero__float{top:0;bottom:0;margin-block:auto;height:fit-content;transform:none}}

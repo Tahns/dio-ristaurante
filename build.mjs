@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const SRC = "src";
-const OUT = "site";
+const OUT = process.env.SITE_OUT || "site";
 // Publication dans un sous-dossier (ex. GitHub Pages : BASE_PATH=/nom-du-depot) et hors index (NOINDEX=1).
 const BASE = (process.env.BASE_PATH || "").replace(/\/+$/, "");
 const NOINDEX = process.env.NOINDEX === "1";
