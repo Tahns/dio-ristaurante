@@ -8,22 +8,22 @@ window.DIO && window.DIO.ok && window.DIO.modules.push((D) => {
   const alive = (el) => el && el.isConnected && !el.hidden;
 
   // Petites briques réutilisables ---------------------------------------------
-  const pop = (el, from = 1.5) => alive(el) && gsap.fromTo(el, { scale: from }, { scale: 1, duration: 0.45, ease: "back.out(3)", overwrite: true, clearProps: "transform" });
-  const glide = (el, x = -16) => alive(el) && el.textContent.trim() && gsap.fromTo(el, { opacity: 0, x }, { opacity: 1, x: 0, duration: 0.4, ease: D.ease, overwrite: true, clearProps: "opacity,transform" });
-  const shake = (el) => alive(el) && gsap.fromTo(el, { x: 0 }, { keyframes: { x: [-9, 8, -6, 4, -2, 0] }, duration: 0.45, ease: "none", overwrite: true, clearProps: "transform" });
+  const pop = (el, from = 1.5) => alive(el) && gsap.fromTo(el, { scale: from }, { scale: 1, duration: 0.45, ease: "back.out(3)", overwrite: "auto", clearProps: "transform" });
+  const glide = (el, x = -16) => alive(el) && el.textContent.trim() && gsap.fromTo(el, { opacity: 0, x }, { opacity: 1, x: 0, duration: 0.4, ease: D.ease, overwrite: "auto", clearProps: "opacity,transform" });
+  const shake = (el) => alive(el) && gsap.fromTo(el, { x: 0 }, { keyframes: { x: [-9, 8, -6, 4, -2, 0] }, duration: 0.45, ease: "none", overwrite: "auto", clearProps: "transform" });
   const ring = (el, rgb = "200,140,40") => alive(el) && gsap.fromTo(el, { boxShadow: `0 0 0 0 rgba(${rgb},.6)` }, { boxShadow: `0 0 0 10px rgba(${rgb},0)`, duration: 0.6, ease: "power2.out", overwrite: "auto", clearProps: "boxShadow" });
   const flash = (el, from = "#ffc857") => {
     if (!alive(el)) return;
     // revient à la couleur d'origine (calculée) puis rend la main à la feuille de style
     gsap.set(el, { clearProps: "backgroundColor" });
     const to = getComputedStyle(el).backgroundColor;
-    gsap.fromTo(el, { backgroundColor: from }, { backgroundColor: to, duration: 0.8, ease: "power2.out", overwrite: true, clearProps: "backgroundColor" });
+    gsap.fromTo(el, { backgroundColor: from }, { backgroundColor: to, duration: 0.8, ease: "power2.out", overwrite: "auto", clearProps: "backgroundColor" });
   };
 
   // Entrée groupée de blocs qu'un script vient d'afficher (changement de type, retour du formulaire…)
   const enter = (els, vars = {}) => {
     const list = els.filter(alive);
-    if (list.length) gsap.fromTo(list, { opacity: 0, x: -22 }, { opacity: 1, x: 0, duration: 0.4, stagger: 0.07, ease: D.ease, overwrite: true, clearProps: "opacity,transform", ...vars });
+    if (list.length) gsap.fromTo(list, { opacity: 0, x: -22 }, { opacity: 1, x: 0, duration: 0.4, stagger: 0.07, ease: D.ease, overwrite: "auto", clearProps: "opacity,transform", ...vars });
   };
 
   // ============================== Réservation =================================
@@ -49,7 +49,7 @@ window.DIO && window.DIO.ok && window.DIO.modules.push((D) => {
       const b = e.target.closest("[data-step]");
       if (!b) return;
       const up = Number(b.dataset.step) > 0;
-      gsap.fromTo(qty, { scale: up ? 1.3 : 0.8 }, { scale: 1, duration: 0.4, ease: "back.out(3)", overwrite: true, clearProps: "transform" });
+      gsap.fromTo(qty, { scale: up ? 1.3 : 0.8 }, { scale: 1, duration: 0.4, ease: "back.out(3)", overwrite: "auto", clearProps: "transform" });
       glide(q("#convives-hint"), 0);
     });
     qty.addEventListener("change", () => pop(qty, 1.2));
@@ -96,7 +96,7 @@ window.DIO && window.DIO.ok && window.DIO.modules.push((D) => {
         // changement de mois : la grille glisse dans le sens de la navigation
         dir = /suivant/i.test(b.getAttribute("aria-label") || "") ? 1 : -1;
         const grid = q(".cal__grid", box);
-        if (grid) gsap.fromTo(grid, { opacity: 0, x: 26 * dir }, { opacity: 1, x: 0, duration: 0.32, ease: D.ease, overwrite: true, clearProps: "opacity,transform" });
+        if (grid) gsap.fromTo(grid, { opacity: 0, x: 26 * dir }, { opacity: 1, x: 0, duration: 0.32, ease: D.ease, overwrite: "auto", clearProps: "opacity,transform" });
         const t = q(".cal__head strong", box);
         if (t) gsap.fromTo(t, { opacity: 0, y: -8 * dir }, { opacity: 1, y: 0, duration: 0.3, ease: D.ease, clearProps: "opacity,transform" });
       }
@@ -146,7 +146,7 @@ window.DIO && window.DIO.ok && window.DIO.modules.push((D) => {
     if (!el) return;
     let wasHidden = el.hidden;
     new MutationObserver(() => {
-      if (wasHidden && !el.hidden) gsap.fromTo(el, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: D.ease, overwrite: true, clearProps: CLEAR });
+      if (wasHidden && !el.hidden) gsap.fromTo(el, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: D.ease, overwrite: "auto", clearProps: CLEAR });
       wasHidden = el.hidden;
     }).observe(el, { attributes: true, attributeFilter: ["hidden"] });
   };
@@ -169,9 +169,9 @@ window.DIO && window.DIO.ok && window.DIO.modules.push((D) => {
       if (plus) {
         pop(out, 1.7);
         if (li.classList.contains("is-in")) flash(li);
-        gsap.fromTo(b, { scale: 0.82 }, { scale: 1, duration: 0.4, ease: "back.out(3)", overwrite: true, clearProps: "transform" });
+        gsap.fromTo(b, { scale: 0.82 }, { scale: 1, duration: 0.4, ease: "back.out(3)", overwrite: "auto", clearProps: "transform" });
       } else {
-        gsap.fromTo(out, { scale: 0.7 }, { scale: 1, duration: 0.3, ease: "back.out(3)", overwrite: true, clearProps: "transform" });
+        gsap.fromTo(out, { scale: 0.7 }, { scale: 1, duration: 0.3, ease: "back.out(3)", overwrite: "auto", clearProps: "transform" });
       }
     });
 
@@ -186,7 +186,7 @@ window.DIO && window.DIO.ok && window.DIO.modules.push((D) => {
       $("li:not(.mf-ghost)", linesEl).forEach((li) => {
         const name = li.children[0]?.textContent.replace(/^\d+\s×\s/, "");
         if (!prev.has(name)) {
-          gsap.fromTo(li, { opacity: 0, x: 48 }, { opacity: 1, x: 0, duration: 0.45, ease: D.ease, overwrite: true, clearProps: "opacity,transform" });
+          gsap.fromTo(li, { opacity: 0, x: 48 }, { opacity: 1, x: 0, duration: 0.45, ease: D.ease, overwrite: "auto", clearProps: "opacity,transform" });
           flash(li, "#ffe3a3");
         } else if (prev.get(name) !== cur.get(name)) {
           pop(li.children[0], 1.15);
@@ -219,10 +219,10 @@ window.DIO && window.DIO.ok && window.DIO.modules.push((D) => {
     const bar = q(".order-bar", order);
     watchText(q(".order-bar__total", order), () => {
       if (!alive(bar)) return;
-      gsap.fromTo(bar, { y: 0 }, { keyframes: { y: [-14, 0, -5, 0] }, duration: 0.55, ease: "power2.out", overwrite: true, clearProps: "transform" });
+      gsap.fromTo(bar, { y: 0 }, { keyframes: { y: [-14, 0, -5, 0] }, duration: 0.55, ease: "power2.out", overwrite: "auto", clearProps: "transform" });
       pop(q(".order-bar__count", bar), 1.4);
     });
-    if (bar) new MutationObserver(() => { if (!bar.hidden) gsap.fromTo(bar, { y: 70, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "back.out(1.6)", overwrite: true, clearProps: CLEAR }); }).observe(bar, { attributes: true, attributeFilter: ["hidden"] });
+    if (bar) new MutationObserver(() => { if (!bar.hidden) gsap.fromTo(bar, { y: 70, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "back.out(1.6)", overwrite: "auto", clearProps: CLEAR }); }).observe(bar, { attributes: true, attributeFilter: ["hidden"] });
 
     // Composeur de pizza
     const compose = q("#o-compose");
@@ -231,7 +231,7 @@ window.DIO && window.DIO.ok && window.DIO.modules.push((D) => {
       compose.addEventListener("change", (e) => {
         const chip = e.target.closest(".chip, .base");
         const span = chip && chip.querySelector("span");
-        if (span) gsap.fromTo(span, { scale: e.target.checked ? 0.86 : 1.08 }, { scale: 1, duration: 0.45, ease: "back.out(3)", overwrite: true, clearProps: "transform" });
+        if (span) gsap.fromTo(span, { scale: e.target.checked ? 0.86 : 1.08 }, { scale: 1, duration: 0.45, ease: "back.out(3)", overwrite: "auto", clearProps: "transform" });
       });
       compose.addEventListener("click", (e) => {
         const add = e.target.closest("[data-compose-add]");
